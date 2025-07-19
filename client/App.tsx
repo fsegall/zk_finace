@@ -11,7 +11,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserSelection from "./pages/UserSelection";
-import LenderDashboard from "./pages/LenderDashboard";
+import BorrowerDashboard from "./pages/BorrowerDashboard";
 import InvestorDashboard from "./pages/InvestorDashboard";
 import InvestorRanking from "./pages/InvestorRanking";
 import KYCVerification from "./pages/KYCVerification";

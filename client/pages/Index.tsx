@@ -49,12 +49,16 @@ const Dashboard = () => {
   ];
 
   const creditRequests = [
-    { amount: "R$5.202,86", status: "Aprovada", statusColor: "text-success" },
-    { amount: "R$5.202,86", status: "Em Análise", statusColor: "text-warning" },
+    { amount: "R$5.202,86", status: "Aprovada", statusColor: "text-green-400" },
+    {
+      amount: "R$5.202,86",
+      status: "Em Análise",
+      statusColor: "text-yellow-400",
+    },
     {
       amount: "R$5.202,86",
       status: "Não Autorizada",
-      statusColor: "text-destructive",
+      statusColor: "text-red-400",
     },
   ];
 
@@ -204,7 +208,7 @@ const Dashboard = () => {
 
                 {/* Credit Requests */}
                 <div className="bg-card rounded-xl p-6 border border-border">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-6">
                     <h2 className="text-lg font-medium">
                       Solicitações de Crédito
                     </h2>
@@ -214,14 +218,18 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {creditRequests.map((request, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-between p-3 bg-muted rounded-lg"
+                        className="flex items-center justify-between py-3"
                       >
-                        <span className="font-medium">{request.amount}</span>
-                        <span className={`text-sm ${request.statusColor}`}>
+                        <span className="font-medium text-base">
+                          {request.amount}
+                        </span>
+                        <span
+                          className={`text-sm font-medium ${request.statusColor}`}
+                        >
                           {request.status}
                         </span>
                       </div>
@@ -254,7 +262,7 @@ const Dashboard = () => {
                           <span className="text-sm font-medium">
                             {item.value}
                           </span>
-                          <span className="text-xs text-success">
+                          <span className="text-xs text-green-400">
                             {item.status}
                           </span>
                         </div>

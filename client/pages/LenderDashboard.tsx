@@ -200,6 +200,13 @@ const LenderDashboard = () => {
 
           {/* Dashboard Content */}
           <main className="p-6">
+            <Breadcrumb
+              items={[
+                { label: "Início", href: "/user-selection" },
+                { label: "KYC Verificação", href: "/kyc-verification" },
+                { label: "Dashboard" },
+              ]}
+            />
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
               {/* Left Column - Stats and Criar Lance */}
               <div className="lg:col-span-1 space-y-6">

@@ -355,12 +355,69 @@ const BorrowerDashboard = () => {
                 </div>
               </div>
 
-              {/* Right Column - Placeholder */}
+              {/* Right Column - Collateral */}
               <div className="lg:col-span-1">
-                <div className="bg-card rounded-xl p-6 border border-border h-full flex items-center justify-center">
-                  <span className="text-muted-foreground">
-                    Additional Stats
-                  </span>
+                <div className="bg-card rounded-xl p-6 border border-border h-full">
+                  <div className="flex items-center justify-between mb-5">
+                    <h2 className="text-xl font-semibold">
+                      Colaterais Cadastrados
+                    </h2>
+                  </div>
+
+                  <div className="space-y-4 mb-6">
+                    <div className="p-3 border border-border rounded-lg">
+                      <div className="flex items-center gap-4">
+                        <div className="bg-muted px-2 py-1 rounded text-sm font-semibold">
+                          Eletrônico
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm opacity-80">
+                            Mackbook Apple 16 Pro...
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-semibold">
+                            R$52.454,32
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            14/02/2025
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-3 border border-border rounded-lg">
+                      <div className="flex items-center gap-4">
+                        <div className="bg-muted px-2 py-1 rounded text-sm font-semibold">
+                          Casa
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm opacity-80">
+                            Guarda Roupa Madeira...
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm font-semibold">
+                            R$52.454,32
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            14/02/2025
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-border mb-4">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-sm">Valor Total</span>
+                      <span className="font-bold">R$100.000,00</span>
+                    </div>
+                  </div>
+
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                    Cadastrar Colateral
+                  </Button>
                 </div>
               </div>
             </div>

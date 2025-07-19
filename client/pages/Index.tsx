@@ -15,9 +15,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Dashboard = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { theme, toggleTheme } = useTheme();
   const [showBalance, setShowBalance] = useState(true);
 
   const sidebarItems = [
@@ -49,16 +50,16 @@ const Dashboard = () => {
   ];
 
   const creditRequests = [
-    { amount: "R$5.202,86", status: "Aprovada", statusColor: "text-green-400" },
+    { amount: "R$5.202,86", status: "Aprovada", statusColor: "text-success" },
     {
       amount: "R$5.202,86",
       status: "Em Análise",
-      statusColor: "text-yellow-400",
+      statusColor: "text-warning",
     },
     {
       amount: "R$5.202,86",
       status: "Não Autorizada",
-      statusColor: "text-red-400",
+      statusColor: "text-destructive",
     },
   ];
 
@@ -80,7 +81,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-sidebar border-r border-sidebar-border p-6">
+        <div className="w-64 bg-sidebar p-6">
           {/* Logo */}
           <div className="flex items-center mb-8">
             <svg
@@ -167,7 +168,7 @@ const Dashboard = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card border-b border-border px-6 py-4">
+          <header className="bg-card px-6 py-4">
             <div className="flex items-center justify-between">
               {/* Search */}
               <div className="relative w-96">
@@ -180,7 +181,7 @@ const Dashboard = () => {
 
               {/* User Actions */}
               <div className="flex items-center gap-4">
-                <button className="p-2 hover:bg-muted rounded-lg">
+                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
                   <Bell className="w-5 h-5" />
                 </button>
 
@@ -195,10 +196,10 @@ const Dashboard = () => {
                 </div>
 
                 <button
-                  onClick={() => setIsDarkMode(!isDarkMode)}
-                  className="p-2 hover:bg-muted rounded-lg"
+                  onClick={toggleTheme}
+                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
                 >
-                  {isDarkMode ? (
+                  {theme === 'dark' ? (
                     <Sun className="w-5 h-5" />
                   ) : (
                     <Moon className="w-5 h-5" />
@@ -215,14 +216,14 @@ const Dashboard = () => {
               <div className="lg:col-span-2 space-y-6">
                 {/* Welcome Section */}
                 <div>
-                  <h1 className="text-h2 font-semibold mb-2">Olá, Maria</h1>
+                  <h1 className="text-h2 font-semibold mb-2 text-foreground">Olá, Maria</h1>
                   <p className="text-body text-muted-foreground">
                     Você ainda não possui um crédito ativo
                   </p>
                 </div>
 
                 {/* Wallet Card */}
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-h4 font-medium">Carteira</h2>
                     <button
@@ -237,12 +238,12 @@ const Dashboard = () => {
                     </button>
                   </div>
 
-                  <div className="text-h1 font-bold mb-6">
+                  <div className="text-h1 font-bold mb-6 text-foreground">
                     {showBalance ? "R$ 0,00" : "R$ ****"}
                   </div>
 
                   <div className="flex gap-3">
-                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                    <Button className="bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
                       Solicitar Crédito
                     </Button>
                     <Button variant="outline">Sacar</Button>
@@ -250,7 +251,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Credit Requests */}
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-h4 font-medium">
                       Solicitações de Crédito
@@ -284,7 +285,7 @@ const Dashboard = () => {
               {/* Right Column */}
               <div className="space-y-6">
                 {/* Collateral Section */}
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-h4 font-medium">
                       Colaterais Cadastrados
@@ -305,7 +306,7 @@ const Dashboard = () => {
                           <span className="text-body font-medium">
                             {item.value}
                           </span>
-                          <span className="text-small text-green-400">
+                          <span className="text-small text-success">
                             {item.status}
                           </span>
                         </div>
@@ -318,17 +319,17 @@ const Dashboard = () => {
                       <span className="text-body font-medium">
                         Valor Total de bens
                       </span>
-                      <span className="font-bold">R$100.000,00</span>
+                      <span className="font-bold text-foreground">R$100.000,00</span>
                     </div>
                   </div>
 
-                  <Button className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                  <Button className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
                     Cadastrar Colateral
                   </Button>
                 </div>
 
                 {/* Recent Activities */}
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-h4 font-medium">Atividades Recentes</h2>
                     <button className="text-body text-primary hover:underline">

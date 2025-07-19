@@ -87,7 +87,7 @@ const Login = () => {
           <div className="space-y-4">
             <Button
               variant="outline"
-              className="w-full h-12 bg-card hover:bg-card/80 text-foreground border border-border"
+              className="w-full h-12 bg-card hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -104,9 +104,9 @@ const Login = () => {
 
             <Button
               variant="outline"
-              className="w-full h-12 bg-card hover:bg-card/80 text-foreground border border-border"
+              className="w-full h-12 bg-card hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
-              <div className="w-5 h-5 mr-2 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">
+                              <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M
               </div>
               MetaMask
@@ -169,7 +169,7 @@ const Login = () => {
             <Link to="/user-selection">
               <Button
                 type="button"
-                className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
               >
                 Login
               </Button>

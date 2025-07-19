@@ -16,9 +16,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const InvestorDashboard = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { theme, toggleTheme } = useTheme();
 
   const sidebarItems = [
     { icon: Home, label: "Dashboard", active: true },
@@ -32,22 +33,22 @@ const InvestorDashboard = () => {
       amount: "R$5.262,56",
       change: "1,5%",
       status: "Aprovada",
-      statusColor: "text-blue-400",
-      bgColor: "bg-blue-400/10",
+      statusColor: "text-success",
+      bgColor: "bg-success/10",
     },
     {
       amount: "R$5.262,56",
       change: "1,5%",
       status: "Em Análise",
-      statusColor: "text-yellow-400",
-      bgColor: "bg-yellow-400/10",
+      statusColor: "text-warning",
+      bgColor: "bg-warning/10",
     },
     {
       amount: "R$5.262,56",
       change: "1,5%",
       status: "Não Autorizada",
-      statusColor: "text-red-400",
-      bgColor: "bg-red-400/10",
+      statusColor: "text-destructive",
+      bgColor: "bg-destructive/10",
     },
   ];
 
@@ -65,7 +66,7 @@ const InvestorDashboard = () => {
 
       <div className="relative z-10 flex">
         {/* Sidebar */}
-        <div className="w-64 bg-sidebar border-r border-sidebar-border p-6">
+        <div className="w-64 bg-sidebar p-6">
           {/* Logo */}
           <div className="flex items-center mb-8">
             <svg
@@ -163,7 +164,7 @@ const InvestorDashboard = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card border-b border-border px-6 py-4">
+          <header className="bg-card px-6 py-4">
             <div className="flex items-center justify-between">
               {/* Search */}
               <div className="relative w-96">
@@ -189,16 +190,16 @@ const InvestorDashboard = () => {
                 </div>
 
                 <Link to="/user-selection">
-                  <button className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
                     <span className="text-body">Sair</span>
                   </button>
                 </Link>
 
                 <button
-                  onClick={() => setIsDarkMode(!isDarkMode)}
-                  className="p-2 hover:bg-muted rounded-lg"
+                  onClick={toggleTheme}
+                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
                 >
-                  {isDarkMode ? (
+                  {theme === 'dark' ? (
                     <Sun className="w-5 h-5" />
                   ) : (
                     <Moon className="w-5 h-5" />
@@ -210,10 +211,11 @@ const InvestorDashboard = () => {
 
           {/* Dashboard Content */}
           <main className="p-6">
-            <Breadcrumb
+            <Breadcrumb 
               items={[
                 { label: "Início", href: "/user-selection" },
                 { label: "Dashboard" },
+                
               ]}
             />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -221,22 +223,22 @@ const InvestorDashboard = () => {
               <div className="space-y-6">
                 {/* Welcome Section */}
                 <div className="px-5">
-                  <h1 className="text-h2 font-semibold mb-2">Olá, José</h1>
-                  <p className="text-body text-muted-foreground">
+                  <h1 className="text-h2 font-semibold mb-2 text-foreground">Olá, José</h1>
+                  <p className="text-body text-foreground">
                     Você ainda não possui um Saldo ativo
                   </p>
                 </div>
 
                 {/* Wallet Card */}
-                <div className="bg-card rounded-xl p-8 border border-border">
+                <div className="bg-card rounded-xl p-8">
                   <div className="space-y-6">
                     <div>
-                      <h2 className="text-h4 font-semibold mb-5">Carteira</h2>
-                      <div className="text-h1 font-bold">R$ 0,00</div>
+                      <h2 className="text-h4 font-semibold mb-5 text-foreground">Carteira</h2>
+                      <div className="text-h1 font-bold text-foreground">R$ 0,00</div>
                     </div>
 
                     <div className="flex gap-4">
-                      <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90">
+                      <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
                         Depositar
                       </Button>
                       <Button variant="outline" className="flex-1">
@@ -247,9 +249,9 @@ const InvestorDashboard = () => {
                 </div>
 
                 {/* Contributions */}
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-h4 font-semibold">Contribuições</h2>
+                    <h2 className="text-h4 font-semibold text-foreground">Contribuições</h2>
                     <div className="flex items-center gap-2 text-body text-muted-foreground bg-muted px-3 py-1 rounded">
                       <span>Últimos 7 dias</span>
                     </div>
@@ -262,7 +264,7 @@ const InvestorDashboard = () => {
                         className="flex items-center justify-between py-4"
                       >
                         <div className="flex flex-col gap-1">
-                          <div className="font-semibold">
+                          <div className="font-semibold text-foreground">
                             {contribution.amount}
                           </div>
                           <div className="flex items-center gap-1 text-small text-muted-foreground">
@@ -284,9 +286,9 @@ const InvestorDashboard = () => {
               {/* Right Column */}
               <div className="space-y-6">
                 {/* Investment Performance Section */}
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6">
                   <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-h4 font-semibold">
+                    <h2 className="text-h4 font-semibold text-foreground">
                       Performance de Investimentos
                     </h2>
                     <div className="text-body text-muted-foreground bg-muted px-3 py-1 rounded">
@@ -295,44 +297,44 @@ const InvestorDashboard = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
+                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-success/10 to-success/5">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="text-body font-semibold">
+                        <div className="text-body font-semibold text-foreground">
                           TechGrow Software
                         </div>
-                        <div className="text-green-600 dark:text-green-400 font-bold">
+                        <div className="text-success font-bold">
                           +8.2% APY
                         </div>
                       </div>
-                      <div className="text-small text-muted-foreground">
+                      <div className="text-small text-foreground">
                         Investido: R$15.000 • Retorno: R$1.230
                       </div>
                     </div>
 
-                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20">
+                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-info/10 to-info/5">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="text-body font-semibold">
+                        <div className="text-body font-semibold text-foreground">
                           Fresh Eats Cafe
                         </div>
-                        <div className="text-blue-600 dark:text-blue-400 font-bold">
+                        <div className="text-info font-bold">
                           +6.5% APY
                         </div>
                       </div>
-                      <div className="text-small text-muted-foreground">
+                      <div className="text-small text-foreground">
                         Investido: R$8.500 • Retorno: R$552
                       </div>
                     </div>
 
-                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20">
+                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-secondary/10 to-secondary/5">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="text-body font-semibold">
+                        <div className="text-body font-semibold text-foreground">
                           Urban Apparel
                         </div>
-                        <div className="text-purple-600 dark:text-purple-400 font-bold">
+                        <div className="text-secondary font-bold">
                           +5.8% APY
                         </div>
                       </div>
-                      <div className="text-small text-muted-foreground">
+                      <div className="text-small text-foreground">
                         Investido: R$12.000 • Retorno: R$696
                       </div>
                     </div>
@@ -340,25 +342,25 @@ const InvestorDashboard = () => {
 
                   <div className="mt-6 pt-4 border-t border-border">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="font-semibold">APY Médio Total</span>
+                      <span className="font-semibold text-foreground">APY Médio Total</span>
                       <span className="font-bold text-primary">6.8%</span>
                     </div>
-                    <div className="text-center text-body text-muted-foreground">
+                    <div className="text-center text-body text-foreground">
                       Total Investido: R$35.500 • Total Retorno: R$2.478
                     </div>
                   </div>
 
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-4">
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/80 transition-colors mt-4">
                     Ver Detalhes dos Investimentos
                   </Button>
                 </div>
 
                 {/* Recent Activities */}
-                <div className="bg-card rounded-xl p-6 border border-border">
-                  <h2 className="text-h4 font-semibold mb-4">
+                <div className="bg-card rounded-xl p-6">
+                  <h2 className="text-h4 font-semibold mb-4 text-foreground">
                     Atividades Recentes
                   </h2>
-                  <div className="text-center text-body text-muted-foreground py-8">
+                  <div className="text-center text-body text-foreground py-8">
                     Nenhuma atividade recente
                   </div>
                 </div>

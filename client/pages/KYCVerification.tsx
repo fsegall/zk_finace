@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { useTheme } from "@/contexts/ThemeContext";
 import {
   Edit,
   FileText,
@@ -11,9 +12,14 @@ import {
   Info,
   Scan,
   BarChart3,
+  Sun,
+  Moon,
+  Bell,
+  User,
 } from "lucide-react";
 
 const KYCVerification = () => {
+  const { theme, toggleTheme } = useTheme();
   const [formData, setFormData] = useState({
     fullName: "",
     cpf: "",
@@ -68,8 +74,9 @@ const KYCVerification = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5 border-b border-border/10">
-          <div className="flex items-center gap-20">
+        <header className="px-6 lg:px-20 py-5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-20">
             {/* Logo */}
             <div className="flex items-center">
               <svg
@@ -128,18 +135,53 @@ const KYCVerification = () => {
             {/* Title */}
             <h1 className="text-h2 font-semibold">Solicitação de Crédito</h1>
           </div>
+
+          {/* User Actions */}
+          <div className="flex items-center gap-4">
+            <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+              <Bell className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                <User className="w-4 h-4" />
+                <span className="text-body">Maria Cardoso</span>
+                <span className="text-small text-muted-foreground">
+                  @maaria_89
+                </span>
+              </div>
+            </div>
+
+            <Link to="/user-selection">
+              <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                <span className="text-body">Sair</span>
+              </button>
+            </Link>
+
+            <button
+              onClick={toggleTheme}
+              className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+        </div>
         </header>
 
         {/* Main Content */}
         <div className="flex min-h-[calc(100vh-117px)]">
           {/* Sidebar - Process Steps */}
-          <div className="w-80 border-r border-border/5 px-20 py-10">
+                        <div className="w-80 px-20 py-10">
             <div className="w-60 space-y-10">
               {kycSteps.map((section, sectionIndex) => (
                 <div key={sectionIndex}>
                   {/* Section Title */}
-                  <div className="bg-white/5 rounded-lg px-5 py-3 mb-5 text-center">
-                    <h3 className="font-bold text-h5">{section.title}</h3>
+                  <div className="bg-muted/50 rounded-lg px-5 py-3 mb-5 text-center">
+                    <h3 className="font-bold text-h5 text-foreground">{section.title}</h3>
                   </div>
 
                   {/* Steps */}
@@ -149,7 +191,7 @@ const KYCVerification = () => {
                         <div className="flex items-center justify-end gap-3">
                           <span
                             className={`text-small font-bold ${
-                              step.active ? "text-white" : "text-white/80"
+                              step.active ? "text-foreground" : "text-muted-foreground"
                             }`}
                           >
                             {step.label}
@@ -166,15 +208,15 @@ const KYCVerification = () => {
                             <step.icon
                               className={`w-4 h-4 ${
                                 step.completed || step.active
-                                  ? "text-white"
-                                  : "text-white/30"
+                                  ? "text-primary-foreground"
+                                  : "text-muted-foreground"
                               }`}
                             />
                           </div>
                         </div>
                         {stepIndex < section.steps.length - 1 && (
                           <div className="flex justify-end pr-4 py-2">
-                            <div className="w-0.5 h-7 bg-white/8"></div>
+                            <div className="w-0.5 h-7 bg-muted/30"></div>
                           </div>
                         )}
                       </div>
@@ -219,7 +261,7 @@ const KYCVerification = () => {
                     onChange={(e) =>
                       handleInputChange("fullName", e.target.value)
                     }
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                   />
                 </div>
 
@@ -228,7 +270,7 @@ const KYCVerification = () => {
                     placeholder="CPF"
                     value={formData.cpf}
                     onChange={(e) => handleInputChange("cpf", e.target.value)}
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                   />
                   <Input
                     placeholder="Data de nascimento"
@@ -236,7 +278,7 @@ const KYCVerification = () => {
                     onChange={(e) =>
                       handleInputChange("birthDate", e.target.value)
                     }
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                   />
                 </div>
 
@@ -246,7 +288,7 @@ const KYCVerification = () => {
                       placeholder="CEP"
                       value={formData.cep}
                       onChange={(e) => handleInputChange("cep", e.target.value)}
-                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                      className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                     />
                   </div>
                   <div className="col-span-3">
@@ -256,7 +298,7 @@ const KYCVerification = () => {
                       onChange={(e) =>
                         handleInputChange("state", e.target.value)
                       }
-                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                      className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                     />
                   </div>
                 </div>
@@ -265,7 +307,7 @@ const KYCVerification = () => {
                   placeholder="Cidade"
                   value={formData.city}
                   onChange={(e) => handleInputChange("city", e.target.value)}
-                  className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                  className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                 />
 
                 <div className="grid grid-cols-4 gap-3">
@@ -276,7 +318,7 @@ const KYCVerification = () => {
                       onChange={(e) =>
                         handleInputChange("address", e.target.value)
                       }
-                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                      className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                     />
                   </div>
                   <Input
@@ -285,7 +327,7 @@ const KYCVerification = () => {
                     onChange={(e) =>
                       handleInputChange("number", e.target.value)
                     }
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
+                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
                   />
                 </div>
               </div>
@@ -295,13 +337,13 @@ const KYCVerification = () => {
                 <Link to="/user-selection" className="w-40">
                   <Button
                     variant="outline"
-                    className="w-full h-12 border-white/10 bg-transparent text-white hover:bg-white/5"
+                    className="w-full h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
                   >
                     Voltar
                   </Button>
                 </Link>
                 <Link to="/borrower/dashboard" className="w-40">
-                  <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
                     Avançar
                   </Button>
                 </Link>

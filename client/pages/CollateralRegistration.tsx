@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { useTheme } from "@/contexts/ThemeContext";
 import {
   ArrowLeft,
   Upload,
@@ -19,7 +20,7 @@ import {
 } from "lucide-react";
 
 const CollateralRegistration = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { theme, toggleTheme } = useTheme();
   const [formData, setFormData] = useState({
     type: "",
     brand: "",
@@ -70,7 +71,7 @@ const CollateralRegistration = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5 border-b border-border/10">
+        <header className="px-6 lg:px-20 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-20">
               {/* Logo */}
@@ -129,12 +130,12 @@ const CollateralRegistration = () => {
               </div>
 
               {/* Title */}
-              <h1 className="text-h2 font-semibold">Cadastrar Colateral</h1>
+              <h1 className="text-h2 font-semibold text-foreground">Cadastrar Colateral</h1>
             </div>
 
             {/* User Actions */}
             <div className="flex items-center gap-4">
-              <button className="p-2 hover:bg-muted rounded-lg">
+              <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
                 <Bell className="w-5 h-5" />
               </button>
 
@@ -149,16 +150,16 @@ const CollateralRegistration = () => {
               </div>
 
               <Link to="/user-selection">
-                <button className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
                   <span className="text-body">Sair</span>
                 </button>
               </Link>
 
               <button
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                className="p-2 hover:bg-muted rounded-lg"
+                onClick={toggleTheme}
+                className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
               >
-                {isDarkMode ? (
+                {theme === 'dark' ? (
                   <Sun className="w-5 h-5" />
                 ) : (
                   <Moon className="w-5 h-5" />
@@ -189,9 +190,9 @@ const CollateralRegistration = () => {
             </Link>
 
             {/* Form */}
-            <div className="bg-card rounded-xl p-8 border border-border">
+            <div className="bg-card rounded-xl p-8">
               <div className="mb-8">
-                <h2 className="text-h2 font-semibold mb-2">
+                <h2 className="text-h2 font-semibold mb-2 text-foreground">
                   Cadastrar Novo Colateral
                 </h2>
                 <p className="text-body text-muted-foreground">
@@ -203,7 +204,7 @@ const CollateralRegistration = () => {
               <form className="space-y-8">
                 {/* Basic Information */}
                 <div className="space-y-6">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
                     <FileText className="w-5 h-5 text-primary" />
                     Informações Básicas
                   </h3>
@@ -283,7 +284,7 @@ const CollateralRegistration = () => {
 
                 {/* Value and Condition */}
                 <div className="space-y-6">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
                     <DollarSign className="w-5 h-5 text-primary" />
                     Valor e Estado
                   </h3>
@@ -341,7 +342,7 @@ const CollateralRegistration = () => {
 
                 {/* Location */}
                 <div className="space-y-6">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
                     <MapPin className="w-5 h-5 text-primary" />
                     Localização
                   </h3>
@@ -363,7 +364,7 @@ const CollateralRegistration = () => {
 
                 {/* Documents and Photos */}
                 <div className="space-y-6">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
                     <Camera className="w-5 h-5 text-primary" />
                     Documentação
                   </h3>
@@ -374,7 +375,7 @@ const CollateralRegistration = () => {
                       <label className="text-sm font-medium">
                         Fotos do Item *
                       </label>
-                      <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
+                      <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
                         <Camera className="w-8 h-8 text-muted-foreground mx-auto mb-4" />
                         <p className="text-sm text-muted-foreground mb-2">
                           Adicione fotos do item de diferentes ângulos
@@ -391,7 +392,7 @@ const CollateralRegistration = () => {
                       <label className="text-sm font-medium">
                         Nota Fiscal / Comprovante
                       </label>
-                      <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
+                      <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
                         <FileText className="w-8 h-8 text-muted-foreground mx-auto mb-4" />
                         <p className="text-sm text-muted-foreground mb-2">
                           Anexe a nota fiscal ou comprovante de compra
@@ -412,7 +413,7 @@ const CollateralRegistration = () => {
                       Cancelar
                     </Button>
                   </Link>
-                  <Button className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button className="flex-1 h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
                     Cadastrar Colateral
                   </Button>
                 </div>

@@ -86,7 +86,7 @@ const UserSelection = () => {
           <div className="space-y-4">
             <Link to="/kyc-verification">
               <Button
-                className="w-full h-14 bg-card hover:bg-card/80 text-foreground border border-border"
+                className="w-full h-14 bg-card hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
                 variant="outline"
               >
                 Quero Solicitar Crédito
@@ -95,7 +95,7 @@ const UserSelection = () => {
 
             <Link to="/investor/dashboard">
               <Button
-                className="w-full h-14 bg-card hover:bg-card/80 text-foreground border border-border"
+                className="w-full h-14 bg-card hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
                 variant="outline"
               >
                 Quero Investir

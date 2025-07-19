@@ -9,51 +9,109 @@
    * Colors are now defined as hex values for better control
   */
   :root {
-    --background: #0C0C21;
-    --foreground: #F2F2F2;
+    /* Tema Escuro (padrão) */
+    --background: 0 0% 13%;
+    --foreground: 0 0% 95%;
 
-    --card: #17171C;
-    --card-foreground: #F2F2F2;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: #17171C;
-    --popover-foreground: #F2F2F2;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: #2974FF;
-    --primary-foreground: #FFFFFF;
+    --primary: 220 100% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: #3DFFEC;
-    --secondary-foreground: #0C0C21;
+    --secondary: 180 100% 62%;
+    --secondary-foreground: 240 100% 13%;
 
-    --muted: #F2F2F2B3;
-    --muted-foreground: #0F0F10;
+    --muted: 0 0% 95% 70%;
+    --muted-foreground: 0 0% 6%;
 
-    --accent: #3DFFEC;
-    --accent-foreground: #0C0C21;
+    --accent: 180 100% 62%;
+    --accent-foreground: 240 100% 13%;
 
-    --destructive: #EF4870;
-    --destructive-foreground: #FFFFFF;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: #F2F2F21F;
-    --input: #F2F2F21F;
-    --ring: #2974FF;
+    --border: 0 0% 95% 12%;
+    --input: 0 0% 95% 12%;
+    --ring: 220 100% 58%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: #000229;
-    --sidebar-foreground: #F2F2F2;
-    --sidebar-primary: #2974FF;
-    --sidebar-primary-foreground: #FFFFFF;
-    --sidebar-accent: #002068;
-    --sidebar-accent-foreground: #F2F2F2;
-    --sidebar-border: #F2F2F21F;
-    --sidebar-ring: #2974FF;
+    --sidebar-background: 240 100% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 220 100% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 100% 20%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 95% 12%;
+    --sidebar-ring: 220 100% 58%;
 
-    --success: #3CFFB1;
-    --success-foreground: #0C0C21;
-    --warning: #FFCD29;
-    --warning-foreground: #0C0C21;
-    --info: #2974FF;
-    --info-foreground: #FFFFFF;
+    --success: 160 100% 62%;
+    --success-foreground: 240 100% 13%;
+    --warning: 45 100% 58%;
+    --warning-foreground: 240 100% 13%;
+    --info: 220 100% 58%;
+    --info-foreground: 0 0% 100%;
+
+    /* Cores específicas para hover com melhor contraste */
+    --hover-bg: 0 0% 95% 10%;
+    --hover-text: 0 0% 95%;
+    --card-hover: 0 0% 95% 5%;
+  }
+
+  /* Tema Claro */
+  [data-theme="light"] {
+    --background: 0 0% 100%;
+    --foreground: 240 100% 13%;
+
+    --card: 0 0% 95%;
+    --card-foreground: 240 100% 13%;
+
+    --popover: 0 0% 95%;
+    --popover-foreground: 240 100% 13%;
+
+    --primary: 220 100% 58%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 180 100% 62%;
+    --secondary-foreground: 240 100% 13%;
+
+    --muted: 240 100% 13% 70%;
+    --muted-foreground: 0 0% 6%;
+
+    --accent: 180 100% 62%;
+    --accent-foreground: 240 100% 13%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 100% 13% 12%;
+    --input: 240 100% 13% 12%;
+    --ring: 220 100% 58%;
+
+    --sidebar-background: 0 0% 95%;
+    --sidebar-foreground: 240 100% 13%;
+    --sidebar-primary: 220 100% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 90%;
+    --sidebar-accent-foreground: 240 100% 13%;
+    --sidebar-border: 240 100% 13% 12%;
+    --sidebar-ring: 220 100% 58%;
+
+    --success: 160 100% 62%;
+    --success-foreground: 240 100% 13%;
+    --warning: 45 100% 58%;
+    --warning-foreground: 240 100% 13%;
+    --info: 220 100% 58%;
+    --info-foreground: 0 0% 100%;
+
+    /* Cores específicas para hover com melhor contraste */
+    --hover-bg: 240 100% 13% 10%;
+    --hover-text: 240 100% 13%;
+    --card-hover: 240 100% 13% 5%;
   }
 
 

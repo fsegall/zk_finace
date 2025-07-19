@@ -13,6 +13,19 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Encode Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'h1': ['4rem', { lineHeight: '1.2', fontWeight: '700' }], // 64px
+        'h2': ['3rem', { lineHeight: '1.3', fontWeight: '600' }], // 48px
+        'h3': ['2.5rem', { lineHeight: '1.4', fontWeight: '600' }], // 40px
+        'h4': ['2.25rem', { lineHeight: '1.5', fontWeight: '500' }], // 36px
+        'h5': ['1.75rem', { lineHeight: '1.5', fontWeight: '500' }], // 28px
+        'h6': ['1.5rem', { lineHeight: '1.5', fontWeight: '500' }], // 24px
+        'body': ['1rem', { lineHeight: '1.6', fontWeight: '400' }], // 16px
+        'small': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }], // 14px
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

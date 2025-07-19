@@ -307,50 +307,74 @@ const BorrowerDashboard = () => {
                 </div>
               </div>
 
-              {/* Center Column - Chart */}
+              {/* Center Column - Credit Progress */}
               <div className="lg:col-span-2">
                 <div className="bg-card rounded-xl p-6 border border-border h-full">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-lg font-semibold">
-                      Histórico de Ganhos
+                      Crédito Assegurado até a Data
                     </h2>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <span>Últimos 7 dias</span>
-                      <ChevronDown className="w-4 h-4" />
+                      <span>Meta: R$300.000</span>
                     </div>
                   </div>
 
-                  {/* Chart placeholder - would use recharts in real implementation */}
-                  <div className="relative h-32 mb-6">
-                    <svg
-                      width="100%"
-                      height="100%"
-                      viewBox="0 0 352 126"
-                      className="text-primary"
-                    >
-                      <defs>
-                        <linearGradient
-                          id="chartGradient"
-                          x1="0%"
-                          y1="0%"
-                          x2="100%"
-                          y2="0%"
+                  {/* Progress Bar */}
+                  <div className="space-y-6">
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">
+                          Progresso da Meta de Aporte Total
+                        </span>
+                        <span className="font-semibold">67%</span>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-4">
+                        <div
+                          className="bg-gradient-to-r from-primary to-cyan-400 h-4 rounded-full relative overflow-hidden"
+                          style={{ width: "67%" }}
                         >
-                          <stop offset="0%" stopColor="#004EF6" />
-                          <stop offset="100%" stopColor="#00D7CC" />
-                        </linearGradient>
-                      </defs>
-                      <path
-                        d="M10.9712 115.5L37.2499 79H112.75L176.25 40L238.75 72L309.25 45L332.75 10"
-                        stroke="url(#chartGradient)"
-                        strokeWidth="4"
-                        fill="none"
-                      />
-                    </svg>
-                  </div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>R$0</span>
+                        <span>R$300.000</span>
+                      </div>
+                    </div>
 
-                  <div className="bg-muted rounded-lg p-4">
-                    <div className="text-2xl font-bold">R$20.000</div>
+                    {/* Current Amount */}
+                    <div className="bg-gradient-to-r from-primary/10 to-cyan-400/10 rounded-lg p-6 text-center">
+                      <div className="text-3xl font-bold text-primary mb-2">
+                        R$200.000
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Crédito Assegurado Atual
+                      </div>
+                    </div>
+
+                    {/* Timeline */}
+                    <div className="grid grid-cols-3 gap-4 text-sm">
+                      <div className="text-center p-3 bg-muted/50 rounded-lg">
+                        <div className="font-semibold">R$50.000</div>
+                        <div className="text-xs text-muted-foreground">
+                          Jan 2024
+                        </div>
+                      </div>
+                      <div className="text-center p-3 bg-muted/50 rounded-lg">
+                        <div className="font-semibold">R$75.000</div>
+                        <div className="text-xs text-muted-foreground">
+                          Fev 2024
+                        </div>
+                      </div>
+                      <div className="text-center p-3 bg-primary/10 rounded-lg border border-primary/20">
+                        <div className="font-semibold text-primary">
+                          R$75.000
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Mar 2024
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

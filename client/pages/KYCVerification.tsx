@@ -247,11 +247,11 @@ const KYCVerification = () => {
                     Voltar
                   </Button>
                 </Link>
-                <div className="w-40">
+                <Link to="/lender/dashboard" className="w-40">
                   <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground">
                     Avançar
                   </Button>
-                </div>
+                </Link>
               </div>
             </div>
           </div>

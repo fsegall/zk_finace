@@ -87,7 +87,7 @@ const KYCVerification = () => {
         {/* Main Content */}
         <div className="flex min-h-[calc(100vh-117px)]">
           {/* Sidebar - Process Steps */}
-          <div className="w-80 border-r border-border/20 px-20 py-10">
+          <div className="w-80 border-r border-border/5 px-20 py-10">
             <div className="w-60 space-y-10">
               {kycSteps.map((section, sectionIndex) => (
                 <div key={sectionIndex}>
@@ -103,9 +103,7 @@ const KYCVerification = () => {
                         <div className="flex items-center justify-end gap-3">
                           <span
                             className={`text-xs font-bold ${
-                              step.active
-                                ? "text-white"
-                                : "text-muted-foreground"
+                              step.active ? "text-white" : "text-white/80"
                             }`}
                           >
                             {step.label}

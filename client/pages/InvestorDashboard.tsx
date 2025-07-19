@@ -165,6 +165,12 @@ const InvestorDashboard = () => {
                   </div>
                 </div>
 
+                <Link to="/user-selection">
+                  <button className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                    <span className="text-sm">Sair</span>
+                  </button>
+                </Link>
+
                 <button
                   onClick={() => setIsDarkMode(!isDarkMode)}
                   className="p-2 hover:bg-muted rounded-lg"

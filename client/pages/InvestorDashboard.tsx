@@ -100,21 +100,32 @@ const InvestorDashboard = () => {
 
           {/* Navigation */}
           <nav className="space-y-2">
-            {sidebarItems.map((item, index) => (
-              <button
-                key={index}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-                  item.active
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                }`}
-              >
-                <item.icon
-                  className={`w-4 h-4 ${item.active ? "text-primary" : ""}`}
-                />
-                {item.label}
-              </button>
-            ))}
+            <Link
+              to="/investor/dashboard"
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors bg-sidebar-accent text-sidebar-accent-foreground`}
+            >
+              <Home className="w-4 h-4 text-primary" />
+              Dashboard
+            </Link>
+            <Link
+              to="/investor/ranking"
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+            >
+              <Star className="w-4 h-4" />
+              Ranking
+            </Link>
+            <button
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+            >
+              <TrendingUp className="w-4 h-4" />
+              Lances Contribuídos
+            </button>
+            <button
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+            >
+              <Settings className="w-4 h-4" />
+              Configurações
+            </button>
           </nav>
 
           {/* Support */}

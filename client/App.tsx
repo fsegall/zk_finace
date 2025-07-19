@@ -29,6 +29,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/user-selection" element={<UserSelection />} />
+          <Route path="/kyc-verification" element={<KYCVerification />} />
           <Route path="/lender/dashboard" element={<LenderDashboard />} />
           <Route path="/investor/dashboard" element={<InvestorDashboard />} />
           <Route path="/investor/ranking" element={<InvestorRanking />} />

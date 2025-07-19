@@ -51,27 +51,6 @@ const InvestorDashboard = () => {
     },
   ];
 
-  const collateralItems = [
-    {
-      type: "Eletrônico",
-      description: "Mackbook Apple 16 Pro...",
-      value: "R$52.454,32",
-      date: "14/02/2025",
-    },
-    {
-      type: "Eletrodoméstico",
-      description: "Geladeira Brastemp",
-      value: "R$52.454,32",
-      date: "14/02/2025",
-    },
-    {
-      type: "Casa",
-      description: "Guarda Roupa Madeira Maçi",
-      value: "R$52.454,32",
-      date: "14/02/2025",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* Background gradient blur effect */}

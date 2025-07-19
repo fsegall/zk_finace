@@ -439,9 +439,11 @@ const BorrowerDashboard = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                    Cadastrar Colateral
-                  </Button>
+                  <Link to="/borrower/collateral">
+                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                      Cadastrar Colateral
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

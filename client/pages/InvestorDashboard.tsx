@@ -304,54 +304,73 @@ const InvestorDashboard = () => {
 
               {/* Right Column */}
               <div className="space-y-6">
-                {/* Collateral Section */}
+                {/* Investment Performance Section */}
                 <div className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-5">
                     <h2 className="text-xl font-semibold">
-                      Colaterais Cadastrados
+                      Performance de Investimentos
                     </h2>
+                    <div className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded">
+                      APY
+                    </div>
                   </div>
 
                   <div className="space-y-4">
-                    {collateralItems.map((item, index) => (
-                      <div
-                        key={index}
-                        className="p-3 border border-border rounded-lg"
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className="bg-muted px-2 py-1 rounded text-sm font-semibold">
-                            {item.type}
-                          </div>
-                          <div className="flex-1">
-                            <div className="text-sm opacity-80">
-                              {item.description}
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm font-semibold">
-                              {item.value}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {item.date}
-                            </div>
-                          </div>
+                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-sm font-semibold">
+                          TechGrow Software
+                        </div>
+                        <div className="text-green-600 dark:text-green-400 font-bold">
+                          +8.2% APY
                         </div>
                       </div>
-                    ))}
+                      <div className="text-xs text-muted-foreground">
+                        Investido: R$15.000 • Retorno: R$1.230
+                      </div>
+                    </div>
+
+                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-sm font-semibold">
+                          Fresh Eats Cafe
+                        </div>
+                        <div className="text-blue-600 dark:text-blue-400 font-bold">
+                          +6.5% APY
+                        </div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Investido: R$8.500 • Retorno: R$552
+                      </div>
+                    </div>
+
+                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-sm font-semibold">
+                          Urban Apparel
+                        </div>
+                        <div className="text-purple-600 dark:text-purple-400 font-bold">
+                          +5.8% APY
+                        </div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Investido: R$12.000 • Retorno: R$696
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-border">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="font-semibold">Valor Total de bens</span>
-                      <span className="font-bold">R$100.000,00</span>
-                      <button className="text-sm text-muted-foreground hover:text-foreground">
-                        Ver todos
-                      </button>
+                      <span className="font-semibold">APY Médio Total</span>
+                      <span className="font-bold text-primary">6.8%</span>
+                    </div>
+                    <div className="text-center text-sm text-muted-foreground">
+                      Total Investido: R$35.500 • Total Retorno: R$2.478
                     </div>
                   </div>
 
-                  <Button className="w-64 bg-primary text-primary-foreground hover:bg-primary/90">
-                    Cadastrar Colateral
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-4">
+                    Ver Detalhes dos Investimentos
                   </Button>
                 </div>
 

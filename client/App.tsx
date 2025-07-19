@@ -15,6 +15,7 @@ import BorrowerDashboard from "./pages/BorrowerDashboard";
 import InvestorDashboard from "./pages/InvestorDashboard";
 import InvestorRanking from "./pages/InvestorRanking";
 import KYCVerification from "./pages/KYCVerification";
+import CollateralRegistration from "./pages/CollateralRegistration";
 
 const queryClient = new QueryClient();
 

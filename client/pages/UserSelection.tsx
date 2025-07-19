@@ -37,7 +37,7 @@ const UserSelection = () => {
           </div>
 
           <div className="space-y-4">
-            <Link to="/lender/dashboard">
+            <Link to="/kyc-verification">
               <Button
                 className="w-full h-14 bg-card hover:bg-card/80 text-foreground border border-border"
                 variant="outline"

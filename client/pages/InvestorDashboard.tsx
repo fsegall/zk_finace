@@ -188,6 +188,12 @@ const InvestorDashboard = () => {
 
           {/* Dashboard Content */}
           <main className="p-6">
+            <Breadcrumb
+              items={[
+                { label: "Início", href: "/user-selection" },
+                { label: "Dashboard" },
+              ]}
+            />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Left Column */}
               <div className="space-y-6">

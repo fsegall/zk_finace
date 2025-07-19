@@ -184,6 +184,14 @@ const InvestorRanking = () => {
           {/* Dashboard Content */}
           <main className="p-6">
             <div className="max-w-4xl mx-auto">
+              <Breadcrumb
+                items={[
+                  { label: "Início", href: "/user-selection" },
+                  { label: "Dashboard", href: "/investor/dashboard" },
+                  { label: "Ranking" },
+                ]}
+              />
+
               {/* Header */}
               <div className="flex items-center justify-between mb-8">
                 <h1 className="text-2xl font-semibold">Top Lances</h1>

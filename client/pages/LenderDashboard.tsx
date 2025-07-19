@@ -23,8 +23,8 @@ const LenderDashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const sidebarItems = [
-    { icon: Home, label: "Dashboard", active: false },
-    { icon: TrendingUp, label: "Lances", active: true },
+    { icon: Home, label: "Dashboard", active: true },
+    { icon: TrendingUp, label: "Lances", active: false },
     { icon: Wallet, label: "Carteira", active: false },
     { icon: Settings, label: "Configurações", active: false },
   ];

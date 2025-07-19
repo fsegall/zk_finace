@@ -143,6 +143,13 @@ const KYCVerification = () => {
           {/* Form Content */}
           <div className="flex-1 px-20 py-10">
             <div className="max-w-xl mx-auto">
+              <Breadcrumb
+                items={[
+                  { label: "Início", href: "/user-selection" },
+                  { label: "KYC Verificação" },
+                ]}
+              />
+
               {/* Form Header */}
               <div className="mb-9 space-y-5">
                 <div className="text-xs text-muted-foreground opacity-80">

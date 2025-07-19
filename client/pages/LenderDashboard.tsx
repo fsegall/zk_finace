@@ -147,7 +147,7 @@ const LenderDashboard = () => {
           {/* Navigation */}
           <nav className="space-y-2">
             <Link
-              to="/lender/dashboard"
+              to="/borrower/dashboard"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <Home className="w-4 h-4" />

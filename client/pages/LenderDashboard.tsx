@@ -130,7 +130,14 @@ const LenderDashboard = () => {
           </nav>
 
           {/* Support */}
-          <div className="mt-auto pt-8">
+          <div className="mt-auto pt-8 space-y-2">
+            <Link
+              to="/kyc-verification"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg"
+            >
+              <span className="text-xs">←</span>
+              Voltar ao KYC
+            </Link>
             <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg">
               <div className="w-4 h-4 rounded-full border border-sidebar-foreground flex items-center justify-center">
                 <span className="text-xs">?</span>

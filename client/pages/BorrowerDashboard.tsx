@@ -259,7 +259,7 @@ const BorrowerDashboard = () => {
                     <div className="w-5 h-5 rounded-full bg-gradient-to-r from-primary to-cyan-400 flex items-center justify-center">
                       <Plus className="w-3 h-3 text-white" />
                     </div>
-                    <span className="font-medium">Criar novo lance</span>
+                    <span className="text-body font-medium">Criar novo lance</span>
                   </div>
 
                   <div className="space-y-4">
@@ -270,8 +270,8 @@ const BorrowerDashboard = () => {
 
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Nível 1</span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-body font-medium">Nível 1</span>
+                        <span className="text-small text-muted-foreground">
                           Ver conquistas
                         </span>
                       </div>
@@ -287,20 +287,20 @@ const BorrowerDashboard = () => {
                 {/* Stats */}
                 <div className="grid grid-cols-1 gap-4">
                   <div className="bg-card rounded-lg p-4 border border-border text-center">
-                    <div className="text-2xl font-semibold">6.56</div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-h4 font-semibold">6.56</div>
+                    <div className="text-body text-muted-foreground">
                       ZK Score
                     </div>
                   </div>
                   <div className="bg-card rounded-lg p-4 border border-border text-center">
-                    <div className="text-2xl font-semibold">13</div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-h4 font-semibold">13</div>
+                    <div className="text-body text-muted-foreground">
                       Lances Postados
                     </div>
                   </div>
                   <div className="bg-card rounded-lg p-4 border border-border text-center">
-                    <div className="text-2xl font-semibold">R$300k</div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-h4 font-semibold">R$300k</div>
+                    <div className="text-body text-muted-foreground">
                       Total Arrecadados
                     </div>
                   </div>
@@ -311,10 +311,10 @@ const BorrowerDashboard = () => {
               <div className="lg:col-span-2">
                 <div className="bg-card rounded-xl p-6 border border-border h-full">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-lg font-semibold">
+                    <h2 className="text-h4 font-semibold">
                       Crédito Assegurado até a Data
                     </h2>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-body text-muted-foreground">
                       <span>Meta: R$300.000</span>
                     </div>
                   </div>
@@ -322,7 +322,7 @@ const BorrowerDashboard = () => {
                   {/* Progress Bar */}
                   <div className="space-y-6">
                     <div className="space-y-3">
-                      <div className="flex justify-between text-sm">
+                      <div className="flex justify-between text-body">
                         <span className="text-muted-foreground">
                           Progresso da Meta de Aporte Total
                         </span>
@@ -336,7 +336,7 @@ const BorrowerDashboard = () => {
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
                         </div>
                       </div>
-                      <div className="flex justify-between text-xs text-muted-foreground">
+                      <div className="flex justify-between text-small text-muted-foreground">
                         <span>R$0</span>
                         <span>R$300.000</span>
                       </div>
@@ -344,25 +344,25 @@ const BorrowerDashboard = () => {
 
                     {/* Current Amount */}
                     <div className="bg-gradient-to-r from-primary/10 to-cyan-400/10 rounded-lg p-6 text-center">
-                      <div className="text-3xl font-bold text-primary mb-2">
+                      <div className="text-h1 font-bold text-primary mb-2">
                         R$200.000
                       </div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-body text-muted-foreground">
                         Crédito Assegurado Atual
                       </div>
                     </div>
 
                     {/* Timeline */}
-                    <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div className="grid grid-cols-3 gap-4 text-body">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
                         <div className="font-semibold">R$50.000</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-small text-muted-foreground">
                           Jan 2024
                         </div>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
                         <div className="font-semibold">R$75.000</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-small text-muted-foreground">
                           Fev 2024
                         </div>
                       </div>
@@ -370,7 +370,7 @@ const BorrowerDashboard = () => {
                         <div className="font-semibold text-primary">
                           R$75.000
                         </div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-small text-muted-foreground">
                           Mar 2024
                         </div>
                       </div>
@@ -383,7 +383,7 @@ const BorrowerDashboard = () => {
               <div className="lg:col-span-1">
                 <div className="bg-card rounded-xl p-6 border border-border h-full">
                   <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-h4 font-semibold">
                       Colaterais Cadastrados
                     </h2>
                   </div>
@@ -391,19 +391,19 @@ const BorrowerDashboard = () => {
                   <div className="space-y-4 mb-6">
                     <div className="p-3 border border-border rounded-lg">
                       <div className="flex items-center gap-4">
-                        <div className="bg-muted px-2 py-1 rounded text-sm font-semibold">
+                        <div className="bg-muted px-2 py-1 rounded text-body font-semibold">
                           Eletrônico
                         </div>
                         <div className="flex-1">
-                          <div className="text-sm opacity-80">
+                          <div className="text-body opacity-80">
                             Mackbook Apple 16 Pro...
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-sm font-semibold">
+                          <div className="text-body font-semibold">
                             R$52.454,32
                           </div>
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-small text-muted-foreground">
                             14/02/2025
                           </div>
                         </div>
@@ -412,19 +412,19 @@ const BorrowerDashboard = () => {
 
                     <div className="p-3 border border-border rounded-lg">
                       <div className="flex items-center gap-4">
-                        <div className="bg-muted px-2 py-1 rounded text-sm font-semibold">
+                        <div className="bg-muted px-2 py-1 rounded text-body font-semibold">
                           Casa
                         </div>
                         <div className="flex-1">
-                          <div className="text-sm opacity-80">
+                          <div className="text-body opacity-80">
                             Guarda Roupa Madeira...
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-sm font-semibold">
+                          <div className="text-body font-semibold">
                             R$52.454,32
                           </div>
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-small text-muted-foreground">
                             14/02/2025
                           </div>
                         </div>
@@ -434,7 +434,7 @@ const BorrowerDashboard = () => {
 
                   <div className="pt-4 border-t border-border mb-4">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-sm">Valor Total</span>
+                      <span className="font-semibold text-body">Valor Total</span>
                       <span className="font-bold">R$100.000,00</span>
                     </div>
                   </div>
@@ -451,10 +451,10 @@ const BorrowerDashboard = () => {
             {/* Meus Lances Section */}
             <div className="mt-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-semibold">Meus Lances</h2>
+                <h2 className="text-h2 font-semibold">Meus Lances</h2>
                 <div className="flex items-center gap-2">
                   <Filter className="w-5 h-5" />
-                  <span className="text-muted-foreground">Filtrar</span>
+                  <span className="text-body text-muted-foreground">Filtrar</span>
                 </div>
               </div>
 
@@ -470,7 +470,7 @@ const BorrowerDashboard = () => {
                         <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
                           <User className="w-4 h-4" />
                         </div>
-                        <span className="text-sm font-medium">
+                        <span className="text-body font-medium">
                           {lance.author}
                         </span>
                       </div>
@@ -485,10 +485,10 @@ const BorrowerDashboard = () => {
                     {/* Content */}
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-lg mb-2">
+                        <h3 className="font-semibold text-h5 mb-2">
                           {lance.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground mb-3">
+                        <p className="text-body text-muted-foreground mb-3">
                           {lance.description}
                         </p>
                         <Button variant="outline" size="sm" className="text-xs">
@@ -497,7 +497,7 @@ const BorrowerDashboard = () => {
                       </div>
 
                       {/* Stats */}
-                      <div className="grid grid-cols-3 gap-4 text-sm">
+                      <div className="grid grid-cols-3 gap-4 text-body">
                         <div>
                           <div className="text-muted-foreground">Valor</div>
                           <div className="font-semibold">{lance.value}</div>
@@ -514,7 +514,7 @@ const BorrowerDashboard = () => {
 
                       {/* Progress */}
                       <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
+                        <div className="flex justify-between text-body">
                           <span className="text-muted-foreground font-semibold">
                             Progresso
                           </span>
@@ -528,7 +528,7 @@ const BorrowerDashboard = () => {
                             style={{ width: `${lance.progress}%` }}
                           ></div>
                         </div>
-                        <div className="flex justify-between text-xs text-muted-foreground">
+                        <div className="flex justify-between text-small text-muted-foreground">
                           <span>{lance.raised}</span>
                           <span>Objetivo: {lance.goal}</span>
                         </div>

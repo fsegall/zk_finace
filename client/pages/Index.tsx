@@ -187,8 +187,8 @@ const Dashboard = () => {
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
                     <User className="w-4 h-4" />
-                    <span className="text-sm">Maria Cardoso</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-body">Maria Cardoso</span>
+                    <span className="text-small text-muted-foreground">
                       @maria.c.M
                     </span>
                   </div>
@@ -215,8 +215,8 @@ const Dashboard = () => {
               <div className="lg:col-span-2 space-y-6">
                 {/* Welcome Section */}
                 <div>
-                  <h1 className="text-2xl font-semibold mb-2">Olá, Maria</h1>
-                  <p className="text-muted-foreground">
+                  <h1 className="text-h2 font-semibold mb-2">Olá, Maria</h1>
+                  <p className="text-body text-muted-foreground">
                     Você ainda não possui um crédito ativo
                   </p>
                 </div>
@@ -224,7 +224,7 @@ const Dashboard = () => {
                 {/* Wallet Card */}
                 <div className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-medium">Carteira</h2>
+                    <h2 className="text-h4 font-medium">Carteira</h2>
                     <button
                       onClick={() => setShowBalance(!showBalance)}
                       className="p-1 hover:bg-muted rounded"
@@ -237,7 +237,7 @@ const Dashboard = () => {
                     </button>
                   </div>
 
-                  <div className="text-3xl font-bold mb-6">
+                  <div className="text-h1 font-bold mb-6">
                     {showBalance ? "R$ 0,00" : "R$ ****"}
                   </div>
 
@@ -252,10 +252,10 @@ const Dashboard = () => {
                 {/* Credit Requests */}
                 <div className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-lg font-medium">
+                    <h2 className="text-h4 font-medium">
                       Solicitações de Crédito
                     </h2>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-body text-muted-foreground">
                       <span>Últimos 7 dias</span>
                       <ChevronDown className="w-4 h-4" />
                     </div>
@@ -267,11 +267,11 @@ const Dashboard = () => {
                         key={index}
                         className="flex items-center justify-between py-3"
                       >
-                        <span className="font-medium text-base">
+                        <span className="font-medium text-body">
                           {request.amount}
                         </span>
                         <span
-                          className={`text-sm font-medium ${request.statusColor}`}
+                          className={`text-body font-medium ${request.statusColor}`}
                         >
                           {request.status}
                         </span>
@@ -286,10 +286,10 @@ const Dashboard = () => {
                 {/* Collateral Section */}
                 <div className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-medium">
+                    <h2 className="text-h4 font-medium">
                       Colaterais Cadastrados
                     </h2>
-                    <button className="text-sm text-primary hover:underline">
+                    <button className="text-body text-primary hover:underline">
                       Ver todos
                     </button>
                   </div>
@@ -297,15 +297,15 @@ const Dashboard = () => {
                   <div className="space-y-3">
                     {collateralItems.map((item, index) => (
                       <div key={index} className="p-3 bg-muted rounded-lg">
-                        <div className="text-sm font-medium">{item.type}</div>
-                        <div className="text-sm text-muted-foreground truncate">
+                        <div className="text-body font-medium">{item.type}</div>
+                        <div className="text-body text-muted-foreground truncate">
                           {item.description}
                         </div>
                         <div className="flex items-center justify-between mt-2">
-                          <span className="text-sm font-medium">
+                          <span className="text-body font-medium">
                             {item.value}
                           </span>
-                          <span className="text-xs text-green-400">
+                          <span className="text-small text-green-400">
                             {item.status}
                           </span>
                         </div>
@@ -315,7 +315,7 @@ const Dashboard = () => {
 
                   <div className="mt-4 pt-4 border-t border-border">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">
+                      <span className="text-body font-medium">
                         Valor Total de bens
                       </span>
                       <span className="font-bold">R$100.000,00</span>
@@ -330,8 +330,8 @@ const Dashboard = () => {
                 {/* Recent Activities */}
                 <div className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-medium">Atividades Recentes</h2>
-                    <button className="text-sm text-primary hover:underline">
+                    <h2 className="text-h4 font-medium">Atividades Recentes</h2>
+                    <button className="text-body text-primary hover:underline">
                       Ver todas
                     </button>
                   </div>
@@ -343,14 +343,14 @@ const Dashboard = () => {
                           <User className="w-4 h-4 text-primary" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-medium">
+                          <div className="text-body font-medium">
                             {activity.user}
                           </div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-body text-muted-foreground">
                             {activity.action}
                           </div>
                         </div>
-                        <div className="text-xs text-muted-foreground whitespace-nowrap">
+                        <div className="text-small text-muted-foreground whitespace-nowrap">
                           {activity.time}
                         </div>
                       </div>

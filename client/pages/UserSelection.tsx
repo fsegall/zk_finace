@@ -73,10 +73,10 @@ const UserSelection = () => {
         {/* Main Content */}
         <div className="space-y-8">
           <div className="space-y-4">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-body">
               Que bom ter você aqui
             </p>
-            <h1 className="text-2xl font-semibold text-foreground">
+            <h1 className="text-h2 text-foreground">
               Como você gostaria de
               <br />
               utilizar a ZK Finance?

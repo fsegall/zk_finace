@@ -126,7 +126,7 @@ const KYCVerification = () => {
             </div>
 
             {/* Title */}
-            <h1 className="text-2xl font-semibold">Solicitação de Crédito</h1>
+            <h1 className="text-h2 font-semibold">Solicitação de Crédito</h1>
           </div>
         </header>
 
@@ -139,7 +139,7 @@ const KYCVerification = () => {
                 <div key={sectionIndex}>
                   {/* Section Title */}
                   <div className="bg-white/5 rounded-lg px-5 py-3 mb-5 text-center">
-                    <h3 className="font-bold text-base">{section.title}</h3>
+                    <h3 className="font-bold text-h5">{section.title}</h3>
                   </div>
 
                   {/* Steps */}
@@ -148,7 +148,7 @@ const KYCVerification = () => {
                       <div key={stepIndex}>
                         <div className="flex items-center justify-end gap-3">
                           <span
-                            className={`text-xs font-bold ${
+                            className={`text-small font-bold ${
                               step.active ? "text-white" : "text-white/80"
                             }`}
                           >

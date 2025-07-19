@@ -79,7 +79,7 @@ const Login = () => {
 
         {/* Main Content */}
         <div className="space-y-8">
-          <h1 className="text-2xl font-semibold text-foreground">
+          <h1 className="text-h2 text-foreground">
             Acesse sua conta
           </h1>
 
@@ -117,7 +117,7 @@ const Login = () => {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-border" />
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
+            <div className="relative flex justify-center text-small uppercase">
               <span className="bg-background px-2 text-muted-foreground">
                 ou
               </span>
@@ -160,7 +160,7 @@ const Login = () => {
             <div className="text-right">
               <Link
                 to="/forgot-password"
-                className="text-sm text-muted-foreground hover:text-foreground"
+                className="text-small text-muted-foreground hover:text-foreground"
               >
                 Esqueci minha Senha
               </Link>
@@ -176,7 +176,7 @@ const Login = () => {
             </Link>
           </form>
 
-          <p className="text-sm text-muted-foreground">
+          <p className="text-body text-muted-foreground">
             Não tem uma conta?{" "}
             <Link to="/register" className="text-primary hover:underline">
               Cadastrar

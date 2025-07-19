@@ -196,8 +196,8 @@ const InvestorRanking = () => {
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
                     <User className="w-4 h-4" />
                     <div className="flex flex-col">
-                      <span className="text-sm">Maria Cardoso</span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-body">Maria Cardoso</span>
+                      <span className="text-small text-muted-foreground">
                         @maaria_89
                       </span>
                     </div>
@@ -206,7 +206,7 @@ const InvestorRanking = () => {
 
                 <Link to="/user-selection">
                   <button className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors">
-                    <span className="text-sm">Sair</span>
+                    <span className="text-body">Sair</span>
                   </button>
                 </Link>
 
@@ -237,10 +237,10 @@ const InvestorRanking = () => {
 
               {/* Header */}
               <div className="flex items-center justify-between mb-8">
-                <h1 className="text-2xl font-semibold">Top Lances</h1>
+                <h1 className="text-h2 font-semibold">Top Lances</h1>
                 <div className="flex items-center gap-2">
                   <Filter className="w-5 h-5" />
-                  <span className="text-muted-foreground">Filtrar</span>
+                  <span className="text-body text-muted-foreground">Filtrar</span>
                 </div>
               </div>
 
@@ -259,7 +259,7 @@ const InvestorRanking = () => {
                             <User className="w-4 h-4" />
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium">
+                            <span className="text-body font-medium">
                               {lance.author}
                             </span>
                             <Badge
@@ -272,11 +272,11 @@ const InvestorRanking = () => {
                           </div>
                         </div>
 
-                        <h3 className="text-lg font-semibold mb-2">
+                        <h3 className="text-h4 font-semibold mb-2">
                           {lance.title}
                         </h3>
 
-                        <div className="grid grid-cols-3 gap-8 text-sm">
+                        <div className="grid grid-cols-3 gap-8 text-body">
                           <div>
                             <div className="text-muted-foreground mb-1">
                               Valor

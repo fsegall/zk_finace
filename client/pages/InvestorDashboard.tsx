@@ -180,8 +180,8 @@ const InvestorDashboard = () => {
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
                     <User className="w-4 h-4" />
                     <div className="flex flex-col">
-                      <span className="text-sm">José Soares</span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-body">José Soares</span>
+                      <span className="text-small text-muted-foreground">
                         @josoa1977
                       </span>
                     </div>
@@ -190,7 +190,7 @@ const InvestorDashboard = () => {
 
                 <Link to="/user-selection">
                   <button className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors">
-                    <span className="text-sm">Sair</span>
+                    <span className="text-body">Sair</span>
                   </button>
                 </Link>
 
@@ -221,8 +221,8 @@ const InvestorDashboard = () => {
               <div className="space-y-6">
                 {/* Welcome Section */}
                 <div className="px-5">
-                  <h1 className="text-2xl font-semibold mb-2">Olá, José</h1>
-                  <p className="text-muted-foreground">
+                  <h1 className="text-h2 font-semibold mb-2">Olá, José</h1>
+                  <p className="text-body text-muted-foreground">
                     Você ainda não possui um Saldo ativo
                   </p>
                 </div>
@@ -231,8 +231,8 @@ const InvestorDashboard = () => {
                 <div className="bg-card rounded-xl p-8 border border-border">
                   <div className="space-y-6">
                     <div>
-                      <h2 className="text-xl font-semibold mb-5">Carteira</h2>
-                      <div className="text-4xl font-bold">R$ 0,00</div>
+                      <h2 className="text-h4 font-semibold mb-5">Carteira</h2>
+                      <div className="text-h1 font-bold">R$ 0,00</div>
                     </div>
 
                     <div className="flex gap-4">
@@ -249,8 +249,8 @@ const InvestorDashboard = () => {
                 {/* Contributions */}
                 <div className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold">Contribuições</h2>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted px-3 py-1 rounded">
+                    <h2 className="text-h4 font-semibold">Contribuições</h2>
+                    <div className="flex items-center gap-2 text-body text-muted-foreground bg-muted px-3 py-1 rounded">
                       <span>Últimos 7 dias</span>
                     </div>
                   </div>
@@ -265,13 +265,13 @@ const InvestorDashboard = () => {
                           <div className="font-semibold">
                             {contribution.amount}
                           </div>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-1 text-small text-muted-foreground">
                             <ChevronDown className="w-3 h-3" />
                             <span>{contribution.change}</span>
                           </div>
                         </div>
                         <div
-                          className={`px-3 py-1 rounded text-sm font-semibold ${contribution.bgColor} ${contribution.statusColor}`}
+                          className={`px-3 py-1 rounded text-body font-semibold ${contribution.bgColor} ${contribution.statusColor}`}
                         >
                           {contribution.status}
                         </div>
@@ -286,10 +286,10 @@ const InvestorDashboard = () => {
                 {/* Investment Performance Section */}
                 <div className="bg-card rounded-xl p-6 border border-border">
                   <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-h4 font-semibold">
                       Performance de Investimentos
                     </h2>
-                    <div className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded">
+                    <div className="text-body text-muted-foreground bg-muted px-3 py-1 rounded">
                       APY
                     </div>
                   </div>
@@ -297,42 +297,42 @@ const InvestorDashboard = () => {
                   <div className="space-y-4">
                     <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="text-sm font-semibold">
+                        <div className="text-body font-semibold">
                           TechGrow Software
                         </div>
                         <div className="text-green-600 dark:text-green-400 font-bold">
                           +8.2% APY
                         </div>
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-small text-muted-foreground">
                         Investido: R$15.000 • Retorno: R$1.230
                       </div>
                     </div>
 
                     <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="text-sm font-semibold">
+                        <div className="text-body font-semibold">
                           Fresh Eats Cafe
                         </div>
                         <div className="text-blue-600 dark:text-blue-400 font-bold">
                           +6.5% APY
                         </div>
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-small text-muted-foreground">
                         Investido: R$8.500 • Retorno: R$552
                       </div>
                     </div>
 
                     <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20">
                       <div className="flex items-center justify-between mb-2">
-                        <div className="text-sm font-semibold">
+                        <div className="text-body font-semibold">
                           Urban Apparel
                         </div>
                         <div className="text-purple-600 dark:text-purple-400 font-bold">
                           +5.8% APY
                         </div>
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-small text-muted-foreground">
                         Investido: R$12.000 • Retorno: R$696
                       </div>
                     </div>
@@ -343,7 +343,7 @@ const InvestorDashboard = () => {
                       <span className="font-semibold">APY Médio Total</span>
                       <span className="font-bold text-primary">6.8%</span>
                     </div>
-                    <div className="text-center text-sm text-muted-foreground">
+                    <div className="text-center text-body text-muted-foreground">
                       Total Investido: R$35.500 • Total Retorno: R$2.478
                     </div>
                   </div>
@@ -355,10 +355,10 @@ const InvestorDashboard = () => {
 
                 {/* Recent Activities */}
                 <div className="bg-card rounded-xl p-6 border border-border">
-                  <h2 className="text-xl font-semibold mb-4">
+                  <h2 className="text-h4 font-semibold mb-4">
                     Atividades Recentes
                   </h2>
-                  <div className="text-center text-muted-foreground py-8">
+                  <div className="text-center text-body text-muted-foreground py-8">
                     Nenhuma atividade recente
                   </div>
                 </div>

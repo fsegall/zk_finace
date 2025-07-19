@@ -129,7 +129,7 @@ const CollateralRegistration = () => {
               </div>
 
               {/* Title */}
-              <h1 className="text-2xl font-semibold">Cadastrar Colateral</h1>
+              <h1 className="text-h2 font-semibold">Cadastrar Colateral</h1>
             </div>
 
             {/* User Actions */}
@@ -141,8 +141,8 @@ const CollateralRegistration = () => {
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
                   <User className="w-4 h-4" />
-                  <span className="text-sm">Maria Cardoso</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-body">Maria Cardoso</span>
+                  <span className="text-small text-muted-foreground">
                     @maaria_89
                   </span>
                 </div>
@@ -150,7 +150,7 @@ const CollateralRegistration = () => {
 
               <Link to="/user-selection">
                 <button className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors">
-                  <span className="text-sm">Sair</span>
+                  <span className="text-body">Sair</span>
                 </button>
               </Link>
 
@@ -191,10 +191,10 @@ const CollateralRegistration = () => {
             {/* Form */}
             <div className="bg-card rounded-xl p-8 border border-border">
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-2">
+                <h2 className="text-h2 font-semibold mb-2">
                   Cadastrar Novo Colateral
                 </h2>
-                <p className="text-muted-foreground">
+                <p className="text-body text-muted-foreground">
                   Preencha as informações do bem que será usado como garantia
                   para seu empréstimo.
                 </p>

@@ -67,8 +67,8 @@ const KYCVerification = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5 border-b border-border">
-          <div className="flex items-center gap-13">
+        <header className="px-6 lg:px-20 py-5 border-b border-border/10">
+          <div className="flex items-center gap-20">
             {/* Logo */}
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
@@ -80,9 +80,7 @@ const KYCVerification = () => {
             </div>
 
             {/* Title */}
-            <h1 className="text-2xl font-semibold ml-13">
-              Solicitação de Crédito
-            </h1>
+            <h1 className="text-2xl font-semibold">Solicitação de Crédito</h1>
           </div>
         </header>
 

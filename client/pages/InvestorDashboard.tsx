@@ -164,14 +164,14 @@ const InvestorDashboard = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card px-6 py-4">
+          <header className="bg-card/20 px-6 py-4">
             <div className="flex items-center justify-between">
               {/* Search */}
               <div className="relative w-96">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
 
@@ -190,7 +190,7 @@ const InvestorDashboard = () => {
                 </div>
 
                 <Link to="/user-selection">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                     <span className="text-body">Sair</span>
                   </button>
                 </Link>
@@ -230,7 +230,7 @@ const InvestorDashboard = () => {
                 </div>
 
                 {/* Wallet Card */}
-                <div className="bg-card rounded-xl p-8">
+                <div className="bg-card/20 rounded-xl p-8">
                   <div className="space-y-6">
                     <div>
                       <h2 className="text-h4 font-semibold mb-5 text-foreground">Carteira</h2>
@@ -249,10 +249,10 @@ const InvestorDashboard = () => {
                 </div>
 
                 {/* Contributions */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-h4 font-semibold text-foreground">Contribuições</h2>
-                    <div className="flex items-center gap-2 text-body text-muted-foreground bg-muted px-3 py-1 rounded">
+                    <div className="flex items-center gap-2 text-body text-foreground bg-muted px-3 py-1 rounded">
                       <span>Últimos 7 dias</span>
                     </div>
                   </div>
@@ -286,18 +286,18 @@ const InvestorDashboard = () => {
               {/* Right Column */}
               <div className="space-y-6">
                 {/* Investment Performance Section */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-5">
                     <h2 className="text-h4 font-semibold text-foreground">
                       Performance de Investimentos
                     </h2>
-                    <div className="text-body text-muted-foreground bg-muted px-3 py-1 rounded">
+                    <div className="text-body text-foreground bg-muted px-3 py-1 rounded">
                       APY
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-success/10 to-success/5">
+                    <div className="p-4 rounded-lg bg-gradient-to-r from-success/10 to-success/5">
                       <div className="flex items-center justify-between mb-2">
                         <div className="text-body font-semibold text-foreground">
                           TechGrow Software
@@ -311,7 +311,7 @@ const InvestorDashboard = () => {
                       </div>
                     </div>
 
-                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-info/10 to-info/5">
+                    <div className="p-4 rounded-lg bg-gradient-to-r from-info/10 to-info/5">
                       <div className="flex items-center justify-between mb-2">
                         <div className="text-body font-semibold text-foreground">
                           Fresh Eats Cafe
@@ -325,7 +325,7 @@ const InvestorDashboard = () => {
                       </div>
                     </div>
 
-                    <div className="p-4 border border-border rounded-lg bg-gradient-to-r from-secondary/10 to-secondary/5">
+                    <div className="p-4 rounded-lg bg-gradient-to-r from-secondary/10 to-secondary/5">
                       <div className="flex items-center justify-between mb-2">
                         <div className="text-body font-semibold text-foreground">
                           Urban Apparel
@@ -340,7 +340,7 @@ const InvestorDashboard = () => {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-border">
+                  <div className="mt-6 pt-4">
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-semibold text-foreground">APY Médio Total</span>
                       <span className="font-bold text-primary">6.8%</span>
@@ -356,7 +356,7 @@ const InvestorDashboard = () => {
                 </div>
 
                 {/* Recent Activities */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <h2 className="text-h4 font-semibold mb-4 text-foreground">
                     Atividades Recentes
                   </h2>

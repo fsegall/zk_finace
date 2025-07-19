@@ -195,14 +195,14 @@ const BorrowerDashboard = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card px-6 py-4">
+          <header className="bg-card/20 px-6 py-4">
             <div className="flex items-center justify-between">
               {/* Search */}
               <div className="relative w-96">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
 
@@ -223,7 +223,7 @@ const BorrowerDashboard = () => {
                 </div>
 
                 <Link to="/user-selection">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                     <span className="text-sm">Sair</span>
                   </button>
                 </Link>
@@ -255,7 +255,7 @@ const BorrowerDashboard = () => {
               {/* Left Column - Stats and Criar Lance */}
               <div className="lg:col-span-1 space-y-6">
                 {/* Create New Lance */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-5 h-5 rounded-full bg-gradient-to-r from-primary to-cyan-400 flex items-center justify-center">
                                               <Plus className="w-3 h-3 text-primary-foreground" />
@@ -287,19 +287,19 @@ const BorrowerDashboard = () => {
 
                 {/* Stats */}
                 <div className="grid grid-cols-1 gap-4">
-                  <div className="bg-card rounded-lg p-4 text-center">
+                  <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">6.56</div>
                     <div className="text-body text-muted-foreground">
                       ZK Score
                     </div>
                   </div>
-                  <div className="bg-card rounded-lg p-4 text-center">
+                  <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">13</div>
                     <div className="text-body text-muted-foreground">
                       Lances Postados
                     </div>
                   </div>
-                  <div className="bg-card rounded-lg p-4 text-center">
+                  <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">R$300k</div>
                     <div className="text-body text-muted-foreground">
                       Total Arrecadados
@@ -310,7 +310,7 @@ const BorrowerDashboard = () => {
 
               {/* Center Column - Credit Progress */}
               <div className="lg:col-span-2">
-                <div className="bg-card rounded-xl p-6 h-full">
+                <div className="bg-card/20 rounded-xl p-6 h-full">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-h4 font-semibold">
                       Crédito Assegurado até a Data
@@ -382,7 +382,7 @@ const BorrowerDashboard = () => {
 
               {/* Right Column - Collateral */}
               <div className="lg:col-span-1">
-                <div className="bg-card rounded-xl p-6 h-full">
+                <div className="bg-card/20 rounded-xl p-6 h-full">
                   <div className="flex items-center justify-between mb-5">
                     <h2 className="text-h4 font-semibold">
                       Colaterais Cadastrados
@@ -433,7 +433,7 @@ const BorrowerDashboard = () => {
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-border mb-4">
+                                      <div className="pt-4 mb-4">
                     <div className="flex items-center justify-between">
                       <span className="font-semibold text-body">Valor Total</span>
                       <span className="font-bold text-foreground">R$100.000,00</span>
@@ -463,7 +463,7 @@ const BorrowerDashboard = () => {
                 {lances.map((lance) => (
                   <div
                     key={lance.id}
-                    className="bg-card rounded-xl p-6"
+                    className="bg-card/20 rounded-xl p-6"
                   >
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">

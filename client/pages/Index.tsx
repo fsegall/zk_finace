@@ -168,14 +168,14 @@ const Dashboard = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card px-6 py-4">
+          <header className="bg-card/20 px-6 py-4">
             <div className="flex items-center justify-between">
               {/* Search */}
               <div className="relative w-96">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
 
@@ -223,7 +223,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Wallet Card */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-h4 font-medium">Carteira</h2>
                     <button
@@ -251,7 +251,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Credit Requests */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-h4 font-medium">
                       Solicitações de Crédito
@@ -285,7 +285,7 @@ const Dashboard = () => {
               {/* Right Column */}
               <div className="space-y-6">
                 {/* Collateral Section */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-h4 font-medium">
                       Colaterais Cadastrados
@@ -314,7 +314,7 @@ const Dashboard = () => {
                     ))}
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-border">
+                  <div className="mt-4 pt-4">
                     <div className="flex items-center justify-between">
                       <span className="text-body font-medium">
                         Valor Total de bens
@@ -329,7 +329,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Recent Activities */}
-                <div className="bg-card rounded-xl p-6">
+                <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-h4 font-medium">Atividades Recentes</h2>
                     <button className="text-body text-primary hover:underline">

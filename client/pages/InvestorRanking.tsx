@@ -180,14 +180,14 @@ const InvestorRanking = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card px-6 py-4">
+          <header className="bg-card/20 px-6 py-4">
             <div className="flex items-center justify-between">
               {/* Search */}
               <div className="relative w-96">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
 
@@ -206,7 +206,7 @@ const InvestorRanking = () => {
                 </div>
 
                 <Link to="/user-selection">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                     <span className="text-body">Sair</span>
                   </button>
                 </Link>
@@ -241,7 +241,7 @@ const InvestorRanking = () => {
                 <h1 className="text-h2 font-semibold text-foreground">Top Lances</h1>
                 <div className="flex items-center gap-2">
                   <Filter className="w-5 h-5" />
-                  <span className="text-body text-muted-foreground">Filtrar</span>
+                  <span className="text-body text-foreground">Filtrar</span>
                 </div>
               </div>
 
@@ -250,7 +250,7 @@ const InvestorRanking = () => {
                 {topLances.map((lance) => (
                   <div
                     key={lance.id}
-                    className="bg-card rounded-xl p-6"
+                    className="bg-card/20 rounded-xl p-6"
                   >
                     <div className="flex items-center justify-between">
                       {/* Left side - Project info */}
@@ -260,7 +260,7 @@ const InvestorRanking = () => {
                             <User className="w-4 h-4" />
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-body font-medium">
+                            <span className="text-body font-medium text-foreground">
                               {lance.author}
                             </span>
                             <Badge
@@ -279,13 +279,13 @@ const InvestorRanking = () => {
 
                         <div className="grid grid-cols-3 gap-8 text-body">
                           <div>
-                            <div className="text-muted-foreground mb-1">
+                            <div className="text-foreground mb-1">
                               Valor
                             </div>
                             <div className="font-semibold text-foreground">{lance.value}</div>
                           </div>
                           <div>
-                            <div className="text-muted-foreground mb-1">
+                            <div className="text-foreground mb-1">
                               Interesse
                             </div>
                             <div className="font-semibold text-foreground">
@@ -293,7 +293,7 @@ const InvestorRanking = () => {
                             </div>
                           </div>
                           <div>
-                            <div className="text-muted-foreground mb-1">
+                            <div className="text-foreground mb-1">
                               Expira em
                             </div>
                             <div className="font-semibold text-foreground">{lance.expires}</div>

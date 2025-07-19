@@ -86,7 +86,7 @@ const Register = () => {
           <div className="space-y-4">
             <Button
               variant="outline"
-              className="w-full h-12 bg-card hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              className="w-full h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -103,7 +103,7 @@ const Register = () => {
 
             <Button
               variant="outline"
-              className="w-full h-12 bg-card hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              className="w-full h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
                               <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M

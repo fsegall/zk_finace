@@ -152,11 +152,11 @@ const KYCVerification = () => {
               </div>
             </div>
 
-            <Link to="/user-selection">
-              <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
-                <span className="text-body">Sair</span>
-              </button>
-            </Link>
+                          <Link to="/user-selection">
+                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
+                  <span className="text-body">Sair</span>
+                </button>
+              </Link>
 
             <button
               onClick={toggleTheme}

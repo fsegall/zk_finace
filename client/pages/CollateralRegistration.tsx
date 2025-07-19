@@ -150,7 +150,7 @@ const CollateralRegistration = () => {
               </div>
 
               <Link to="/user-selection">
-                <button className="p-2 hover:bg-muted/50 rounded-lg text-muted-foreground hover:text-foreground transition-colors">
+                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                   <span className="text-body">Sair</span>
                 </button>
               </Link>
@@ -190,7 +190,7 @@ const CollateralRegistration = () => {
             </Link>
 
             {/* Form */}
-            <div className="bg-card rounded-xl p-8">
+            <div className="bg-card/20 rounded-xl p-8">
               <div className="mb-8">
                 <h2 className="text-h2 font-semibold mb-2 text-foreground">
                   Cadastrar Novo Colateral

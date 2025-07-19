@@ -35,6 +35,9 @@
   - Badges: `bg-purple-100 text-purple-700` → `bg-secondary/20 text-secondary`
   - Ícones de avatar: `bg-orange-500 text-white` → `bg-warning text-warning-foreground`
   - Página 404: `bg-gray-100 text-gray-600` → `bg-background text-muted-foreground`
+  - Ícone de busca: `text-muted-foreground` → `text-foreground`
+  - Input de busca: Adicionado `text-foreground` e `placeholder:text-muted-foreground`
+  - Botão Sair: `text-muted-foreground hover:text-foreground` → `text-foreground`
 
 ### 🎯 **4. Variáveis CSS Melhoradas**
 - **Adicionadas variáveis específicas para hover**:
@@ -81,12 +84,14 @@
 ### **Páginas Específicas**
 - ✅ KYCVerification (maior correção)
 - ✅ CollateralRegistration
-- ✅ InvestorDashboard (gradientes e status colors)
-- ✅ Index (status colors e textos)
+- ✅ InvestorDashboard (gradientes, status colors, textos de badge, busca e logout)
+- ✅ Index (status colors, textos e busca)
 - ✅ NotFound (cores fixas)
-- ✅ InvestorRanking (badges e textos)
-- ✅ BorrowerDashboard (textos e valores)
+- ✅ InvestorRanking (badges, textos, busca, labels de métricas e logout)
+- ✅ BorrowerDashboard (textos, valores, busca e logout)
 - ✅ Login/Register (ícones de avatares)
+- ✅ CollateralRegistration (logout)
+- ✅ KYCVerification (logout)
 
 ## 🔧 **Classes CSS Padronizadas**
 
@@ -127,6 +132,19 @@ text-primary-foreground
 - ✅ **Acessibilidade**: Melhor legibilidade para todos os usuários
 - ✅ **Transições**: Hover suave com `transition-colors`
 - ✅ **Responsividade**: Funciona em todos os tamanhos de tela
+
+## 🎨 **Melhorias Visuais Recentes**
+
+### **Transparência nos Cards**
+- **Mudança**: Adicionado 80% de transparência (20% de opacidade) em todos os fundos de cards
+- **Resultado**: Visual muito transparente e moderno
+- **Aplicado em**: Todos os cards da aplicação
+- **Implementação**: Usando sintaxe Tailwind `bg-card/20` para 20% de opacidade
+
+### **Remoção de Bordas Desnecessárias**
+- **Cards internos**: Removidas bordas em cards de performance
+- **Separadores**: Removidas bordas de separação em algumas seções
+- **Resultado**: Design mais limpo e minimalista
 
 ## 🚀 **Próximos Passos**
 

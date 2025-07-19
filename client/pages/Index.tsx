@@ -293,11 +293,11 @@ const Dashboard = () => {
                     </button>
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {recentActivities.map((activity, index) => (
                       <div key={index} className="flex items-start gap-3">
-                        <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
-                          <User className="w-4 h-4" />
+                        <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                          <User className="w-4 h-4 text-primary" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="text-sm font-medium">
@@ -307,7 +307,7 @@ const Dashboard = () => {
                             {activity.action}
                           </div>
                         </div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-muted-foreground whitespace-nowrap">
                           {activity.time}
                         </div>
                       </div>

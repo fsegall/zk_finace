@@ -33,24 +33,24 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#2974FF",
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#3DFFEC",
+          foreground: "#0C0C21",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "#EF4870",
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#F2F2F2B3",
+          foreground: "#0F0F10",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#3DFFEC",
+          foreground: "#0C0C21",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -71,16 +71,32 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
+          DEFAULT: "#3CFFB1",
+          foreground: "#0C0C21",
         },
         warning: {
-          DEFAULT: "hsl(var(--warning))",
-          foreground: "hsl(var(--warning-foreground))",
+          DEFAULT: "#FFCD29",
+          foreground: "#0C0C21",
         },
         info: {
-          DEFAULT: "hsl(var(--info))",
-          foreground: "hsl(var(--info-foreground))",
+          DEFAULT: "#2974FF",
+          foreground: "#FFFFFF",
+        },
+        // Cores secundárias
+        secondary1: "#3DFFEC",
+        secondary2: "#0C0C21",
+        secondary3: "#000229",
+        secondary4: "#002068",
+        // Cores neutras
+        neutral: {
+          50: "#F2F2F2",
+          100: "#F2F2F2CC",
+          200: "#F2F2F2B3",
+          300: "#F2F2F21F",
+          400: "#F2F2F20D",
+          500: "#040406",
+          600: "#0F0F10",
+          700: "#17171C",
         },
       },
       borderRadius: {

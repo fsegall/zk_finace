@@ -14,6 +14,7 @@ import UserSelection from "./pages/UserSelection";
 import LenderDashboard from "./pages/LenderDashboard";
 import InvestorDashboard from "./pages/InvestorDashboard";
 import InvestorRanking from "./pages/InvestorRanking";
+import KYCVerification from "./pages/KYCVerification";
 
 const queryClient = new QueryClient();
 

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 
 const InvestorDashboard = () => {

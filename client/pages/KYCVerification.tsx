@@ -166,7 +166,7 @@ const KYCVerification = () => {
                     onChange={(e) =>
                       handleInputChange("fullName", e.target.value)
                     }
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                   />
                 </div>
 
@@ -175,7 +175,7 @@ const KYCVerification = () => {
                     placeholder="CPF"
                     value={formData.cpf}
                     onChange={(e) => handleInputChange("cpf", e.target.value)}
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                   />
                   <Input
                     placeholder="Data de nascimento"
@@ -183,7 +183,7 @@ const KYCVerification = () => {
                     onChange={(e) =>
                       handleInputChange("birthDate", e.target.value)
                     }
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                   />
                 </div>
 
@@ -193,7 +193,7 @@ const KYCVerification = () => {
                       placeholder="CEP"
                       value={formData.cep}
                       onChange={(e) => handleInputChange("cep", e.target.value)}
-                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                     />
                   </div>
                   <div className="col-span-3">
@@ -203,7 +203,7 @@ const KYCVerification = () => {
                       onChange={(e) =>
                         handleInputChange("state", e.target.value)
                       }
-                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                     />
                   </div>
                 </div>
@@ -212,7 +212,7 @@ const KYCVerification = () => {
                   placeholder="Cidade"
                   value={formData.city}
                   onChange={(e) => handleInputChange("city", e.target.value)}
-                  className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                  className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                 />
 
                 <div className="grid grid-cols-4 gap-3">
@@ -223,7 +223,7 @@ const KYCVerification = () => {
                       onChange={(e) =>
                         handleInputChange("address", e.target.value)
                       }
-                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                      className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                     />
                   </div>
                   <Input
@@ -232,7 +232,7 @@ const KYCVerification = () => {
                     onChange={(e) =>
                       handleInputChange("number", e.target.value)
                     }
-                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10"
+                    className="h-12 bg-gradient-to-r from-white/5 to-transparent border-white/10 placeholder:text-white/50"
                   />
                 </div>
               </div>

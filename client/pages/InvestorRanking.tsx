@@ -205,7 +205,7 @@ const InvestorRanking = () => {
                   </div>
                 </div>
 
-                <Link to="/user-selection">
+                <Link to="/login">
                   <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                     <span className="text-body">Sair</span>
                   </button>

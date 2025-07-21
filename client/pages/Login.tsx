@@ -21,7 +21,7 @@ const Login = () => {
         }}
       />
 
-      <div className="relative z-10 text-center max-w-sm mx-auto px-6">
+      <div className="relative z-10 text-center max-w-md mx-auto px-6">
         {/* Logo */}
         <div className="flex items-center justify-center mb-12">
           <svg
@@ -84,10 +84,10 @@ const Login = () => {
           </h1>
 
           {/* Social Login */}
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3">
             <Button
               variant="outline"
-              className="w-full h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -104,9 +104,9 @@ const Login = () => {
 
             <Button
               variant="outline"
-              className="w-full h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
-                              <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
+              <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M
               </div>
               MetaMask
@@ -118,7 +118,7 @@ const Login = () => {
               <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-small uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
+              <span className="bg-background px-2 text-foreground">
                 ou
               </span>
             </div>
@@ -132,7 +132,7 @@ const Login = () => {
                 placeholder="Login"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-muted border-border"
+                className="h-12 bg-muted border-border placeholder:text-foreground"
               />
             </div>
 
@@ -142,7 +142,7 @@ const Login = () => {
                 placeholder="••••••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-12 bg-muted border-border pr-10"
+                className="h-12 bg-muted border-border pr-10 placeholder:text-foreground"
               />
               <button
                 type="button"
@@ -150,9 +150,9 @@ const Login = () => {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
                 {showPassword ? (
-                  <EyeOff className="w-4 h-4" />
+                  <EyeOff className="w-4 h-4 text-foreground" />
                 ) : (
-                  <Eye className="w-4 h-4" />
+                  <Eye className="w-4 h-4 text-foreground" />
                 )}
               </button>
             </div>
@@ -160,7 +160,8 @@ const Login = () => {
             <div className="text-right">
               <Link
                 to="/forgot-password"
-                className="text-small text-muted-foreground hover:text-foreground"
+                className="text-small text-foreground hover:text-foreground"
+                
               >
                 Esqueci minha Senha
               </Link>
@@ -176,7 +177,7 @@ const Login = () => {
             </Link>
           </form>
 
-          <p className="text-body text-muted-foreground">
+          <p className="text-body text-foreground">
             Não tem uma conta?{" "}
             <Link to="/register" className="text-primary hover:underline">
               Cadastrar

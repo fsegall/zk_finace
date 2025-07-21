@@ -20,7 +20,7 @@ const Register = () => {
         }}
       />
 
-      <div className="relative z-10 text-center max-w-sm mx-auto px-6">
+      <div className="relative z-10 text-center max-w-md mx-auto px-6">
         {/* Logo */}
         <div className="flex items-center justify-center mb-12">
           <svg
@@ -83,10 +83,10 @@ const Register = () => {
           </h1>
 
           {/* Social Login */}
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3">
             <Button
               variant="outline"
-              className="w-full h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -103,9 +103,9 @@ const Register = () => {
 
             <Button
               variant="outline"
-              className="w-full h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
             >
-                              <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
+              <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M
               </div>
               MetaMask
@@ -117,7 +117,7 @@ const Register = () => {
               <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-small uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
+              <span className="bg-background px-2 text-foreground">
                 ou
               </span>
             </div>

@@ -143,13 +143,13 @@ const CollateralRegistration = () => {
                 <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
                   <User className="w-4 h-4" />
                   <span className="text-body">Maria Cardoso</span>
-                  <span className="text-small text-muted-foreground">
+                  <span className="text-small text-foreground">
                     @maaria_89
                   </span>
                 </div>
               </div>
 
-              <Link to="/user-selection">
+              <Link to="/login">
                 <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                   <span className="text-body">Sair</span>
                 </button>
@@ -183,7 +183,7 @@ const CollateralRegistration = () => {
             {/* Back Button */}
             <Link
               to="/borrower/dashboard"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
               Voltar ao Dashboard
@@ -195,7 +195,7 @@ const CollateralRegistration = () => {
                 <h2 className="text-h2 font-semibold mb-2 text-foreground">
                   Cadastrar Novo Colateral
                 </h2>
-                <p className="text-body text-muted-foreground">
+                <p className="text-body text-foreground">
                   Preencha as informações do bem que será usado como garantia
                   para seu empréstimo.
                 </p>
@@ -238,7 +238,7 @@ const CollateralRegistration = () => {
                         onChange={(e) =>
                           handleInputChange("brand", e.target.value)
                         }
-                        className="h-12 bg-muted border-border"
+                        className="h-12 bg-muted border-border placeholder:text-foreground"
                       />
                     </div>
 
@@ -250,7 +250,7 @@ const CollateralRegistration = () => {
                         onChange={(e) =>
                           handleInputChange("model", e.target.value)
                         }
-                        className="h-12 bg-muted border-border"
+                        className="h-12 bg-muted border-border placeholder:text-foreground"
                       />
                     </div>
 
@@ -264,7 +264,7 @@ const CollateralRegistration = () => {
                         onChange={(e) =>
                           handleInputChange("serialNumber", e.target.value)
                         }
-                        className="h-12 bg-muted border-border"
+                        className="h-12 bg-muted border-border placeholder:text-foreground"
                       />
                     </div>
 
@@ -276,7 +276,7 @@ const CollateralRegistration = () => {
                         onChange={(e) =>
                           handleInputChange("description", e.target.value)
                         }
-                        className="w-full h-24 px-3 py-2 bg-muted border border-border rounded-lg text-foreground resize-none"
+                        className="w-full h-24 px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder:text-foreground resize-none"
                       />
                     </div>
                   </div>
@@ -300,7 +300,7 @@ const CollateralRegistration = () => {
                         onChange={(e) =>
                           handleInputChange("estimatedValue", e.target.value)
                         }
-                        className="h-12 bg-muted border-border"
+                        className="h-12 bg-muted border-border placeholder:text-foreground"
                       />
                     </div>
 
@@ -314,7 +314,7 @@ const CollateralRegistration = () => {
                         onChange={(e) =>
                           handleInputChange("purchaseDate", e.target.value)
                         }
-                        className="h-12 bg-muted border-border"
+                        className="h-12 bg-muted border-border placeholder:text-foreground [&::-webkit-calendar-picker-indicator]:text-foreground [&::-webkit-calendar-picker-indicator]:filter-invert dark:[&::-webkit-calendar-picker-indicator]:filter-none"
                       />
                     </div>
 
@@ -357,7 +357,7 @@ const CollateralRegistration = () => {
                       onChange={(e) =>
                         handleInputChange("location", e.target.value)
                       }
-                      className="h-12 bg-muted border-border"
+                      className="h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
                 </div>
@@ -376,8 +376,8 @@ const CollateralRegistration = () => {
                         Fotos do Item *
                       </label>
                       <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
-                        <Camera className="w-8 h-8 text-muted-foreground mx-auto mb-4" />
-                        <p className="text-sm text-muted-foreground mb-2">
+                        <Camera className="w-8 h-8 text-foreground mx-auto mb-4" />
+                        <p className="text-sm text-foreground mb-2">
                           Adicione fotos do item de diferentes ângulos
                         </p>
                         <Button variant="outline" size="sm">
@@ -393,8 +393,8 @@ const CollateralRegistration = () => {
                         Nota Fiscal / Comprovante
                       </label>
                       <div className="border-2 border-dashed border-muted rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
-                        <FileText className="w-8 h-8 text-muted-foreground mx-auto mb-4" />
-                        <p className="text-sm text-muted-foreground mb-2">
+                        <FileText className="w-8 h-8 text-foreground mx-auto mb-4" />
+                        <p className="text-sm text-foreground mb-2">
                           Anexe a nota fiscal ou comprovante de compra
                         </p>
                         <Button variant="outline" size="sm">

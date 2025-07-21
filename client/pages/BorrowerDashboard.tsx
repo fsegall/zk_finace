@@ -154,24 +154,27 @@ const BorrowerDashboard = () => {
               <Home className="w-4 h-4" />
               Dashboard
             </Link>
-            <button
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors bg-sidebar-accent text-sidebar-accent-foreground`}
+            <Link
+              to="/borrower/lances"
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <TrendingUp className="w-4 h-4" />
               Lances
-            </button>
-            <button
+            </Link>
+            <Link
+              to="/borrower/wallet"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <Wallet className="w-4 h-4" />
               Carteira
-            </button>
-            <button
+            </Link>
+            <Link
+              to="/borrower/settings"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <Settings className="w-4 h-4" />
               Configurações
-            </button>
+            </Link>
           </nav>
 
           {/* Support */}
@@ -183,12 +186,15 @@ const BorrowerDashboard = () => {
               <span className="text-xs">←</span>
               Voltar ao KYC
             </Link>
-            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg">
+            <Link
+              to="/borrower/support"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg"
+            >
               <div className="w-4 h-4 rounded-full border border-sidebar-foreground flex items-center justify-center">
                 <span className="text-xs">?</span>
               </div>
               Suporte
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -202,7 +208,7 @@ const BorrowerDashboard = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-muted-foreground"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground"
                 />
               </div>
 
@@ -216,13 +222,13 @@ const BorrowerDashboard = () => {
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
                     <User className="w-4 h-4" />
                     <span className="text-sm">Maria Cardoso</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-foreground">
                       @maaria_89
                     </span>
                   </div>
                 </div>
 
-                <Link to="/user-selection">
+                <Link to="/login">
                   <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                     <span className="text-sm">Sair</span>
                   </button>
@@ -258,7 +264,7 @@ const BorrowerDashboard = () => {
                 <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-5 h-5 rounded-full bg-gradient-to-r from-primary to-cyan-400 flex items-center justify-center">
-                                              <Plus className="w-3 h-3 text-primary-foreground" />
+                      <Plus className="w-3 h-3 text-primary-foreground" />
                     </div>
                     <span className="text-body font-medium">Criar novo lance</span>
                   </div>
@@ -272,7 +278,7 @@ const BorrowerDashboard = () => {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-body font-medium">Nível 1</span>
-                        <span className="text-small text-muted-foreground">
+                        <span className="text-small text-foreground">
                           Ver conquistas
                         </span>
                       </div>
@@ -289,20 +295,20 @@ const BorrowerDashboard = () => {
                 <div className="grid grid-cols-1 gap-4">
                   <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">6.56</div>
-                    <div className="text-body text-muted-foreground">
+                    <div className="text-body text-foreground">
                       ZK Score
                     </div>
                   </div>
                   <div className="bg-card/20 rounded-lg p-4 text-center">
-                    <div className="text-h4 font-semibold text-foreground">13</div>
-                    <div className="text-body text-muted-foreground">
+                    <div className="text-h4 font-semibold text-foreground">8</div>
+                    <div className="text-body text-foreground">
                       Lances Postados
                     </div>
                   </div>
                   <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">R$300k</div>
-                    <div className="text-body text-muted-foreground">
-                      Total Arrecadados
+                    <div className="text-body text-foreground">
+                      Total Arrecadado
                     </div>
                   </div>
                 </div>
@@ -315,7 +321,7 @@ const BorrowerDashboard = () => {
                     <h2 className="text-h4 font-semibold">
                       Crédito Assegurado até a Data
                     </h2>
-                    <div className="flex items-center gap-2 text-body text-muted-foreground">
+                    <div className="flex items-center gap-2 text-body text-foreground">
                       <span>Meta: R$300.000</span>
                     </div>
                   </div>
@@ -324,7 +330,7 @@ const BorrowerDashboard = () => {
                   <div className="space-y-6">
                     <div className="space-y-3">
                       <div className="flex justify-between text-body">
-                        <span className="text-muted-foreground">
+                        <span className="text-foreground">
                           Progresso da Meta de Aporte Total
                         </span>
                         <span className="font-semibold text-foreground">67%</span>
@@ -337,7 +343,7 @@ const BorrowerDashboard = () => {
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
                         </div>
                       </div>
-                      <div className="flex justify-between text-small text-muted-foreground">
+                      <div className="flex justify-between text-small text-foreground">
                         <span>R$0</span>
                         <span>R$300.000</span>
                       </div>
@@ -348,7 +354,7 @@ const BorrowerDashboard = () => {
                       <div className="text-h1 font-bold text-primary mb-2">
                         R$200.000
                       </div>
-                      <div className="text-body text-muted-foreground">
+                      <div className="text-body text-foreground">
                         Crédito Assegurado Atual
                       </div>
                     </div>
@@ -357,13 +363,13 @@ const BorrowerDashboard = () => {
                     <div className="grid grid-cols-3 gap-4 text-body">
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
                         <div className="font-semibold text-foreground">R$50.000</div>
-                        <div className="text-small text-muted-foreground">
+                        <div className="text-small text-foreground">
                           Jan 2024
                         </div>
                       </div>
                       <div className="text-center p-3 bg-muted/50 rounded-lg">
                         <div className="font-semibold text-foreground">R$75.000</div>
-                        <div className="text-small text-muted-foreground">
+                        <div className="text-small text-foreground">
                           Fev 2024
                         </div>
                       </div>
@@ -371,7 +377,7 @@ const BorrowerDashboard = () => {
                         <div className="font-semibold text-primary">
                           R$75.000
                         </div>
-                        <div className="text-small text-muted-foreground">
+                        <div className="text-small text-foreground">
                           Mar 2024
                         </div>
                       </div>
@@ -404,7 +410,7 @@ const BorrowerDashboard = () => {
                           <div className="text-body font-semibold">
                             R$52.454,32
                           </div>
-                          <div className="text-small text-muted-foreground">
+                          <div className="text-small text-foreground">
                             14/02/2025
                           </div>
                         </div>
@@ -425,7 +431,7 @@ const BorrowerDashboard = () => {
                           <div className="text-body font-semibold">
                             R$52.454,32
                           </div>
-                          <div className="text-small text-muted-foreground">
+                          <div className="text-small text-foreground">
                             14/02/2025
                           </div>
                         </div>
@@ -455,7 +461,13 @@ const BorrowerDashboard = () => {
                 <h2 className="text-h2 font-semibold text-foreground">Meus Lances</h2>
                 <div className="flex items-center gap-2">
                   <Filter className="w-5 h-5" />
-                  <span className="text-body text-muted-foreground">Filtrar</span>
+                  <span className="text-body text-foreground">Filtrar</span>
+                  <Link to="/borrower/create-lance">
+                    <Button className="bg-primary hover:bg-primary/80 transition-colors">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Criar Lance
+                    </Button>
+                  </Link>
                 </div>
               </div>
 
@@ -489,7 +501,7 @@ const BorrowerDashboard = () => {
                         <h3 className="font-semibold text-h5 mb-2 text-foreground">
                           {lance.title}
                         </h3>
-                        <p className="text-body text-muted-foreground mb-3">
+                        <p className="text-body text-foreground mb-3">
                           {lance.description}
                         </p>
                         <Button variant="outline" size="sm" className="text-xs">
@@ -500,15 +512,15 @@ const BorrowerDashboard = () => {
                       {/* Stats */}
                       <div className="grid grid-cols-3 gap-4 text-body">
                         <div>
-                          <div className="text-muted-foreground">Valor</div>
+                          <div className="text-foreground">Valor</div>
                           <div className="font-semibold text-foreground">{lance.value}</div>
                         </div>
                         <div>
-                          <div className="text-muted-foreground">Interesse</div>
+                          <div className="text-foreground">Interesse</div>
                           <div className="font-semibold text-foreground">{lance.interest}</div>
                         </div>
                         <div>
-                          <div className="text-muted-foreground">Expira em</div>
+                          <div className="text-foreground">Expira em</div>
                           <div className="font-semibold text-foreground">{lance.expires}</div>
                         </div>
                       </div>
@@ -516,10 +528,10 @@ const BorrowerDashboard = () => {
                       {/* Progress */}
                       <div className="space-y-2">
                         <div className="flex justify-between text-body">
-                          <span className="text-muted-foreground font-semibold">
+                          <span className="text-foreground font-semibold">
                             Progresso
                           </span>
-                          <span className="text-muted-foreground font-semibold">
+                          <span className="text-foreground font-semibold">
                             {lance.progress}%
                           </span>
                         </div>
@@ -529,15 +541,17 @@ const BorrowerDashboard = () => {
                             style={{ width: `${lance.progress}%` }}
                           ></div>
                         </div>
-                        <div className="flex justify-between text-small text-muted-foreground">
+                        <div className="flex justify-between text-small text-foreground">
                           <span>{lance.raised}</span>
                           <span>Objetivo: {lance.goal}</span>
                         </div>
                       </div>
 
-                      <Button className="w-full bg-primary hover:bg-primary/80 transition-colors">
-                        Solicitar Crédito
-                      </Button>
+                      <Link to={`/borrower/credit-request/${lance.id}`}>
+                        <Button className="w-full bg-primary hover:bg-primary/80 transition-colors">
+                          Solicitar Crédito
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 ))}

@@ -20,6 +20,7 @@ import {
 
 const KYCVerification = () => {
   const { theme, toggleTheme } = useTheme();
+  const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     fullName: "",
     cpf: "",
@@ -35,6 +36,18 @@ const KYCVerification = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleNextStep = () => {
+    if (currentStep < 6) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handlePrevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   const kycSteps = [
     {
       title: "KYC Verificação",
@@ -42,22 +55,72 @@ const KYCVerification = () => {
         {
           icon: Edit,
           label: "Informações Pessoais",
-          completed: true,
-          active: true,
+          completed: currentStep > 0,
+          active: currentStep === 0,
         },
-        { icon: FileText, label: "Verificação ID", completed: false },
-        { icon: Camera, label: "Selfie", completed: false },
-        { icon: CheckCircle, label: "Review", completed: false },
+        { 
+          icon: FileText, 
+          label: "Verificação ID", 
+          completed: currentStep > 1,
+          active: currentStep === 1,
+        },
+        { 
+          icon: Camera, 
+          label: "Selfie", 
+          completed: currentStep > 2,
+          active: currentStep === 2,
+        },
+        { 
+          icon: CheckCircle, 
+          label: "Review", 
+          completed: currentStep > 3,
+          active: currentStep === 3,
+        },
       ],
     },
     {
       title: "Dados de Crédito",
       steps: [
-        { icon: Info, label: "Informações Gerais", completed: false },
-        { icon: Scan, label: "Scanear Garantia", completed: false },
-        { icon: BarChart3, label: "Análise", completed: false },
+        { 
+          icon: Info, 
+          label: "Informações Gerais", 
+          completed: currentStep > 4,
+          active: currentStep === 4,
+        },
+        { 
+          icon: Scan, 
+          label: "Scanear Garantia", 
+          completed: currentStep > 5,
+          active: currentStep === 5,
+        },
+        { 
+          icon: BarChart3, 
+          label: "Análise", 
+          completed: currentStep > 6,
+          active: currentStep === 6,
+        },
       ],
     },
+  ];
+
+  const stepTitles = [
+    "Informações Pessoais",
+    "Verificação ID",
+    "Selfie",
+    "Review",
+    "Informações Gerais",
+    "Scanear Garantia",
+    "Análise"
+  ];
+
+  const stepDescriptions = [
+    "Preencha os espaços com suas informações pessoais",
+    "Faça upload dos documentos de identificação",
+    "Tire uma selfie para verificação facial",
+    "Revise todas as informações antes de prosseguir",
+    "Informe seus dados financeiros e de crédito",
+    "Escaneie ou fotografe seus bens como garantia",
+    "Processamento ZK e geração de score de crédito"
   ];
 
   return (
@@ -152,7 +215,7 @@ const KYCVerification = () => {
               </div>
             </div>
 
-                          <Link to="/user-selection">
+                          <Link to="/login">
                 <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                   <span className="text-body">Sair</span>
                 </button>
@@ -191,7 +254,7 @@ const KYCVerification = () => {
                         <div className="flex items-center justify-end gap-3">
                           <span
                             className={`text-small font-bold ${
-                              step.active ? "text-foreground" : "text-muted-foreground"
+                              step.active ? "text-foreground" : "text-foreground opacity-60"
                             }`}
                           >
                             {step.label}
@@ -209,7 +272,7 @@ const KYCVerification = () => {
                               className={`w-4 h-4 ${
                                 step.completed || step.active
                                   ? "text-primary-foreground"
-                                  : "text-muted-foreground"
+                                  : "text-foreground opacity-60"
                               }`}
                             />
                           </div>
@@ -239,114 +302,329 @@ const KYCVerification = () => {
 
               {/* Form Header */}
               <div className="mb-9 space-y-5">
-                <div className="text-xs text-muted-foreground opacity-80">
-                  Passo 1/4
+                <div className="text-xs text-foreground opacity-80">
+                  Passo {currentStep + 1}/7
                 </div>
                 <div className="space-y-3">
-                  <h2 className="text-xl font-medium">
-                    Verifique sua Identidade
+                  <h2 className="text-xl font-medium text-foreground">
+                    {stepTitles[currentStep]}
                   </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Preencha os espaços com suas informações pessoais
+                  <p className="text-sm text-foreground">
+                    {stepDescriptions[currentStep]}
                   </p>
                 </div>
               </div>
 
-              {/* Form Fields */}
-              <div className="space-y-6">
-                <div className="space-y-3">
-                  <Input
-                    placeholder="Nome completo"
-                    value={formData.fullName}
-                    onChange={(e) =>
-                      handleInputChange("fullName", e.target.value)
-                    }
-                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <Input
-                    placeholder="CPF"
-                    value={formData.cpf}
-                    onChange={(e) => handleInputChange("cpf", e.target.value)}
-                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
-                  />
-                  <Input
-                    placeholder="Data de nascimento"
-                    value={formData.birthDate}
-                    onChange={(e) =>
-                      handleInputChange("birthDate", e.target.value)
-                    }
-                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
-                  />
-                </div>
-
-                <div className="grid grid-cols-5 gap-3">
-                  <div className="col-span-2">
+              {/* Step Content */}
+              {currentStep === 0 && (
+                <div className="space-y-6">
+                  <div className="space-y-3">
                     <Input
-                      placeholder="CEP"
-                      value={formData.cep}
-                      onChange={(e) => handleInputChange("cep", e.target.value)}
-                      className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
-                    />
-                  </div>
-                  <div className="col-span-3">
-                    <Input
-                      placeholder="Estado"
-                      value={formData.state}
+                      placeholder="Nome completo"
+                      value={formData.fullName}
                       onChange={(e) =>
-                        handleInputChange("state", e.target.value)
+                        handleInputChange("fullName", e.target.value)
                       }
-                      className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                     />
                   </div>
-                </div>
 
-                <Input
-                  placeholder="Cidade"
-                  value={formData.city}
-                  onChange={(e) => handleInputChange("city", e.target.value)}
-                  className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
-                />
-
-                <div className="grid grid-cols-4 gap-3">
-                  <div className="col-span-3">
+                  <div className="grid grid-cols-2 gap-3">
                     <Input
-                      placeholder="Endereço"
-                      value={formData.address}
+                      placeholder="CPF"
+                      value={formData.cpf}
+                      onChange={(e) => handleInputChange("cpf", e.target.value)}
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    />
+                    <Input
+                      placeholder="Data de nascimento"
+                      value={formData.birthDate}
                       onChange={(e) =>
-                        handleInputChange("address", e.target.value)
+                        handleInputChange("birthDate", e.target.value)
                       }
-                      className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                     />
                   </div>
+
+                  <div className="grid grid-cols-5 gap-3">
+                    <div className="col-span-2">
+                      <Input
+                        placeholder="CEP"
+                        value={formData.cep}
+                        onChange={(e) => handleInputChange("cep", e.target.value)}
+                        className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                      />
+                    </div>
+                    <div className="col-span-3">
+                      <Input
+                        placeholder="Estado"
+                        value={formData.state}
+                        onChange={(e) =>
+                          handleInputChange("state", e.target.value)
+                        }
+                        className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                      />
+                    </div>
+                  </div>
+
                   <Input
-                    placeholder="Número"
-                    value={formData.number}
-                    onChange={(e) =>
-                      handleInputChange("number", e.target.value)
-                    }
-                    className="h-12 bg-muted/50 border-border placeholder:text-muted-foreground"
+                    placeholder="Cidade"
+                    value={formData.city}
+                    onChange={(e) => handleInputChange("city", e.target.value)}
+                    className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                   />
+
+                  <div className="grid grid-cols-4 gap-3">
+                    <div className="col-span-3">
+                      <Input
+                        placeholder="Endereço"
+                        value={formData.address}
+                        onChange={(e) =>
+                          handleInputChange("address", e.target.value)
+                        }
+                        className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                      />
+                    </div>
+                    <Input
+                      placeholder="Número"
+                      value={formData.number}
+                      onChange={(e) =>
+                        handleInputChange("number", e.target.value)
+                      }
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {currentStep === 1 && (
+                <div className="space-y-6">
+                  <div className="bg-muted/30 rounded-lg p-6 border-2 border-dashed border-muted">
+                    <div className="text-center space-y-4">
+                      <FileText className="w-12 h-12 mx-auto text-foreground opacity-60" />
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">
+                          Upload de Documentos
+                        </h3>
+                        <p className="text-sm text-foreground opacity-80 mb-4">
+                          Faça upload dos seguintes documentos:
+                        </p>
+                        <ul className="text-sm text-foreground opacity-80 space-y-2 mb-6">
+                          <li>• RG ou CNH (frente e verso)</li>
+                          <li>• CPF</li>
+                          <li>• Comprovante de residência</li>
+                        </ul>
+                      </div>
+                      <Button className="bg-primary hover:bg-primary/80 text-primary-foreground">
+                        Selecionar Arquivos
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 2 && (
+                <div className="space-y-6">
+                  <div className="bg-muted/30 rounded-lg p-6 border-2 border-dashed border-muted">
+                    <div className="text-center space-y-4">
+                      <Camera className="w-12 h-12 mx-auto text-foreground opacity-60" />
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">
+                          Verificação Facial
+                        </h3>
+                        <p className="text-sm text-foreground opacity-80 mb-4">
+                          Tire uma selfie para verificação de identidade
+                        </p>
+                      </div>
+                      <div className="w-48 h-48 bg-muted/50 rounded-lg mx-auto flex items-center justify-center">
+                        <Camera className="w-16 h-16 text-foreground opacity-40" />
+                      </div>
+                      <Button className="bg-primary hover:bg-primary/80 text-primary-foreground">
+                        Tirar Selfie
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                <div className="space-y-6">
+                  <div className="bg-muted/30 rounded-lg p-6">
+                    <h3 className="text-lg font-medium text-foreground mb-4">
+                      Revisão das Informações
+                    </h3>
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="text-sm text-foreground opacity-80">Nome</label>
+                          <p className="text-foreground font-medium">{formData.fullName || "Não informado"}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm text-foreground opacity-80">CPF</label>
+                          <p className="text-foreground font-medium">{formData.cpf || "Não informado"}</p>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-sm text-foreground opacity-80">Endereço</label>
+                        <p className="text-foreground font-medium">
+                          {formData.address ? `${formData.address}, ${formData.number} - ${formData.city}, ${formData.state}` : "Não informado"}
+                        </p>
+                      </div>
+                      <div className="pt-4 border-t border-muted">
+                        <p className="text-sm text-foreground opacity-80">
+                          ✓ Documentos enviados<br/>
+                          ✓ Selfie capturada<br/>
+                          ✓ Informações verificadas
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <Input
+                      placeholder="Renda mensal"
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    />
+                    <Input
+                      placeholder="Profissão"
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    />
+                    <Input
+                      placeholder="Empresa"
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    />
+                    <Input
+                      placeholder="Telefone"
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    />
+                    <Input
+                      placeholder="Email"
+                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 5 && (
+                <div className="space-y-6">
+                  <div className="bg-muted/30 rounded-lg p-6 border-2 border-dashed border-muted">
+                    <div className="text-center space-y-4">
+                      <Scan className="w-12 h-12 mx-auto text-foreground opacity-60" />
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">
+                          Garantias e Colaterais
+                        </h3>
+                        <p className="text-sm text-foreground opacity-80 mb-4">
+                          Escaneie ou fotografe seus bens como garantia:
+                        </p>
+                        <ul className="text-sm text-foreground opacity-80 space-y-2 mb-6">
+                          <li>• Veículos</li>
+                          <li>• Imóveis</li>
+                          <li>• Eletrônicos</li>
+                          <li>• Outros bens de valor</li>
+                        </ul>
+                      </div>
+                      <Button className="bg-primary hover:bg-primary/80 text-primary-foreground">
+                        Escanear Garantias
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 6 && (
+                <div className="space-y-6">
+                  <div className="bg-muted/30 rounded-lg p-6">
+                    <div className="text-center space-y-4">
+                      <BarChart3 className="w-12 h-12 mx-auto text-foreground opacity-60" />
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">
+                          Análise com Prova ZK em Andamento
+                        </h3>
+                        <p className="text-sm text-foreground opacity-80 mb-4">
+                          Estamos processando seus dados através de nossa tecnologia ZK Finance.
+                          Este processo pode levar até 24 horas.
+                        </p>
+                        
+                        {/* ZK Proof Section */}
+                        <div className="bg-primary/10 rounded-lg p-4 mb-4 border border-primary/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                            <span className="text-sm font-medium text-primary">Prova ZK de Score de Crédito</span>
+                          </div>
+                          <p className="text-xs text-foreground opacity-80 text-left">
+                            Seus dados financeiros e pessoais são processados por algoritmos de IA 
+                            sem serem armazenados. Apenas o score final é gerado através de prova 
+                            zero-knowledge, garantindo total privacidade.
+                          </p>
+                        </div>
+
+                        {/* Privacy Notice */}
+                        <div className="bg-success/10 rounded-lg p-4 mb-4 border border-success/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            <span className="text-sm font-medium text-success">Privacidade Garantida</span>
+                          </div>
+                          <ul className="text-xs text-foreground opacity-80 text-left space-y-1">
+                            <li>• Dados pessoais não são armazenados</li>
+                            <li>• Processamento via algoritmo ZK</li>
+                            <li>• Score gerado por IA sem retenção de dados</li>
+                            <li>• Conformidade com LGPD</li>
+                          </ul>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="w-full bg-muted rounded-full h-2">
+                          <div className="bg-gradient-to-r from-primary to-cyan-400 h-2 rounded-full animate-pulse" style={{ width: "60%" }}></div>
+                        </div>
+                        <p className="text-xs text-foreground opacity-60">
+                          Processando prova ZK... 60%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Action Buttons */}
               <div className="flex gap-4 mt-20">
-                <Link to="/user-selection" className="w-40">
+                {currentStep === 0 ? (
+                  <Link to="/login" className="w-40">
+                    <Button
+                      variant="outline"
+                      className="w-full h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+                    >
+                      Voltar
+                    </Button>
+                  </Link>
+                ) : (
                   <Button
                     variant="outline"
-                    className="w-full h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+                    onClick={handlePrevStep}
+                    className="w-40 h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
                   >
-                    Voltar
+                    Anterior
                   </Button>
-                </Link>
-                <Link to="/borrower/dashboard" className="w-40">
-                  <Button className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
-                    Avançar
+                )}
+                
+                {currentStep === 6 ? (
+                  <Link to="/borrower/dashboard" className="w-40">
+                    <Button className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
+                      Finalizar
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button 
+                    onClick={handleNextStep}
+                    className="w-40 h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
+                  >
+                    Próximo
                   </Button>
-                </Link>
+                )}
               </div>
             </div>
           </div>

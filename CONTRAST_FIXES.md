@@ -38,6 +38,11 @@
   - Ícone de busca: `text-muted-foreground` → `text-foreground`
   - Input de busca: Adicionado `text-foreground` e `placeholder:text-muted-foreground`
   - Botão Sair: `text-muted-foreground hover:text-foreground` → `text-foreground`
+  - Textos de formulário: `text-muted-foreground` → `text-foreground`
+  - Inputs de formulário: Adicionado `text-foreground` para texto digitado
+  - Placeholders de formulário: `placeholder:text-muted-foreground` → `placeholder:text-foreground`
+  - Labels de steps: `text-muted-foreground` → `text-foreground opacity-60`
+  - Ícones de steps: `text-muted-foreground` → `text-foreground opacity-60`
 
 ### 🎯 **4. Variáveis CSS Melhoradas**
 - **Adicionadas variáveis específicas para hover**:
@@ -82,7 +87,7 @@
 - ✅ UserSelection
 
 ### **Páginas Específicas**
-- ✅ KYCVerification (maior correção)
+- ✅ KYCVerification (maior correção - textos de formulário e inputs)
 - ✅ CollateralRegistration
 - ✅ InvestorDashboard (gradientes, status colors, textos de badge, busca e logout)
 - ✅ Index (status colors, textos e busca)
@@ -145,6 +150,92 @@ text-primary-foreground
 - **Cards internos**: Removidas bordas em cards de performance
 - **Separadores**: Removidas bordas de separação em algumas seções
 - **Resultado**: Design mais limpo e minimalista
+
+### **Correção de Navegação**
+- **Botão Sair**: Redirecionamento corrigido de `/user-selection` para `/login`
+- **Resultado**: Fluxo de logout mais lógico e intuitivo
+- **Aplicado em**: Todas as páginas com botão de logout
+
+### **Melhorias no Login/Register**
+- **Providers lado a lado**: Google e MetaMask em grid de 2 colunas
+- **Largura aumentada**: Container expandido de `max-w-sm` para `max-w-md`
+- **Contraste do "ou"**: Corrigido de `text-muted-foreground` para `text-foreground`
+- **Redirecionamento**: Botões agora redirecionam para `/user-selection`
+- **Resultado**: Layout mais compacto e moderno, contraste adequado, navegação correta
+- **Aplicado em**: Páginas Login e Register
+
+### **Correções no BorrowerDashboard**
+- **Placeholder do search**: Corrigido de `text-muted-foreground` para `text-foreground`
+- **Username**: Corrigido de `text-muted-foreground` para `text-foreground`
+- **Labels dos cards**: ZK Score, Lances Postados, Total Arrecadados
+- **Textos de progresso**: Meta, progresso, datas, valores
+- **Textos dos lances**: Descrições, labels, progresso, objetivos
+- **Resultado**: Contraste adequado em todos os textos
+- **Aplicado em**: Página BorrowerDashboard
+
+### **Correções no CollateralRegistration**
+- **Username**: Corrigido de `text-muted-foreground` para `text-foreground`
+- **Link "Voltar"**: Corrigido de `text-muted-foreground` para `text-foreground`
+- **Descrição do formulário**: Corrigido de `text-muted-foreground` para `text-foreground`
+- **Ícones de upload**: Camera e FileText corrigidos de `text-muted-foreground` para `text-foreground`
+- **Textos de upload**: Descrições dos uploads corrigidas de `text-muted-foreground` para `text-foreground`
+- **Placeholders dos inputs**: Todos os inputs agora com `placeholder:text-foreground`
+- **Ícone de calendário**: Input de data com ícone nativo corrigido para contraste adequado
+- **Resultado**: Contraste adequado em todos os textos, placeholders e ícones
+- **Aplicado em**: Página CollateralRegistration
+
+### **Correções Gerais**
+- **Breadcrumb**: Setas corrigidas de `text-muted-foreground` para `text-foreground`
+- **Resultado**: Contraste adequado em todos os elementos de navegação
+- **Aplicado em**: Componente Breadcrumb
+
+### **Novas Páginas Criadas**
+- **Wallet.tsx**: Página de Carteira com saldo devedor, prazo de pagamento, credores e informações de quitação
+- **Settings.tsx**: Página de Configurações com perfil, segurança, notificações e aparência
+- **Support.tsx**: Página de Suporte com FAQ, métodos de contato, recursos úteis e formulário de contato
+- **Resultado**: Interface completa seguindo a identidade visual do projeto
+- **Aplicado em**: Novas páginas placeholder para navegação completa
+
+### **Configuração de Rotas**
+- **App.tsx**: Adicionadas rotas para `/borrower/wallet`, `/borrower/settings`, `/borrower/support`, `/investor/contributions`, `/investor/settings`, `/investor/support`
+- **BorrowerDashboard.tsx**: Links do sidebar convertidos para navegação funcional
+- **InvestorDashboard.tsx**: Links do sidebar convertidos para navegação funcional
+- **Index.tsx**: Link "Cadastrar Colateral" adicionado com import do React Router
+- **Resultado**: Navegação completa entre todas as páginas
+- **Aplicado em**: Sistema de rotas e links de navegação
+
+### **Nova Página: Lances Contribuídos**
+- **InvestorContributions.tsx**: Página completa para investidores acompanharem seus investimentos
+- **Funcionalidades**: 
+  - Resumo financeiro (total investido, recebido, expectativa)
+  - Lista detalhada de projetos com progresso
+  - Informações de adimplência (100% em dia)
+  - Dados de cada investimento (valor, juros, prazo, pagamentos)
+  - Busca por tomador ou projeto
+  - Status de risco e categoria
+- **Resultado**: Dashboard completo para acompanhamento de investimentos
+- **Aplicado em**: Área do investidor
+
+### **Fluxo KYC Completo**
+- **KYCVerification.tsx**: Fluxo completo de 7 etapas para verificação de identidade
+- **Etapas Implementadas**:
+  1. **Informações Pessoais**: Formulário com dados pessoais e endereço
+  2. **Verificação ID**: Upload de documentos (RG, CPF, comprovante)
+  3. **Selfie**: Captura de foto para verificação facial
+  4. **Review**: Revisão de todas as informações inseridas
+  5. **Informações Gerais**: Dados financeiros e profissionais
+  6. **Scanear Garantia**: Upload de bens como colateral
+  7. **Análise ZK**: Processamento com prova zero-knowledge e geração de score
+- **Funcionalidades**:
+  - Navegação entre etapas com botões Anterior/Próximo
+  - Indicadores visuais de progresso no sidebar
+  - Validação de etapas completadas
+  - Interface intuitiva para cada tipo de informação
+  - **Prova ZK**: Destaque da tecnologia zero-knowledge
+  - **Privacidade**: Garantias de não armazenamento de dados
+  - **IA**: Processamento por algoritmos de inteligência artificial
+- **Resultado**: Fluxo completo e profissional para KYC com foco em privacidade
+- **Aplicado em**: Processo de verificação de identidade
 
 ## 🚀 **Próximos Passos**
 

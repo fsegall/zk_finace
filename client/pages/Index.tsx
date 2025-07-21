@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Search,
   Bell,
@@ -323,9 +324,11 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
-                    Cadastrar Colateral
-                  </Button>
+                  <Link to="/borrower/collateral">
+                    <Button className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
+                      Cadastrar Colateral
+                    </Button>
+                  </Link>
                 </div>
 
                 {/* Recent Activities */}

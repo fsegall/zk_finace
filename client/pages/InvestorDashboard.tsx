@@ -21,6 +21,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 const InvestorDashboard = () => {
   const { theme, toggleTheme } = useTheme();
 
+
   const sidebarItems = [
     { icon: Home, label: "Dashboard", active: true },
     { icon: Star, label: "Ranking", active: false },
@@ -138,26 +139,31 @@ const InvestorDashboard = () => {
               <Star className="w-4 h-4" />
               Ranking
             </Link>
-            <button
+            <Link
+              to="/investor/contributions"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <TrendingUp className="w-4 h-4" />
               Lances Contribuídos
-            </button>
-            <button
+            </Link>
+            <Link
+              to="/investor/settings"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <Settings className="w-4 h-4" />
               Configurações
-            </button>
+            </Link>
           </nav>
 
           {/* Support */}
           <div className="mt-auto pt-8">
-            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg">
+            <Link
+              to="/investor/support"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg"
+            >
               <HelpCircle className="w-4 h-4" />
               Suporte
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -189,7 +195,7 @@ const InvestorDashboard = () => {
                   </div>
                 </div>
 
-                <Link to="/user-selection">
+                <Link to="/login">
                   <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                     <span className="text-body">Sair</span>
                   </button>
@@ -238,12 +244,16 @@ const InvestorDashboard = () => {
                     </div>
 
                     <div className="flex gap-4">
-                      <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
-                        Depositar
-                      </Button>
-                      <Button variant="outline" className="flex-1">
-                        Sacar
-                      </Button>
+                      <Link to="/investor/deposit">
+                        <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
+                          Depositar
+                        </Button>
+                      </Link>
+                      <Link to="/investor/withdraw">
+                        <Button variant="outline" className="flex-1">
+                          Sacar
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -350,9 +360,11 @@ const InvestorDashboard = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/80 transition-colors mt-4">
-                    Ver Detalhes dos Investimentos
-                  </Button>
+                  <Link to="/investor/investments">
+                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/80 transition-colors mt-4">
+                      Ver Detalhes dos Investimentos
+                    </Button>
+                  </Link>
                 </div>
 
                 {/* Recent Activities */}

@@ -29,30 +29,38 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useMyLoans, LoanWithDetails } from "../hooks/useMyLoans";
+
+// Tipo unificado para lances (reais e mock)
+interface DisplayLance {
+  id: string | number;
+  title: string;
+  description: string;
+  author: string;
+  category: string;
+  value: string;
+  interest: string;
+  expires: string;
+  progress: number;
+  raised: string;
+  goal: string;
+  status: string;
+  createdAt: string;
+  investors: number;
+  daysLeft: number;
+}
 
 const BorrowerLances = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
   const [filterStatus, setFilterStatus] = useState("all");
+  
+  // Buscar dados reais do banco
+  const { data: realLoans, isLoading, error } = useMyLoans();
 
-  const lances = [
-    {
-      id: 1,
-      title: "TechGrow Software Development",
-      description:
-        "Esse projeto é para implementar o crescimento das sementes na minha agroindústria, pelo qual estamos...",
-      author: "Maria Cardoso",
-      category: "Tech",
-      value: "R$50.000,00",
-      interest: "5.8% APR",
-      expires: "5 dias",
-      progress: 65,
-      raised: "R$32.000",
-      goal: "R$50.000",
-      status: "active",
-      createdAt: "2024-03-15",
-      investors: 12,
-      daysLeft: 5,
-    },
+  // Dados mock para manter a tela completa
+  const mockLances = [
     {
       id: 2,
       title: "Fresh Eats Cafe Expansion",
@@ -145,6 +153,44 @@ const BorrowerLances = () => {
     },
   ];
 
+  // Combinar dados reais com mock
+  const allLances = [
+    // Primeiro lance real (se existir)
+    ...(realLoans && realLoans.length > 0 ? [realLoans[0]] : []),
+    // Lances mock
+    ...mockLances
+  ];
+
+  // Converter lance real para formato compatível com o mock
+  const formatRealLoanForDisplay = (loan: LoanWithDetails) => ({
+    id: loan.id,
+    title: loan.title,
+    description: loan.description,
+    author: loan.author,
+    category: loan.category,
+    value: loan.value,
+    interest: loan.interest,
+    expires: loan.expires,
+    progress: loan.progress,
+    raised: loan.raised,
+    goal: loan.goal,
+    status: loan.status,
+    createdAt: loan.created_at,
+    investors: loan.investors,
+    daysLeft: loan.daysLeft,
+  });
+
+  // Preparar lista final de lances para exibição
+  const displayLances: DisplayLance[] = allLances.map((lance, index) => {
+    if (index === 0 && realLoans && realLoans.length > 0) {
+      // Primeiro lance é real
+      return formatRealLoanForDisplay(lance as LoanWithDetails);
+    } else {
+      // Outros lances são mock
+      return lance as DisplayLance;
+    }
+  });
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
@@ -185,8 +231,33 @@ const BorrowerLances = () => {
   };
 
   const filteredLances = filterStatus === "all" 
-    ? lances 
-    : lances.filter(lance => lance.status === filterStatus);
+    ? displayLances 
+    : displayLances.filter(lance => lance.status === filterStatus);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-body">Carregando seus lances...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <h3 className="text-h4 font-semibold text-foreground mb-2">Erro ao carregar dados</h3>
+          <p className="text-body text-foreground">Tente novamente mais tarde.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
@@ -333,10 +404,12 @@ const BorrowerLances = () => {
 
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">Maria Cardoso</span>
-                    <span className="text-xs text-foreground">
-                      @maaria_89
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
+                    <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                    <span className="text-small text-foreground">
+                      @{user?.email ? user.email.split("@")[0] : "usuario"}
                     </span>
                   </div>
                 </div>
@@ -396,7 +469,7 @@ const BorrowerLances = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-body text-foreground mb-1">Total de Lances</p>
-                    <p className="text-h2 font-bold text-foreground">{lances.length}</p>
+                    <p className="text-h2 font-bold text-foreground">{allLances.length}</p>
                   </div>
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-primary" />
@@ -409,7 +482,7 @@ const BorrowerLances = () => {
                   <div>
                     <p className="text-body text-foreground mb-1">Lances Ativos</p>
                     <p className="text-h2 font-bold text-green-600">
-                      {lances.filter(l => l.status === "active").length}
+                      {allLances.filter(l => l.status === "active").length}
                     </p>
                   </div>
                   <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
@@ -486,7 +559,7 @@ const BorrowerLances = () => {
               {filteredLances.map((lance) => (
                 <div
                   key={lance.id}
-                  className="bg-card/20 rounded-xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300"
+                  className="bg-card/20 rounded-xl p-6 border border-primary/30 hover:border-border/50 transition-all duration-300"
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">

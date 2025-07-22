@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Index from "./pages/Index";
+import { AuthProvider } from "./contexts/AuthContext";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -29,6 +29,7 @@ import Wallet from "./pages/Wallet";
 import Settings from "./pages/Settings";
 import Support from "./pages/Support";
 import InvestorContributions from "./pages/InvestorContributions";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -37,41 +38,43 @@ function App() {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/user-selection" element={<UserSelection />} />
-              <Route path="/kyc-verification" element={<KYCVerification />} />
-              <Route path="/borrower/dashboard" element={<BorrowerDashboard />} />
-              <Route path="/borrower/lances" element={<BorrowerLances />} />
-              <Route path="/borrower/lance/:id" element={<LanceDetails />} />
-              <Route path="/borrower/create-lance" element={<CreateLance />} />
-              <Route path="/borrower/credit-request/:lanceId" element={<CreditRequest />} />
-              <Route
-                path="/borrower/collateral"
-                element={<CollateralRegistration />}
-              />
-              <Route path="/borrower/wallet" element={<Wallet />} />
-              <Route path="/borrower/settings" element={<Settings />} />
-              <Route path="/borrower/support" element={<Support />} />
-              <Route path="/investor/dashboard" element={<InvestorDashboard />} />
-              <Route path="/investor/deposit" element={<InvestorDeposit />} />
-              <Route path="/investor/withdraw" element={<InvestorWithdraw />} />
-              <Route path="/investor/investments" element={<InvestorInvestments />} />
-              <Route path="/investor/investment/:investmentId" element={<InvestmentDetails />} />
-              <Route path="/investor/contributions" element={<InvestorContributions />} />
-              <Route path="/investor/settings" element={<Settings />} />
-              <Route path="/investor/support" element={<Support />} />
-              <Route path="/investor/ranking" element={<InvestorRanking />} />
-              <Route path="/dashboard" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </TooltipProvider>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/user-selection" element={<UserSelection />} />
+                <Route path="/kyc-verification" element={<KYCVerification />} />
+                <Route path="/borrower/dashboard" element={<BorrowerDashboard />} />
+                <Route path="/borrower/lances" element={<BorrowerLances />} />
+                <Route path="/borrower/lance/:id" element={<LanceDetails />} />
+                <Route path="/borrower/create-lance" element={<CreateLance />} />
+                <Route path="/borrower/credit-request/:lanceId" element={<CreditRequest />} />
+                <Route
+                  path="/borrower/collateral"
+                  element={<CollateralRegistration />}
+                />
+                <Route path="/borrower/wallet" element={<Wallet />} />
+                <Route path="/borrower/settings" element={<Settings />} />
+                <Route path="/borrower/support" element={<Support />} />
+                <Route path="/investor/dashboard" element={<InvestorDashboard />} />
+                <Route path="/investor/deposit" element={<InvestorDeposit />} />
+                <Route path="/investor/withdraw" element={<InvestorWithdraw />} />
+                <Route path="/investor/investments" element={<InvestorInvestments />} />
+                <Route path="/investor/investment/:investmentId" element={<InvestmentDetails />} />
+                <Route path="/investor/contributions" element={<InvestorContributions />} />
+                <Route path="/investor/settings" element={<Settings />} />
+                <Route path="/investor/support" element={<Support />} />
+                <Route path="/investor/ranking" element={<InvestorRanking />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </TooltipProvider>
+          </AuthProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>

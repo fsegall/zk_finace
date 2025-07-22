@@ -1,12 +1,44 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "../contexts/AuthContext";
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { loginWithGoogle, signupWithPassword, connectWallet, user, loading, error, walletAddress } = useAuth();
+  const [formLoading, setFormLoading] = useState(false);
+  const [metaMaskLoading, setMetaMaskLoading] = useState(false);
+
+  // Redireciona se já estiver logado
+  if (user && !loading) {
+    navigate("/user-selection");
+  }
+
+  const handleGoogle = async () => {
+    setFormLoading(true);
+    await loginWithGoogle();
+    setFormLoading(false);
+    navigate("/user-selection");
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormLoading(true);
+    await signupWithPassword(email, password, fullName);
+    setFormLoading(false);
+    navigate("/user-selection");
+  };
+
+  const handleMetaMask = async () => {
+    setMetaMaskLoading(true);
+    await connectWallet();
+    setMetaMaskLoading(false);
+    navigate("/user-selection");
+  };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
@@ -87,6 +119,8 @@ const Register = () => {
             <Button
               variant="outline"
               className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              onClick={handleGoogle}
+              disabled={formLoading || loading}
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -104,11 +138,13 @@ const Register = () => {
             <Button
               variant="outline"
               className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              onClick={handleMetaMask}
+              disabled={metaMaskLoading}
             >
               <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M
               </div>
-              MetaMask
+              {walletAddress ? "Carteira conectada" : "MetaMask"}
             </Button>
           </div>
 
@@ -124,7 +160,7 @@ const Register = () => {
           </div>
 
           {/* Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSignup}>
             <div className="space-y-2">
               <Input
                 type="text"
@@ -132,6 +168,7 @@ const Register = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className="h-12 bg-muted border-border"
+                disabled={formLoading || loading}
               />
             </div>
 
@@ -142,6 +179,7 @@ const Register = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-12 bg-muted border-border"
+                disabled={formLoading || loading}
               />
             </div>
 
@@ -152,20 +190,24 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-12 bg-muted border-border"
+                disabled={formLoading || loading}
               />
             </div>
 
-            <Link to="/user-selection">
-              <Button
-                type="button"
-                className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
-              >
-                Cadastre-se
-              </Button>
-            </Link>
+            <Button
+              type="submit"
+              className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
+              disabled={formLoading || loading}
+            >
+              {formLoading || loading ? "Cadastrando..." : "Cadastre-se"}
+            </Button>
           </form>
 
-          <p className="text-body text-muted-foreground">
+          {error && (
+            <div className="text-red-500 text-sm mt-2">{error}</div>
+          )}
+
+          <p className="text-body text-foreground">
             Já tem uma conta?{" "}
             <Link to="/login" className="text-primary hover:underline">
               Entrar

@@ -44,12 +44,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useCreateLoan } from "../hooks/useCreateLoan";
+import { useCreditAnalysis, useMockCreditAnalysis } from "../hooks/useCreditAnalysis";
 
 const CreateLance = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
+  const createLoanMutation = useCreateLoan();
+  
+  // Hook para análise de crédito
+  const creditAnalysis = useCreditAnalysis(); // N8N configurado e ativo
+  
   const [currentStep, setCurrentStep] = useState(1);
+  const [creditAnalysisCompleted, setCreditAnalysisCompleted] = useState(false);
   const [formData, setFormData] = useState({
     // Informações básicas
     title: "",
@@ -162,6 +179,66 @@ const CreateLance = () => {
     }
   };
 
+  const handleCreditAnalysis = async () => {
+    try {
+      // Dados para análise de crédito (baseados no formulário)
+      const creditData = {
+        income: formData.monthlyRevenue ? parseFloat(formData.monthlyRevenue) : undefined,
+        employment_years: 3, // Valor padrão - pode ser adicionado ao formulário
+        has_property: formData.collateralType === "imóvel",
+        has_debt: false, // Valor padrão - pode ser adicionado ao formulário
+        payment_defaults: 0, // Valor padrão - pode ser adicionado ao formulário
+      };
+
+      const result = await creditAnalysis.analyzeCreditAsync(creditData);
+      
+      if (result.passed) {
+        setCreditAnalysisCompleted(true);
+        alert(`Análise de crédito aprovada! Score: ${result.score} (Threshold: ${result.threshold})`);
+      } else {
+        alert(`Análise de crédito reprovada. Score: ${result.score} (Threshold: ${result.threshold})`);
+      }
+    } catch (error) {
+      console.error("Erro na análise de crédito:", error);
+      alert("Erro na análise de crédito. Tente novamente.");
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      // Validar campos obrigatórios
+      if (!formData.title || !formData.description || !formData.category || 
+          !formData.goal || !formData.interest || !formData.term) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      // Verificar se a análise de crédito foi aprovada
+      if (!creditAnalysisCompleted) {
+        alert("É necessário realizar e aprovar a análise de crédito antes de criar o lance.");
+        return;
+      }
+
+      // Preparar dados para o banco
+      const loanData = {
+        title: formData.title,
+        description: formData.description,
+        amount: parseFloat(formData.goal),
+        interest_rate: parseFloat(formData.interest),
+        term_months: parseInt(formData.term),
+        category: formData.category,
+        risk_score: "medium", // default para MVP
+        deadline: new Date().toISOString(), // será calculado no hook
+      };
+
+      // Criar o lance
+      await createLoanMutation.mutateAsync(loanData);
+    } catch (error) {
+      console.error("Erro ao criar lance:", error);
+      alert("Erro ao criar lance. Tente novamente.");
+    }
+  };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -175,7 +252,7 @@ const CreateLance = () => {
                 value={formData.title}
                 onChange={(e) => handleInputChange("title", e.target.value)}
                 placeholder="Ex: TechGrow Software Development"
-                className="bg-muted border-border"
+                className="bg-muted border-border placeholder:text-foreground"
               />
             </div>
 
@@ -188,7 +265,7 @@ const CreateLance = () => {
                 onChange={(e) => handleInputChange("description", e.target.value)}
                 placeholder="Descreva seu projeto, objetivos, mercado-alvo, etc..."
                 rows={6}
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground resize-none"
+                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground placeholder:text-foreground resize-none"
               />
             </div>
 
@@ -197,18 +274,18 @@ const CreateLance = () => {
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Categoria *
                 </label>
-                <select
-                  value={formData.category}
-                  onChange={(e) => handleInputChange("category", e.target.value)}
-                  className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground"
-                >
-                  <option value="">Selecione uma categoria</option>
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
+                <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
+                  <SelectTrigger className="w-full bg-muted border-border">
+                    <SelectValue placeholder="Selecione uma categoria" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div>
@@ -220,7 +297,7 @@ const CreateLance = () => {
                   value={formData.goal}
                   onChange={(e) => handleInputChange("goal", e.target.value)}
                   placeholder="50000"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -234,7 +311,7 @@ const CreateLance = () => {
                   value={formData.interest}
                   onChange={(e) => handleInputChange("interest", e.target.value)}
                   placeholder="8.5"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -247,7 +324,7 @@ const CreateLance = () => {
                   value={formData.term}
                   onChange={(e) => handleInputChange("term", e.target.value)}
                   placeholder="12"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
             </div>
@@ -261,18 +338,18 @@ const CreateLance = () => {
               <label className="block text-sm font-medium text-foreground mb-2">
                 Tipo de Projeto *
               </label>
-              <select
-                value={formData.projectType}
-                onChange={(e) => handleInputChange("projectType", e.target.value)}
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground"
-              >
-                <option value="">Selecione o tipo de projeto</option>
-                {projectTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
+              <Select value={formData.projectType} onValueChange={(value) => handleInputChange("projectType", value)}>
+                <SelectTrigger className="w-full bg-muted border-border">
+                  <SelectValue placeholder="Selecione o tipo de projeto" />
+                </SelectTrigger>
+                <SelectContent>
+                  {projectTypes.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div>
@@ -284,7 +361,7 @@ const CreateLance = () => {
                 onChange={(e) => handleInputChange("businessPlan", e.target.value)}
                 placeholder="Descreva seu plano de negócios, estratégia de execução, cronograma..."
                 rows={4}
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground resize-none"
+                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground placeholder:text-foreground resize-none"
               />
             </div>
 
@@ -297,7 +374,7 @@ const CreateLance = () => {
                 onChange={(e) => handleInputChange("marketAnalysis", e.target.value)}
                 placeholder="Descreva o mercado-alvo, concorrência, oportunidades..."
                 rows={4}
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground resize-none"
+                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground placeholder:text-foreground resize-none"
               />
             </div>
 
@@ -310,7 +387,7 @@ const CreateLance = () => {
                 onChange={(e) => handleInputChange("competitiveAdvantage", e.target.value)}
                 placeholder="O que torna seu projeto único? Quais são suas vantagens?"
                 rows={3}
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground resize-none"
+                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground placeholder:text-foreground resize-none"
               />
             </div>
           </div>
@@ -329,7 +406,7 @@ const CreateLance = () => {
                   value={formData.monthlyRevenue}
                   onChange={(e) => handleInputChange("monthlyRevenue", e.target.value)}
                   placeholder="15000"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -342,7 +419,7 @@ const CreateLance = () => {
                   value={formData.expenses}
                   onChange={(e) => handleInputChange("expenses", e.target.value)}
                   placeholder="8000"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -356,7 +433,7 @@ const CreateLance = () => {
                   value={formData.profitMargin}
                   onChange={(e) => handleInputChange("profitMargin", e.target.value)}
                   placeholder="25.5"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -369,7 +446,7 @@ const CreateLance = () => {
                   value={formData.breakEvenPoint}
                   onChange={(e) => handleInputChange("breakEvenPoint", e.target.value)}
                   placeholder="8"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
             </div>
@@ -411,18 +488,18 @@ const CreateLance = () => {
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Tipo de Garantia *
                 </label>
-                <select
-                  value={formData.collateralType}
-                  onChange={(e) => handleInputChange("collateralType", e.target.value)}
-                  className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground"
-                >
-                  <option value="">Selecione o tipo de garantia</option>
-                  {collateralTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
+                <Select value={formData.collateralType} onValueChange={(value) => handleInputChange("collateralType", value)}>
+                  <SelectTrigger className="w-full bg-muted border-border">
+                    <SelectValue placeholder="Selecione o tipo de garantia" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {collateralTypes.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div>
@@ -434,7 +511,7 @@ const CreateLance = () => {
                   value={formData.collateralValue}
                   onChange={(e) => handleInputChange("collateralValue", e.target.value)}
                   placeholder="75000"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
             </div>
@@ -448,7 +525,7 @@ const CreateLance = () => {
                 onChange={(e) => handleInputChange("collateralDescription", e.target.value)}
                 placeholder="Descreva detalhadamente a garantia oferecida..."
                 rows={4}
-                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground resize-none"
+                className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground placeholder:text-foreground resize-none"
               />
             </div>
 
@@ -485,6 +562,90 @@ const CreateLance = () => {
       case 5:
         return (
           <div className="space-y-6">
+            {/* Seção de Análise de Crédito */}
+            <div className="bg-muted/50 rounded-lg p-6 border border-border/50">
+              <div className="flex items-center gap-3 mb-4">
+                <Shield className="w-6 h-6 text-primary" />
+                <h3 className="text-lg font-semibold text-foreground">
+                  Análise de Crédito
+                </h3>
+              </div>
+              
+              {!creditAnalysisCompleted ? (
+                <div className="space-y-4">
+                  <p className="text-sm text-foreground/80">
+                    Antes de criar seu lance, é necessário realizar uma análise de crédito para verificar sua elegibilidade.
+                  </p>
+                  
+                  <div className="bg-background/50 rounded-lg p-4 border border-border/30">
+                    <h4 className="font-medium text-foreground mb-2">Critérios de Análise:</h4>
+                    <ul className="text-sm text-foreground/80 space-y-1">
+                      <li>• Renda mensal (se informada)</li>
+                      <li>• Tempo de emprego</li>
+                      <li>• Posse de imóvel</li>
+                      <li>• Histórico de dívidas</li>
+                      <li>• Inadimplências</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      onClick={handleCreditAnalysis}
+                      disabled={creditAnalysis.isLoading}
+                      size="sm"
+                      className="bg-primary hover:bg-primary/80"
+                    >
+                      {creditAnalysis.isLoading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-2"></div>
+                          Analisando...
+                        </>
+                      ) : (
+                        <>
+                          <Shield className="w-4 h-4 mr-2" />
+                          Realizar Análise
+                        </>
+                      )}
+                    </Button>
+                    
+                    {creditAnalysis.isError && (
+                      <span className="text-sm text-red-500">
+                        Erro na análise. Tente novamente.
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-green-600 font-medium">Análise de Crédito Aprovada!</span>
+                  </div>
+                  
+                  {creditAnalysis.data && (
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-foreground/60">Score:</span>
+                        <span className="ml-2 font-medium text-foreground">
+                          {creditAnalysis.data.score}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-foreground/60">Threshold:</span>
+                        <span className="ml-2 font-medium text-foreground">
+                          {creditAnalysis.data.threshold}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <p className="text-sm text-foreground/80">
+                    Sua análise foi aprovada! Agora você pode prosseguir com a criação do lance.
+                  </p>
+                </div>
+              )}
+            </div>
+
             {/* Upload de Imagens */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
@@ -593,7 +754,7 @@ const CreateLance = () => {
                   value={formData.minInvestment}
                   onChange={(e) => handleInputChange("minInvestment", e.target.value)}
                   placeholder="100"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -606,7 +767,7 @@ const CreateLance = () => {
                   value={formData.maxInvestment}
                   onChange={(e) => handleInputChange("maxInvestment", e.target.value)}
                   placeholder="5000"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -620,7 +781,7 @@ const CreateLance = () => {
                   value={formData.earlyBirdBonus}
                   onChange={(e) => handleInputChange("earlyBirdBonus", e.target.value)}
                   placeholder="1.0"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
@@ -634,7 +795,7 @@ const CreateLance = () => {
                   value={formData.referralBonus}
                   onChange={(e) => handleInputChange("referralBonus", e.target.value)}
                   placeholder="0.5"
-                  className="bg-muted border-border"
+                  className="bg-muted border-border placeholder:text-foreground"
                 />
               </div>
             </div>
@@ -910,10 +1071,12 @@ const CreateLance = () => {
 
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">Maria Cardoso</span>
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
+                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
                     <span className="text-xs text-foreground">
-                      @maaria_89
+                      @{user?.email ? user.email.split("@")[0] : "usuario"}
                     </span>
                   </div>
                 </div>
@@ -1027,10 +1190,56 @@ const CreateLance = () => {
                     Próximo
                   </Button>
                 ) : (
-                  <Button className="bg-primary hover:bg-primary/80">
-                    <Send className="w-4 h-4 mr-2" />
-                    Criar Lance
-                  </Button>
+                  <>
+                    {/* Botão de Análise de Crédito */}
+                    {!creditAnalysisCompleted && (
+                      <Button 
+                        onClick={handleCreditAnalysis}
+                        disabled={creditAnalysis.isLoading}
+                        variant="outline"
+                        className="mr-2"
+                      >
+                        {creditAnalysis.isLoading ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary mr-2"></div>
+                            Analisando...
+                          </>
+                        ) : (
+                          <>
+                            <Shield className="w-4 h-4 mr-2" />
+                            Analisar Crédito
+                          </>
+                        )}
+                      </Button>
+                    )}
+                    
+                    {/* Status da Análise */}
+                    {creditAnalysisCompleted && (
+                      <Badge variant="default" className="mr-2 bg-green-500 text-white">
+                        <CheckCircle className="w-3 h-3 mr-1" />
+                        Crédito Aprovado
+                      </Badge>
+                    )}
+                    
+                    {/* Botão Criar Lance */}
+                    <Button 
+                      onClick={handleSubmit}
+                      disabled={createLoanMutation.isPending || !creditAnalysisCompleted}
+                      className="bg-primary hover:bg-primary/80"
+                    >
+                      {createLoanMutation.isPending ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Criando...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4 mr-2" />
+                          Criar Lance
+                        </>
+                      )}
+                    </Button>
+                  </>
                 )}
               </div>
             </div>

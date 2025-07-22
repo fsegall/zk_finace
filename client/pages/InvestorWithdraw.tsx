@@ -29,6 +29,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -410,14 +417,15 @@ const InvestorWithdraw = () => {
                           <label className="block text-sm font-medium text-foreground mb-2">
                             Tipo de Conta
                           </label>
-                          <select
-                            value={bankAccount.type}
-                            onChange={(e) => setBankAccount({...bankAccount, type: e.target.value})}
-                            className="w-full px-3 py-2 bg-muted border border-border rounded-md text-foreground"
-                          >
-                            <option value="checking">Conta Corrente</option>
-                            <option value="savings">Conta Poupança</option>
-                          </select>
+                          <Select value={bankAccount.type} onValueChange={(value) => setBankAccount({...bankAccount, type: value})}>
+                            <SelectTrigger className="w-full bg-muted border-border">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="checking">Conta Corrente</SelectItem>
+                              <SelectItem value="savings">Conta Poupança</SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
                       </div>
                     </div>

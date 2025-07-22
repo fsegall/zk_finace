@@ -18,9 +18,11 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const InvestorRanking = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
 
   const sidebarItems = [
     { icon: Home, label: "Dashboard", active: false },
@@ -154,26 +156,31 @@ const InvestorRanking = () => {
               <Star className="w-4 h-4 text-primary" />
               Ranking
             </Link>
-            <button
+            <Link
+              to="/investor/contributions"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <TrendingUp className="w-4 h-4" />
               Lances Contribuídos
-            </button>
-            <button
+            </Link>
+            <Link
+              to="/investor/settings"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <Settings className="w-4 h-4" />
               Configurações
-            </button>
+            </Link>
           </nav>
 
           {/* Support */}
           <div className="mt-auto pt-8">
-            <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg">
+            <Link
+              to="/investor/support"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg"
+            >
               <HelpCircle className="w-4 h-4" />
               Suporte
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -187,7 +194,7 @@ const InvestorRanking = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-muted-foreground"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground"
                 />
               </div>
 
@@ -195,11 +202,13 @@ const InvestorRanking = () => {
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
                     <div className="flex flex-col">
-                      <span className="text-body">Maria Cardoso</span>
+                      <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
                       <span className="text-small text-muted-foreground">
-                        @maaria_89
+                        @{user?.email ? user.email.split("@")[0] : "usuario"}
                       </span>
                     </div>
                   </div>

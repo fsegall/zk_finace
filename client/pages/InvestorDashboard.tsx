@@ -17,9 +17,13 @@ import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useRBAC } from "../hooks/useRBAC";
 
 const InvestorDashboard = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile, logout } = useAuth();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
 
 
   const sidebarItems = [
@@ -177,7 +181,7 @@ const InvestorDashboard = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-muted-foreground"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground"
                 />
               </div>
 
@@ -185,13 +189,23 @@ const InvestorDashboard = () => {
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
+                    {/* Avatar opcional */}
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
                     <div className="flex flex-col">
-                      <span className="text-body">José Soares</span>
+                      <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
                       <span className="text-small text-muted-foreground">
-                        @josoa1977
+                        @{user?.email ? user.email.split("@")[0] : "usuario"}
                       </span>
                     </div>
+                    {isAdmin && (
+                      <Link to="/admin" className="ml-2 px-2 py-0.5 rounded bg-primary text-primary-foreground text-xs hover:underline">
+                        Admin
+                      </Link>
+                    )}
+                    {isLender && <span className="ml-2 px-2 py-0.5 rounded bg-success text-success-foreground text-xs">Investidor</span>}
+                    {isBorrower && <span className="ml-2 px-2 py-0.5 rounded bg-warning text-warning-foreground text-xs">Tomador</span>}
                   </div>
                 </div>
 

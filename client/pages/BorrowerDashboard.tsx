@@ -17,11 +17,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useRBAC } from "../hooks/useRBAC";
 
 const BorrowerDashboard = () => {
   const { theme, toggleTheme } = useTheme();
+  const { logout, user, profile } = useAuth();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
 
   const sidebarItems = [
     { icon: Home, label: "Dashboard", active: true },
@@ -220,19 +230,29 @@ const BorrowerDashboard = () => {
 
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">Maria Cardoso</span>
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
+                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
                     <span className="text-xs text-foreground">
-                      @maaria_89
+                      @{user?.email ? user.email.split("@")[0] : "usuario"}
                     </span>
+                    {isAdmin && (
+                      <Link to="/admin" className="ml-2 px-2 py-0.5 rounded bg-primary text-primary-foreground text-xs hover:underline">
+                        Admin
+                      </Link>
+                    )}
+                    {isLender && <span className="ml-2 px-2 py-0.5 rounded bg-success text-success-foreground text-xs">Investidor</span>}
+                    {isBorrower && <span className="ml-2 px-2 py-0.5 rounded bg-warning text-warning-foreground text-xs">Tomador</span>}
                   </div>
                 </div>
 
-                <Link to="/login">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                    <span className="text-sm">Sair</span>
-                  </button>
-                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                >
+                  <span className="text-sm">Sair</span>
+                </button>
 
                 <button
                   onClick={toggleTheme}

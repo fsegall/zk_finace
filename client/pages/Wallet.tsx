@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 import {
   ArrowLeft,
   Calendar,
@@ -24,6 +25,7 @@ import {
 
 const Wallet = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
 
   const walletData = {
     saldoDevedor: "R$ 45.000,00",
@@ -124,10 +126,12 @@ const Wallet = () => {
 
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                  <User className="w-4 h-4" />
-                  <span className="text-body">Maria Cardoso</span>
+                  {user?.user_metadata?.avatar_url && (
+                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                  )}
+                  <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
                   <span className="text-small text-foreground">
-                    @maaria_89
+                    @{user?.email ? user.email.split("@")[0] : "usuario"}
                   </span>
                 </div>
               </div>

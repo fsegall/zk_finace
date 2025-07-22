@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 import {
   Edit,
   FileText,
@@ -20,6 +21,7 @@ import {
 
 const KYCVerification = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -207,10 +209,12 @@ const KYCVerification = () => {
 
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                <User className="w-4 h-4" />
-                <span className="text-body">Maria Cardoso</span>
-                <span className="text-small text-muted-foreground">
-                  @maaria_89
+                {user?.user_metadata?.avatar_url && (
+                  <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                )}
+                <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                <span className="text-small text-foreground">
+                  @{user?.email ? user.email.split("@")[0] : "usuario"}
                 </span>
               </div>
             </div>

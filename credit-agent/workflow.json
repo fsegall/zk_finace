@@ -1,0 +1,140 @@
+{
+    "name": "Credit analysis",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "webhook-test/credit-analysis",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "db99b5d6-5cec-479a-9003-98eb6d346250",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          -336,
+          304
+        ],
+        "webhookId": "credit-analysis-webhook"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Gerar ID único para a requisição\nconst requestId = $json.headers['x-request-id'] || Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);\n\n// Extrair dados do usuário do body\nconst userData = $json.body || {};\n\n// Criar metadata\nconst metadata = {\n  requestId: requestId,\n  timestamp: new Date().toISOString(),\n  modelVersion: '1.0.0',\n  workflowVersion: '2.0.0',\n  environment: 'production',\n  source: 'zkfinance-ui',\n  userAgent: $json.headers['user-agent'] || 'unknown',\n  ipAddress: $json.headers['x-forwarded-for'] || $json.headers['x-real-ip'] || 'unknown'\n};\n\n// Preparar dados para análise\nconst analysisData = {\n  income: userData.income || 0,\n  employment_years: userData.employment_years || 0,\n  has_property: userData.has_property || false,\n  has_debt: userData.has_debt || false,\n  payment_defaults: userData.payment_defaults || 0\n};\n\nreturn {\n  json: {\n    requestId,\n    userData,\n    analysisData,\n    metadata,\n    originalRequest: $json\n  }\n};"
+        },
+        "id": "c59661e1-ff55-4e54-b4a7-d08584fa6e6f",
+        "name": "Prepare Data",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -112,
+          304
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Lógica de análise de crédito melhorada\nconst data = $json.analysisData;\n\n// Calcular score base\nlet score = 300; // Score mínimo\n\n// Fatores de renda (0-300 pontos)\nif (data.income >= 10000) score += 300;\nelse if (data.income >= 8000) score += 250;\nelse if (data.income >= 6000) score += 200;\nelse if (data.income >= 4000) score += 150;\nelse if (data.income >= 2000) score += 100;\n\n// Fatores de emprego (0-200 pontos)\nif (data.employment_years >= 10) score += 200;\nelse if (data.employment_years >= 7) score += 180;\nelse if (data.employment_years >= 5) score += 150;\nelse if (data.employment_years >= 3) score += 120;\nelse if (data.employment_years >= 1) score += 80;\n\n// Fatores de propriedade (0-150 pontos)\nif (data.has_property) score += 150;\n\n// Fatores de dívida (-100 a 0 pontos)\nif (data.has_debt) score -= 100;\n\n// Fatores de inadimplência (-200 a 0 pontos)\nif (data.payment_defaults >= 5) score -= 200;\nelse if (data.payment_defaults >= 3) score -= 150;\nelse if (data.payment_defaults >= 1) score -= 100;\n\n// Garantir que o score esteja entre 300 e 850\nscore = Math.max(300, Math.min(850, score));\n\n// Determinar status\nconst threshold = 650;\nconst passed = score >= threshold;\n\n// Categorizar score\nlet category = 'Poor';\nif (score >= 750) category = 'Excellent';\nelse if (score >= 700) category = 'Good';\nelse if (score >= 650) category = 'Fair';\nelse if (score >= 600) category = 'Poor';\nelse category = 'Very Poor';\n\n// Gerar mensagem personalizada\nlet message = '';\nif (passed) {\n  message = `Parabéns! Seu score de crédito é ${score} (${category}). Você está aprovado para financiamento.`;\n} else {\n  message = `Seu score de crédito é ${score} (${category}). Infelizmente não foi aprovado. Recomendamos melhorar sua situação financeira.`;\n}\n\n// Calcular limite de crédito sugerido\nlet suggestedLimit = 0;\nif (passed) {\n  if (score >= 750) suggestedLimit = data.income * 12;\n  else if (score >= 700) suggestedLimit = data.income * 8;\n  else if (score >= 650) suggestedLimit = data.income * 5;\n}\n\nreturn {\n  json: {\n    ...$json,\n    analysisResult: {\n      score,\n      threshold,\n      passed,\n      category,\n      message,\n      suggestedLimit,\n      factors: {\n        income: data.income,\n        employment_years: data.employment_years,\n        has_property: data.has_property,\n        has_debt: data.has_debt,\n        payment_defaults: data.payment_defaults\n      }\n    }\n  }\n};"
+        },
+        "id": "f5645b11-b3be-41f8-99ce-05aa58adc6c9",
+        "name": "Credit Analysis",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          112,
+          304
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Preparar payload completo para o callback\nconst data = $json;\n\nconst enhancedPayload = {\n  // Metadata da requisição\n  requestId: data.requestId,\n  timestamp: data.metadata.timestamp,\n  modelVersion: data.metadata.modelVersion,\n  workflowVersion: data.metadata.workflowVersion,\n  environment: data.metadata.environment,\n  \n  // Dados do usuário (anônimos para segurança)\n  userProfile: {\n    incomeRange: data.userData.income >= 10000 ? 'high' : \n                 data.userData.income >= 6000 ? 'medium' : 'low',\n    employmentStability: data.userData.employment_years >= 5 ? 'stable' : \n                         data.userData.employment_years >= 2 ? 'moderate' : 'new',\n    hasProperty: data.userData.has_property,\n    hasDebt: data.userData.has_debt,\n    riskLevel: data.userData.payment_defaults >= 3 ? 'high' : \n               data.userData.payment_defaults >= 1 ? 'medium' : 'low'\n  },\n  \n  // Resultado da análise\n  analysis: {\n    score: data.analysisResult.score,\n    threshold: data.analysisResult.threshold,\n    passed: data.analysisResult.passed,\n    category: data.analysisResult.category,\n    message: data.analysisResult.message,\n    suggestedLimit: data.analysisResult.suggestedLimit,\n    confidence: data.analysisResult.score >= 750 ? 0.95 : \n                data.analysisResult.score >= 700 ? 0.85 : \n                data.analysisResult.score >= 650 ? 0.75 : 0.60\n  },\n  \n  // Recomendações\n  recommendations: {\n    immediate: data.analysisResult.passed ? \n      ['Aproveite o financiamento aprovado', 'Mantenha pagamentos em dia'] : \n      ['Reduza dívidas existentes', 'Melhore histórico de pagamentos'],\n    longTerm: data.analysisResult.passed ? \n      ['Construa reserva de emergência', 'Diversifique investimentos'] : \n      ['Estabeleça orçamento mensal', 'Considere consultoria financeira'],\n    nextReview: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000).toISOString() // 6 meses\n  },\n  \n  // Informações técnicas\n  technical: {\n    processingTime: Date.now() - new Date(data.metadata.timestamp).getTime(),\n    algorithm: 'zkfinance-credit-v1',\n    dataPoints: Object.keys(data.analysisData).length,\n    validation: 'passed'\n  }\n};\n\nreturn {\n  json: enhancedPayload\n};"
+        },
+        "id": "fcc12b73-2ecc-4dc6-b17b-4f609e22f48a",
+        "name": "Prepare Callback",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          336,
+          304
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ $json }}",
+          "options": {}
+        },
+        "id": "36bc1c72-39c3-4246-9f85-7dda915e7dba",
+        "name": "Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          560,
+          304
+        ]
+      }
+    ],
+    "pinData": {},
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Prepare Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Data": {
+        "main": [
+          [
+            {
+              "node": "Credit Analysis",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Credit Analysis": {
+        "main": [
+          [
+            {
+              "node": "Prepare Callback",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Callback": {
+        "main": [
+          [
+            {
+              "node": "Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": true,
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "versionId": "da253f86-0caf-44b8-9f88-643ffdf46a6f",
+    "meta": {
+      "instanceId": "953d0d372267e9179d5444c37ce8c4806a693ed44c0f582b4047e53ec94443a6"
+    },
+    "id": "mx1IpWxQupZ9VWfe",
+    "tags": [
+      {
+        "createdAt": "2025-07-22T03:16:26.918Z",
+        "updatedAt": "2025-07-22T03:16:26.918Z",
+        "id": "wlXkCpwLZIYNmhE9",
+        "name": "credit-analysis"
+      }
+    ]
+  }

@@ -1,13 +1,42 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { loginWithGoogle, loginWithPassword, connectWallet, user, loading, error, walletAddress } = useAuth();
+  const [formLoading, setFormLoading] = useState(false);
+  const [metaMaskLoading, setMetaMaskLoading] = useState(false);
+
+  // Redireciona se já estiver logado
+  if (user && !loading) {
+    navigate("/user-selection");
+  }
+
+  const handleGoogle = async () => {
+    setFormLoading(true);
+    await loginWithGoogle();
+    setFormLoading(false);
+  };
+
+  const handlePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormLoading(true);
+    await loginWithPassword(email, password);
+    setFormLoading(false);
+  };
+
+  const handleMetaMask = async () => {
+    setMetaMaskLoading(true);
+    await connectWallet();
+    setMetaMaskLoading(false);
+  };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
@@ -88,6 +117,8 @@ const Login = () => {
             <Button
               variant="outline"
               className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              onClick={handleGoogle}
+              disabled={formLoading || loading}
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -105,11 +136,13 @@ const Login = () => {
             <Button
               variant="outline"
               className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              onClick={handleMetaMask}
+              disabled={metaMaskLoading}
             >
               <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M
               </div>
-              MetaMask
+              {walletAddress ? "Carteira conectada" : "MetaMask"}
             </Button>
           </div>
 
@@ -125,7 +158,7 @@ const Login = () => {
           </div>
 
           {/* Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handlePassword}>
             <div className="space-y-2">
               <Input
                 type="email"
@@ -133,6 +166,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-12 bg-muted border-border placeholder:text-foreground"
+                disabled={formLoading || loading}
               />
             </div>
 
@@ -143,11 +177,13 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-12 bg-muted border-border pr-10 placeholder:text-foreground"
+                disabled={formLoading || loading}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                tabIndex={-1}
               >
                 {showPassword ? (
                   <EyeOff className="w-4 h-4 text-foreground" />
@@ -161,21 +197,23 @@ const Login = () => {
               <Link
                 to="/forgot-password"
                 className="text-small text-foreground hover:text-foreground"
-                
               >
                 Esqueci minha Senha
               </Link>
             </div>
 
-            <Link to="/user-selection">
-              <Button
-                type="button"
-                className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
-              >
-                Login
-              </Button>
-            </Link>
+            <Button
+              type="submit"
+              className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
+              disabled={formLoading || loading}
+            >
+              {formLoading || loading ? "Entrando..." : "Login"}
+            </Button>
           </form>
+
+          {error && (
+            <div className="text-red-500 text-sm mt-2">{error}</div>
+          )}
 
           <p className="text-body text-foreground">
             Não tem uma conta?{" "}

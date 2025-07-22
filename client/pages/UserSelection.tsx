@@ -73,7 +73,7 @@ const UserSelection = () => {
         {/* Main Content */}
         <div className="space-y-8">
           <div className="space-y-4">
-            <p className="text-muted-foreground text-body">
+            <p className="text-foreground text-body">
               Que bom ter você aqui
             </p>
             <h1 className="text-h2 text-foreground">

@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 import {
   ArrowLeft,
   Upload,
@@ -21,6 +29,7 @@ import {
 
 const CollateralRegistration = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
   const [formData, setFormData] = useState({
     type: "",
     brand: "",
@@ -141,10 +150,12 @@ const CollateralRegistration = () => {
 
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                  <User className="w-4 h-4" />
-                  <span className="text-body">Maria Cardoso</span>
+                  {user?.user_metadata?.avatar_url && (
+                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                  )}
+                  <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
                   <span className="text-small text-foreground">
-                    @maaria_89
+                    @{user?.email ? user.email.split("@")[0] : "usuario"}
                   </span>
                 </div>
               </div>
@@ -214,20 +225,18 @@ const CollateralRegistration = () => {
                       <label className="text-sm font-medium">
                         Tipo de Colateral *
                       </label>
-                      <select
-                        className="w-full h-12 px-3 bg-muted border border-border rounded-lg text-foreground"
-                        value={formData.type}
-                        onChange={(e) =>
-                          handleInputChange("type", e.target.value)
-                        }
-                      >
-                        <option value="">Selecione o tipo</option>
-                        {collateralTypes.map((type) => (
-                          <option key={type} value={type}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
+                      <Select value={formData.type} onValueChange={(value) => handleInputChange("type", value)}>
+                        <SelectTrigger className="w-full h-12 bg-muted border-border">
+                          <SelectValue placeholder="Selecione o tipo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {collateralTypes.map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -322,20 +331,18 @@ const CollateralRegistration = () => {
                       <label className="text-sm font-medium">
                         Estado de Conservação *
                       </label>
-                      <select
-                        className="w-full h-12 px-3 bg-muted border border-border rounded-lg text-foreground"
-                        value={formData.condition}
-                        onChange={(e) =>
-                          handleInputChange("condition", e.target.value)
-                        }
-                      >
-                        <option value="">Selecione o estado</option>
-                        {conditionOptions.map((condition) => (
-                          <option key={condition} value={condition}>
-                            {condition}
-                          </option>
-                        ))}
-                      </select>
+                      <Select value={formData.condition} onValueChange={(value) => handleInputChange("condition", value)}>
+                        <SelectTrigger className="w-full h-12 bg-muted border-border">
+                          <SelectValue placeholder="Selecione o estado" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {conditionOptions.map((condition) => (
+                            <SelectItem key={condition} value={condition}>
+                              {condition}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
                 </div>

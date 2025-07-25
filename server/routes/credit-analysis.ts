@@ -5,8 +5,8 @@ const router = Router();
 
 /**
  * POST /api/credit-analysis
- * Endpoint para análise de crédito
- * Substitui o webhook do n8n com processamento local
+ * Credit analysis endpoint
+ * Replaces the n8n webhook with local processing
  */
 router.post('/credit-analysis', async (req: Request, res: Response) => {
   try {
@@ -14,7 +14,7 @@ router.post('/credit-analysis', async (req: Request, res: Response) => {
     console.log('Headers:', req.headers);
     console.log('Body:', req.body);
     
-    // Extrair dados do usuário do body
+    // Extract user data from body
     const userData: CreditData = {
       income: req.body.income || 0,
       employment_years: req.body.employment_years || 0,
@@ -23,7 +23,7 @@ router.post('/credit-analysis', async (req: Request, res: Response) => {
       payment_defaults: req.body.payment_defaults || 0
     };
 
-    // Validar dados obrigatórios
+    // Validate required data
     if (userData.income <= 0) {
       return res.status(400).json({
         error: 'Invalid income value',
@@ -31,7 +31,7 @@ router.post('/credit-analysis', async (req: Request, res: Response) => {
       });
     }
 
-    // Gerar request ID (pode vir do header ou ser gerado)
+    // Generate request ID (can come from header or be generated)
     const requestId = req.headers['x-request-id'] as string || 
                      Math.random().toString(36).substring(2, 15) + 
                      Math.random().toString(36).substring(2, 15);
@@ -39,7 +39,7 @@ router.post('/credit-analysis', async (req: Request, res: Response) => {
     console.log('Processing credit analysis for request ID:', requestId);
     console.log('User data:', userData);
 
-    // Executar análise de crédito (agora assíncrona)
+    // Execute credit analysis (now asynchronous)
     const analysisResult = await analyzeCredit(userData, requestId);
 
     console.log('=== CREDIT ANALYSIS RESULT ===');
@@ -50,7 +50,7 @@ router.post('/credit-analysis', async (req: Request, res: Response) => {
     console.log('Processing Time (ms):', analysisResult.technical.processingTime);
     console.log('=====================================\n');
 
-    // Retornar resultado
+    // Return result
     res.status(200).json(analysisResult);
 
   } catch (error) {
@@ -65,7 +65,7 @@ router.post('/credit-analysis', async (req: Request, res: Response) => {
 
 /**
  * GET /api/credit-analysis/health
- * Health check específico para o serviço de análise de crédito
+ * Specific health check for the credit analysis service
  */
 router.get('/credit-analysis/health', (req: Request, res: Response) => {
   res.status(200).json({
@@ -79,7 +79,7 @@ router.get('/credit-analysis/health', (req: Request, res: Response) => {
 
 /**
  * GET /api/credit-analysis/algorithm
- * Endpoint para consultar informações sobre o algoritmo
+ * Endpoint to get information about the algorithm
  */
 router.get('/credit-analysis/algorithm', (req: Request, res: Response) => {
   res.status(200).json({

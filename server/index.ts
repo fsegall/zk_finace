@@ -3,24 +3,24 @@ import express from 'express';
 import cors from "cors";
 import creditAnalysisRouter from './routes/credit-analysis.js';
 
-// Carregar variáveis de ambiente
+// Load environment variables
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log('🔧 Carregando variáveis de ambiente...');
-console.log('🔑 ZKVERIFY_SEED_PHRASE:', process.env.ZKVERIFY_SEED_PHRASE ? 'Configurada' : 'Não configurada');
+console.log('🔧 Loading environment variables...');
+console.log('🔑 ZKVERIFY_SEED_PHRASE:', process.env.ZKVERIFY_SEED_PHRASE ? 'Configured' : 'Not configured');
 
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // Para aceitar JSON no body
+app.use(express.json()); // To accept JSON in the body
 
-// Rotas de análise de crédito (nova implementação local)
+// Credit analysis routes (new local implementation)
 app.use('/api', creditAnalysisRouter);
 
-// Endpoint legado removido - migração para processamento local concluída
+// Legacy endpoint removed - migration to local processing completed
 
-// Endpoint de health check geral
+// General health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'ok', 
@@ -38,16 +38,16 @@ app.get('/health', (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`🚀 Servidor rodando na porta ${port}`);
-  console.log('📊 Endpoints disponíveis:');
-  console.log('- POST /api/credit-analysis (ANÁLISE LOCAL + ZK)');
+  console.log(`🚀 Server running on port ${port}`);
+  console.log('📊 Available endpoints:');
+  console.log('- POST /api/credit-analysis (LOCAL ANALYSIS + ZK)');
   console.log('- GET /api/credit-analysis/health');
   console.log('- GET /api/credit-analysis/algorithm');
   console.log('- GET /health');
   console.log('');
-  console.log('💡 Análise de crédito 100% local com provas ZK');
-  console.log('🔒 Dados processados localmente - sigilo total garantido');
-  console.log('🔐 Provas ZK geradas para compliance com zero-knowledge');
+  console.log('💡 100% local credit analysis with ZK proofs');
+  console.log('🔒 Data processed locally - total confidentiality guaranteed');
+  console.log('🔑 ZK proofs generated for zero-knowledge compliance');
 });
 
 export default app;

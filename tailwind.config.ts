@@ -17,14 +17,14 @@ export default {
         sans: ['Encode Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        'h1': ['2rem', { lineHeight: '1.2', fontWeight: '700' }], // 32px (reduzido de 64px)
-        'h2': ['1.5rem', { lineHeight: '1.3', fontWeight: '600' }], // 24px (reduzido de 48px)
-        'h3': ['1.25rem', { lineHeight: '1.4', fontWeight: '600' }], // 20px (reduzido de 40px)
-        'h4': ['1.125rem', { lineHeight: '1.5', fontWeight: '500' }], // 18px (reduzido de 36px)
-        'h5': ['1rem', { lineHeight: '1.5', fontWeight: '500' }], // 14px (reduzido de 28px)
-        'h6': ['0.9rem', { lineHeight: '1.5', fontWeight: '500' }], // 12px (reduzido de 24px)
-        'body': ['0.8rem', { lineHeight: '1.6', fontWeight: '400' }], // 14px (reduzido de 16px)
-        'small': ['0.7rem', { lineHeight: '1.5', fontWeight: '400' }], // 12px (reduzido de 14px)
+        'h1': ['2rem', { lineHeight: '1.2', fontWeight: '700' }], // 32px (reduced from 64px)
+        'h2': ['1.5rem', { lineHeight: '1.3', fontWeight: '600' }], // 24px (reduced from 48px)
+        'h3': ['1.25rem', { lineHeight: '1.4', fontWeight: '600' }], // 20px (reduced from 40px)
+        'h4': ['1.125rem', { lineHeight: '1.5', fontWeight: '500' }], // 18px (reduced from 36px)
+        'h5': ['1rem', { lineHeight: '1.5', fontWeight: '500' }], // 14px (reduced from 28px)
+        'h6': ['0.9rem', { lineHeight: '1.5', fontWeight: '500' }], // 12px (reduced from 24px)
+        'body': ['0.8rem', { lineHeight: '1.6', fontWeight: '400' }], // 14px (reduced from 16px)
+        'small': ['0.7rem', { lineHeight: '1.5', fontWeight: '400' }], // 12px (reduced from 14px)
       },
       colors: {
         border: "hsl(var(--border))",
@@ -82,12 +82,12 @@ export default {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
         },
-        // Cores secundárias
+        // Secondary colors
         secondary1: "#3DFFEC",
         secondary2: "#0C0C21",
         secondary3: "#000229",
         secondary4: "#002068",
-        // Cores neutras
+        // Neutral colors
         neutral: {
           50: "#F2F2F2",
           100: "#F2F2F2CC",

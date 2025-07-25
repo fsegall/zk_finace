@@ -55,7 +55,33 @@
 
 ---
 
-## 🎨 **DIA 3: Frontend e UX**
+## 🎨 **DIA 3: Smart Contract e Sistema de Roles - ✅ CONCLUÍDO!**
+
+### ✅ **Objetivos:**
+- ✅ **Deploy Smart Contract** - Local e testnet Sepolia
+- ✅ **Testar Contrato** - Validação completa com Foundry
+- ✅ **Implementar Ponte Frontend-Contrato** - Integração com Supabase
+- ✅ **Documentar Sistema DDD** - Roles e entidades
+
+### 🔧 **Tarefas Técnicas:**
+- ✅ **Deploy contrato LoanManager** - Local e Sepolia testnet
+- ✅ **Executar testes Foundry** - Validação completa do contrato
+- ✅ **Criar serviço de integração** - Ponte entre frontend e contrato
+- ✅ **Implementar sincronização** - Supabase ↔ Smart Contract
+- ✅ **Documentar arquitetura DDD** - Roles e entidades
+- ✅ **Criar README_LENDING_SMART_CONTRACT.md** - Documentação completa
+- ✅ **MILESTONE 3**: Smart Contract funcional e testado
+- ✅ **MILESTONE 4**: Sistema de roles implementado
+
+### 📊 **Entregáveis:**
+- ✅ **Smart Contract deployado e testado**
+- ✅ **Ponte Frontend-Contrato implementada**
+- ✅ **Sistema de roles documentado (DDD)**
+- ✅ **README_LENDING_SMART_CONTRACT.md criado**
+
+---
+
+## 🎨 **DIA 4: Frontend e UX**
 
 ### ✅ **Objetivos:**
 - [ ] **Testar interface** - Verificar se frontend funciona
@@ -70,8 +96,7 @@
 - [ ] **Validar formulários de entrada** - Dados corretos
 - [ ] **Testar em diferentes dispositivos/tamanhos de tela** - Compatibilidade
 - [ ] **Implementar tratamento de erros no frontend** - Robustez
-- [ ] **MILESTONE 4**: Implementar fluxo completo end-to-end
-- [ ] **MILESTONE 5**: Funcionalidades avançadas básicas
+- [ ] **MILESTONE 5**: Implementar fluxo completo end-to-end
 
 ### 📊 **Entregáveis:**
 - [ ] Interface responsiva e funcional
@@ -81,7 +106,7 @@
 
 ---
 
-## 📚 **DIA 4: Documentação e Deploy - ✅ CONCLUÍDO!**
+## 📚 **DIA 5: Documentação e Deploy - ✅ CONCLUÍDO!**
 
 ### ✅ **Objetivos:**
 - ✅ **README completo** - Documentação clara
@@ -109,15 +134,16 @@
 
 ## 🏗️ **ARQUITETURA ATUAL (SEM N8N)**
 
-### 🔄 **Fluxo de Análise de Crédito:**
+### 🔄 **Fluxo Completo de Empréstimo:**
 ```
-Frontend → API Local → Algoritmo Interno → Prova ZK → ZKVerify (OBRIGATÓRIO)
+Frontend → API Local → Algoritmo Interno → Prova ZK → ZKVerify → Smart Contract → Supabase
 ```
 
 ### 📦 **Módulos Integrados:**
 - **credit-agent**: Algoritmo local (sem webhook externo)
 - **zk-credit**: Geração de provas ZK locais ✅
-- **foundry**: Smart contracts (preparação)
+- **foundry**: Smart contracts de empréstimo ✅
+- **supabase**: Sistema de roles e persistência (DDD) ✅
 
 ### 🔒 **Vantagens da Arquitetura Local:**
 - ✅ **Zero dependências externas** - Tudo roda no monorepo
@@ -147,6 +173,8 @@ Frontend → API Local → Algoritmo Interno → Prova ZK → ZKVerify (OBRIGAT�
 - [ ] Análise de crédito funcionando
 - [ ] Geração de provas ZK
 - [ ] **Integração ZKVerify estável** (OBRIGATÓRIO)
+- [ ] **Smart Contract de empréstimo** (OBRIGATÓRIO)
+- [ ] **Sistema de roles e persistência** (OBRIGATÓRIO)
 - [ ] Interface responsiva
 - [ ] API estável
 
@@ -164,13 +192,16 @@ Frontend → API Local → Algoritmo Interno → Prova ZK → ZKVerify (OBRIGAT�
 ### 🎯 **Antes da Entrega:**
 - [ ] Todos os endpoints funcionando
 - [ ] Frontend responsivo
-- [ ] **Provas ZK sendo geradas**
-- [ ] **ZKVerify integrado (mesmo com erro esperado)**
-- [ ] Documentação completa
-- [ ] Código limpo
-- [ ] Testes básicos passando
-- [ ] Deploy funcionando
-- [ ] **Material de apresentação pronto**
+- [ ] **Provas ZK sendo geradas** ✅
+- [ ] **ZKVerify integrado (mesmo com erro esperado)** ✅
+- [ ] **Smart Contract deployado e testado** ✅
+- [ ] **Sistema de roles implementado (DDD)** ✅
+- [ ] **Ponte Frontend-Contrato funcionando** ✅
+- [ ] Documentação completa ✅
+- [ ] Código limpo ✅
+- [ ] Testes básicos passando ✅
+- [ ] Deploy funcionando ✅
+- [ ] **Material de apresentação pronto** ✅
 
 ### 🚀 **MVP PRONTO PARA APRESENTAÇÃO AOS DONOS DA EMPRESA! ✅**
 
@@ -182,10 +213,26 @@ Frontend → API Local → Algoritmo Interno → Prova ZK → ZKVerify (OBRIGAT�
 - **Submissão de Provas**: Múltiplas provas verificadas com sucesso
 - **Scripts de Teste**: Organizados e funcionais
 
+### ✅ **Smart Contract de Empréstimo EVM:**
+- **Contrato LoanManager**: Implementado e testado ✅
+- **Deploy Local**: Funcionando com Foundry ✅
+- **Deploy Testnet Sepolia**: Pronto para produção ✅
+- **Integração Frontend**: Ponte com Supabase implementada ✅
+- **Serviço Viem**: Integração completa com TypeScript ✅
+
+### ✅ **Sistema de Roles e Entidades (DDD):**
+- **Domain Driven Design**: Arquitetura robusta implementada ✅
+- **Supabase Schema**: Roles, perfis e transações estruturados ✅
+- **Ponte Frontend-Contrato**: Persistência e sincronização ✅
+- **Controle de Acesso**: RBAC implementado ✅
+- **Hook Personalizado**: useLoanIntegration para frontend ✅
+
 ### ✅ **Documentação:**
-- **README Principal**: Atualizado com testes ZKVerify
-- **README zk-credit**: Documentação completa dos scripts
-- **Comandos Prontos**: Para demonstração ao vivo
+- **README Principal**: Atualizado com testes ZKVerify ✅
+- **README zk-credit**: Documentação completa dos scripts ✅
+- **README_LENDING_SMART_CONTRACT.md**: Documentação do contrato ✅
+- **Comandos Prontos**: Para demonstração ao vivo ✅
+- **Script de Integração**: test_integration_complete.js ✅
 
 ### ✅ **Código Limpo:**
 - **Scripts Essenciais**: Apenas os necessários mantidos

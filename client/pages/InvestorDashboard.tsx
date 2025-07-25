@@ -19,9 +19,12 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useRBAC } from "../hooks/useRBAC";
+import { useLanguage } from "../contexts/LanguageContext";
+import LanguageSwitch from "../components/LanguageSwitch";
 
 const InvestorDashboard = () => {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
   const { user, profile, logout } = useAuth();
   const { isAdmin, isLender, isBorrower } = useRBAC();
 
@@ -209,9 +212,10 @@ const InvestorDashboard = () => {
                   </div>
                 </div>
 
+                <LanguageSwitch />
                 <Link to="/login">
                   <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                    <span className="text-body">Sair</span>
+                    <span className="text-body">{t('auth.logout')}</span>
                   </button>
                 </Link>
 

@@ -21,9 +21,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useRBAC } from "../hooks/useRBAC";
+import { useLanguage } from "../contexts/LanguageContext";
+import LanguageSwitch from "../components/LanguageSwitch";
 
 const BorrowerDashboard = () => {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
   const { logout, user, profile } = useAuth();
   const { isAdmin, isLender, isBorrower } = useRBAC();
   const navigate = useNavigate();
@@ -247,11 +250,12 @@ const BorrowerDashboard = () => {
                   </div>
                 </div>
 
+                <LanguageSwitch />
                 <button
                   onClick={handleLogout}
                   className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
                 >
-                  <span className="text-sm">Sair</span>
+                  <span className="text-sm">{t('auth.logout')}</span>
                 </button>
 
                 <button

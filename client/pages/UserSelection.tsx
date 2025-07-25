@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "../contexts/LanguageContext";
+import LanguageSwitch from "../components/LanguageSwitch";
 
 const UserSelection = () => {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
       {/* Background gradient blur effect */}
@@ -15,6 +18,11 @@ const UserSelection = () => {
       />
 
       <div className="relative z-10 text-center max-w-md mx-auto px-6">
+        {/* Header with Language Switch */}
+        <div className="absolute top-4 right-4">
+          <LanguageSwitch />
+        </div>
+        
         {/* Logo */}
         <div className="flex items-center justify-center mb-12">
           <svg
@@ -74,12 +82,10 @@ const UserSelection = () => {
         <div className="space-y-8">
           <div className="space-y-4">
             <p className="text-foreground text-body">
-              Que bom ter você aqui
+              {t('user.welcome')}
             </p>
             <h1 className="text-h2 text-foreground">
-              Como você gostaria de
-              <br />
-              utilizar a ZK Finance?
+              {t('user.howToUse')}
             </h1>
           </div>
 
@@ -89,7 +95,7 @@ const UserSelection = () => {
                 className="w-full h-14 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
                 variant="outline"
               >
-                Quero Solicitar Crédito
+                {t('user.wantCredit')}
               </Button>
             </Link>
 
@@ -98,7 +104,7 @@ const UserSelection = () => {
                 className="w-full h-14 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
                 variant="outline"
               >
-                Quero Investir
+                {t('user.wantInvest')}
               </Button>
             </Link>
           </div>

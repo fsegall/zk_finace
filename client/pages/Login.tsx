@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -109,7 +111,7 @@ const Login = () => {
         {/* Main Content */}
         <div className="space-y-8">
           <h1 className="text-h2 text-foreground">
-            Acesse sua conta
+            {t('auth.login')}
           </h1>
 
           {/* Social Login */}
@@ -142,7 +144,7 @@ const Login = () => {
               <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M
               </div>
-              {walletAddress ? "Carteira conectada" : "MetaMask"}
+              {walletAddress ? t('auth.walletConnected') : "MetaMask"}
             </Button>
           </div>
 
@@ -152,7 +154,7 @@ const Login = () => {
             </div>
             <div className="relative flex justify-center text-small uppercase">
               <span className="bg-background px-2 text-foreground">
-                ou
+                {t('auth.or')}
               </span>
             </div>
           </div>
@@ -162,7 +164,7 @@ const Login = () => {
             <div className="space-y-2">
               <Input
                 type="email"
-                placeholder="Login"
+                placeholder={t('auth.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-12 bg-muted border-border placeholder:text-foreground"
@@ -198,7 +200,7 @@ const Login = () => {
                 to="/forgot-password"
                 className="text-small text-foreground hover:text-foreground"
               >
-                Esqueci minha Senha
+                {t('auth.forgotPassword')}
               </Link>
             </div>
 
@@ -207,7 +209,7 @@ const Login = () => {
               className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
               disabled={formLoading || loading}
             >
-              {formLoading || loading ? "Entrando..." : "Login"}
+              {formLoading || loading ? t('auth.entering') : t('auth.login')}
             </Button>
           </form>
 
@@ -216,9 +218,9 @@ const Login = () => {
           )}
 
           <p className="text-body text-foreground">
-            Não tem uma conta?{" "}
+            {t('auth.dontHaveAccount')}{" "}
             <Link to="/register" className="text-primary hover:underline">
-              Cadastrar
+              {t('auth.register')}
             </Link>
           </p>
         </div>

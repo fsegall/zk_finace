@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -37,8 +38,9 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider>
-          <AuthProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            <AuthProvider>
             <TooltipProvider>
               <Toaster />
               <Sonner />
@@ -76,6 +78,7 @@ function App() {
             </TooltipProvider>
           </AuthProvider>
         </ThemeProvider>
+        </LanguageProvider>
       </QueryClientProvider>
     </BrowserRouter>
   );

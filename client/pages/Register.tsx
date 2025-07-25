@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -111,7 +113,7 @@ const Register = () => {
         {/* Main Content */}
         <div className="space-y-8">
           <h1 className="text-h2 font-semibold text-foreground">
-            Criar uma conta
+            {t('auth.register')}
           </h1>
 
           {/* Social Login */}
@@ -144,7 +146,7 @@ const Register = () => {
               <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
                 M
               </div>
-              {walletAddress ? "Carteira conectada" : "MetaMask"}
+              {walletAddress ? t('auth.walletConnected') : "MetaMask"}
             </Button>
           </div>
 
@@ -154,7 +156,7 @@ const Register = () => {
             </div>
             <div className="relative flex justify-center text-small uppercase">
               <span className="bg-background px-2 text-foreground">
-                ou
+                {t('auth.or')}
               </span>
             </div>
           </div>
@@ -164,7 +166,7 @@ const Register = () => {
             <div className="space-y-2">
               <Input
                 type="text"
-                placeholder="Digite seu nome completo"
+                placeholder={t('auth.fullName')}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className="h-12 bg-muted border-border"
@@ -175,7 +177,7 @@ const Register = () => {
             <div className="space-y-2">
               <Input
                 type="email"
-                placeholder="Digite seu email principal"
+                placeholder={t('auth.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="h-12 bg-muted border-border"
@@ -186,7 +188,7 @@ const Register = () => {
             <div className="space-y-2">
               <Input
                 type="password"
-                placeholder="Crie uma senha"
+                placeholder={t('auth.password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-12 bg-muted border-border"
@@ -199,7 +201,7 @@ const Register = () => {
               className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
               disabled={formLoading || loading}
             >
-              {formLoading || loading ? "Cadastrando..." : "Cadastre-se"}
+              {formLoading || loading ? t('auth.registering') : t('auth.register')}
             </Button>
           </form>
 
@@ -208,9 +210,9 @@ const Register = () => {
           )}
 
           <p className="text-body text-foreground">
-            Já tem uma conta?{" "}
+            {t('auth.alreadyHaveAccount')}{" "}
             <Link to="/login" className="text-primary hover:underline">
-              Entrar
+              {t('auth.login')}
             </Link>
           </p>
         </div>

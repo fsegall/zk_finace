@@ -1,12 +1,12 @@
 # 🔐 Módulo `zk-credit/` — Provas ZK para Análise de Crédito
 
-Este módulo contém os circuitos Circom, scripts e ferramentas para gerar, provar e verificar provas ZK (Zero-Knowledge Proofs) usadas no processo de análise de crédito. Ele permite comprovar que um score privado atende a um critério mínimo **sem revelar o valor real**.
+Este módulo contém os circuitos Circom, scripts e ferramentas para gerar provas ZK (Zero-Knowledge Proofs) usadas no processo de análise de crédito. Ele permite comprovar que um score privado atende a um critério mínimo **sem revelar o valor real**.
 
 ---
 
 ## 🎯 Objetivo
 
-Provar que um usuário possui `score >= threshold` usando provas Groth16 via Circom e SnarkJS, com saída pública `passed = 1`, validada pela plataforma (localmente ou via ZKVerify).
+Provar que um usuário possui `score >= threshold` usando provas Groth16 via Circom e SnarkJS, com saída pública `passed = 1`, validada pela plataforma ZKVerify.
 
 ---
 
@@ -14,7 +14,7 @@ Provar que um usuário possui `score >= threshold` usando provas Groth16 via Cir
 
 - [Circom](https://docs.circom.io/)
 - [SnarkJS](https://github.com/iden3/snarkjs)
-- [ZKVerify](https://zkverify.io/)
+- [ZKVerify](https://zkverify.io/) - Biblioteca oficial `zkverifyjs`
 - Supabase (via Edge Function)
 - Web3 Frontend (importação .wasm e .zkey)
 
@@ -40,9 +40,9 @@ zk-credit/
 │       └── generate_witness.js
 ├── scripts/
 │   ├── setup.sh
-│   └── prove.sh
-├── zk-mock/
-│   └── mock-verify.js
+│   ├── register-circuit.js
+│   ├── test-zkverify-proof.js
+│   └── test-zkverify-rpc.js
 └── README.md
 ```
 
@@ -79,101 +79,98 @@ component main = CreditScoreCheck();
 ### 2. Gerar prova
 
 ```bash
-./scripts/prove.sh
+node scripts/generateProofAndHash.js
 ```
 
-### 3. Verificar localmente (snarkjs)
+### 3. Integração com ZKVerify
 
-```bash
-snarkjs groth16 verify build/verification_key.json build/public.json build/proof.json
-```
-
-### 4. Verificação via código
-
-```bash
-node zk-mock/mock-verify.js
-```
+O módulo é integrado automaticamente via `server/services/zk-credit.ts` usando a biblioteca oficial `zkverifyjs`.
 
 ---
 
 ## ⚙️ Scripts Disponíveis
 
-### 🔧 Setup inicial
+### `setup.sh`
+Configura o ambiente, compila circuitos e gera chaves necessárias.
 
-```bash
-npm run setup
+### `register-circuit.js`
+Registra a verification key (circuito) na blockchain ZKVerify. **Execute apenas uma vez** por circuito.
+
+### `test-zkverify-proof.js`
+Testa a submissão de provas ZK usando uma verification key já registrada. **Pode ser executado múltiplas vezes** para demonstrar a integração.
+
+### `test-zkverify-rpc.js`
+Testa a conectividade RPC com a rede ZKVerify Volta. Verifica saúde da rede, versão do node e dados on-chain.
+
+## 🧪 Testes de Integração
+
+### Fluxo de Teste
+1. **Build dos artefatos**: `bash scripts/setup.sh`
+2. **Registro do circuito**: `node scripts/register-circuit.js` (uma vez)
+3. **Teste de conectividade**: `node scripts/test-zkverify-rpc.js`
+4. **Teste de provas**: `node scripts/test-zkverify-proof.js` (múltiplas vezes)
+
+### Status dos Testes
+- ✅ **Conectividade RPC**: 13+ peers, rede estável
+- ✅ **Registro de VK**: Verification key registrada na blockchain
+- ✅ **Submissão de Provas**: Múltiplas provas verificadas com sucesso
+- ✅ **Rede Volta**: Operacional e acessível
+
+---
+
+## 🔧 Integração
+
+### Via Serviço ZK
+
+```typescript
+import { ZKCreditService } from './zk-credit.js';
+
+const zkService = new ZKCreditService();
+const proof = await zkService.generateProof({
+  score: 850,
+  threshold: 650,
+  requestId: 'request-123'
+});
 ```
 
-> Executa o Powers of Tau e gera os arquivos de chave de verificação.
+### Via ZKVerify
 
----
+```typescript
+import { zkVerifySession, Library, CurveType } from 'zkverifyjs';
 
-### ⚙️ Compilar circuito
+const session = await zkVerifySession.start()
+  .Volta()
+  .withAccount(seedPhrase);
 
-```bash
-npm run compile
+const { events, transactionResult } = await session
+  .verify()
+  .groth16({
+    library: Library.snarkjs,
+    curve: CurveType.bn128
+  })
+  .execute({
+    proofData: { vk, proof, publicSignals },
+    domainId: 1
+  });
 ```
 
-> Gera os arquivos `.wasm`, `.r1cs` e `.sym` a partir do `.circom`.
+---
 
+## 📊 Status
 
-> Executa `scripts/generateProofAndHash.js` para gerar:
->
-> - Prova (`proof.json`)
-
-### 🧪 Gerar prova ZK com hash de commitment
-
-```bash
-npm run generate
-```
-
-> Executa `scripts/generateProofAndHash.js` para gerar:
->
-> - Prova (`proof.json`)
-> - Sinais públicos (`public.json`)
-> - Witness (`witness.wtns`)
-> - Hash do commitment ZK
+- ✅ **Circuito**: Compilado e testado
+- ✅ **Geração de Prova**: Funcionando
+- ✅ **Integração ZKVerify**: Implementada e testada
+- ✅ **Biblioteca Oficial**: `zkverifyjs` configurada
+- ✅ **Scripts de Teste**: Organizados e funcionais
+- ✅ **Rede Volta**: Conectividade confirmada
+- ✅ **Provas ZK**: Submissão e verificação operacionais
 
 ---
 
-### ✅ Verificar prova localmente (mock ZKVerify)
+## 🔗 Links
 
-```bash
-npm run verify
-```
-
-> Executa `zk-mock/mock-verify.js` usando o `verification_key.json`.
-
----
-
-## 🧪 Teste com entrada
-
-```json
-{
-  "score": "720",
-  "threshold": "650"
-}
-```
-
-- Prova: `proof.json`
-- Entrada pública: `["650", "1"]` → passou
-
----
-
-## 📤 Integração com Frontend
-
-O frontend:
-- Gera prova via `snarkjs.groth16.fullProve(...)`
-- Envia a prova e os publicSignals para Supabase
-- Recebe `{ valid: true/false }` da Edge Function
-
----
-
-## 🔒 Privacidade
-
-- `score` é privado e não revelado
-- Apenas `threshold` e `passed` são públicos
-
----
-
-> Desenvolvido como parte do MVP entre-chain-lend por Felipe Segall
+- [ZKVerify Documentation](https://docs.zkverify.io)
+- [zkverifyjs npm package](https://www.npmjs.com/package/zkverifyjs)
+- [Circom Documentation](https://docs.circom.io/)
+- [SnarkJS GitHub](https://github.com/iden3/snarkjs)

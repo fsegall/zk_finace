@@ -192,11 +192,21 @@ const CreateLance = () => {
 
       const result = await creditAnalysis.analyzeCreditAsync(creditData);
       
-      if (result.passed) {
+      if (result.analysis.passed) {
         setCreditAnalysisCompleted(true);
-        alert(`Análise de crédito aprovada! Score: ${result.score} (Threshold: ${result.threshold})`);
+        
+        let zkInfo = '';
+        if (result.zkProof?.zkVerifySubmission) {
+          const zk = result.zkProof.zkVerifySubmission;
+          zkInfo = `\n🔐 Prova ZK: ${zk.success ? '✅ Enviada para ZKVerify' : '❌ Erro'}`;
+          if (zk.transactionHash) {
+            zkInfo += `\n📄 TX Hash: ${zk.transactionHash}`;
+          }
+        }
+        
+        alert(`✅ Análise de crédito aprovada!\n\n📊 Score: ${result.analysis.score} (${result.analysis.category})\n🎯 Threshold: ${result.analysis.threshold}\n💰 Limite sugerido: R$ ${result.analysis.suggestedLimit.toLocaleString()}\n\n💡 ${result.analysis.message}${zkInfo}`);
       } else {
-        alert(`Análise de crédito reprovada. Score: ${result.score} (Threshold: ${result.threshold})`);
+        alert(`❌ Análise de crédito reprovada.\n\n📊 Score: ${result.analysis.score} (${result.analysis.category})\n🎯 Threshold: ${result.analysis.threshold}\n\n💡 ${result.analysis.message}\n\n📋 Recomendações:\n${result.recommendations.immediate.join('\n')}`);
       }
     } catch (error) {
       console.error("Erro na análise de crédito:", error);

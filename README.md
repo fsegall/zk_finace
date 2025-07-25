@@ -49,6 +49,12 @@ Este projeto é uma plataforma moderna que conecta empreendedores a investidores
 - **zk-credit**: Circuitos Circom e provas ZK para preservação de privacidade
 - **foundry**: Smart contracts para empréstimos e financiamento peer-to-peer
 
+### ✅ Integração ZKVerify
+- **Testes de conectividade RPC** com a rede ZKVerify Volta
+- **Registro de verification keys** na blockchain
+- **Submissão e verificação de provas ZK** em tempo real
+- **Scripts de teste** para demonstração e validação
+
 ---
 
 ## 🔁 Fluxo Atual da Plataforma
@@ -64,9 +70,32 @@ Este projeto é uma plataforma moderna que conecta empreendedores a investidores
 
 1. **Análise de Crédito**: credit-agent (N8N) calcula score do usuário
 2. **Geração de Prova ZK**: zk-credit gera prova de que score ≥ threshold
-3. **Verificação**: ZKVerify valida a prova sem revelar o score
+3. **Verificação ZKVerify**: Prova validada na blockchain ZKVerify Volta
 4. **Smart Contract**: foundry registra empréstimo validado na blockchain
 5. **Financiamento**: Investidores podem financiar via contrato inteligente
+
+## 🧪 Testes de Integração ZKVerify
+
+### Scripts Disponíveis
+```bash
+# Teste de conectividade RPC
+node zk-credit/scripts/test-zkverify-rpc.js
+
+# Registro de verification key (uma vez só)
+node zk-credit/scripts/register-circuit.js
+
+# Teste de submissão de provas (múltiplas vezes)
+node zk-credit/scripts/test-zkverify-proof.js
+
+# Build dos artefatos ZK
+bash zk-credit/scripts/setup.sh
+```
+
+### Status dos Testes
+- ✅ **Conectividade RPC**: 13+ peers, rede estável
+- ✅ **Registro de VK**: Verification key registrada na blockchain
+- ✅ **Submissão de Provas**: Múltiplas provas verificadas com sucesso
+- ✅ **Rede Volta**: Operacional e acessível
 
 ---
 

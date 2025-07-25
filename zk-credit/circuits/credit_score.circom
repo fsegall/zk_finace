@@ -1,6 +1,6 @@
 pragma circom 2.2.2;
 
-include "circomlib/circuits/comparators.circom";
+include "comparators.circom";
 
 template CreditScoreCheck() {
     signal input score;      // privado

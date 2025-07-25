@@ -12,7 +12,7 @@ const UserSelection = () => {
         className="absolute inset-0 opacity-30"
         style={{
           background:
-            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #3CFFB1 0%, #002168 70.19%, #00022A 87.98%)",
+            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #004EF6 0%, #002168 70.19%, #00022A 87.98%)",
           filter: "blur(120px)",
         }}
       />

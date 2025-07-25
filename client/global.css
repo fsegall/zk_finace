@@ -136,4 +136,94 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(0);
 }
 
+/* RainbowKit ConnectButton custom styling - Only for the main button */
+[data-testid="rk-connect-button"] {
+  background-color: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.75rem !important;
+  gap: 1rem !important;
+}
+
+[data-testid="rk-connect-button"]:hover {
+  background-color: hsl(var(--accent)) !important;
+}
+
+/* Only target the account button (when connected) */
+[data-testid="rk-account-button"] {
+  background-color: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+[data-testid="rk-account-button"]:hover {
+  background-color: hsl(var(--accent)) !important;
+}
+
+/* Target specific elements within the account button */
+[data-testid="rk-account-button"] > div {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+[data-testid="rk-account-button"] span {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* RainbowKit Modal styling - Multiple selectors to catch all modal variations */
+[data-testid="rk-connect-modal"],
+[data-testid="rk-connect-modal"] *,
+[data-testid="rk-account-modal"],
+[data-testid="rk-account-modal"] *,
+[data-testid="rk-modal"],
+[data-testid="rk-modal"] * {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Modal backdrop - multiple variations */
+[data-testid="rk-connect-modal"] [data-testid="rk-connect-modal-backdrop"],
+[data-testid="rk-account-modal"] [data-testid="rk-account-modal-backdrop"],
+[data-testid="rk-modal"] [data-testid="rk-modal-backdrop"],
+[data-testid*="modal-backdrop"] {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Modal content - multiple variations */
+[data-testid="rk-connect-modal"] [data-testid="rk-connect-modal-content"],
+[data-testid="rk-account-modal"] [data-testid="rk-account-modal-content"],
+[data-testid="rk-modal"] [data-testid="rk-modal-content"],
+[data-testid*="modal-content"] {
+  background-color: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Modal buttons - multiple variations */
+[data-testid="rk-connect-modal"] button,
+[data-testid="rk-account-modal"] button,
+[data-testid="rk-modal"] button,
+[data-testid*="modal"] button {
+  background-color: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+[data-testid="rk-connect-modal"] button:hover,
+[data-testid="rk-account-modal"] button:hover,
+[data-testid="rk-modal"] button:hover,
+[data-testid*="modal"] button:hover {
+  background-color: hsl(var(--accent)) !important;
+}
+
+/* Only target RainbowKit specific modal elements */
+[data-testid*="rk-connect-modal"],
+[data-testid*="rk-account-modal"],
+[data-testid*="rk-modal"] {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
 

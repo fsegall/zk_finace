@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { loanIntegrationService, LoanData, IntegrationResult } from '../services/LoanIntegrationService';
 import { useAuth } from '../contexts/AuthContext';
+import { useWallet } from './useWallet';
 
 export const useLoanIntegration = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user, walletAddress } = useAuth();
+  const { user } = useAuth();
+  const { address: walletAddress } = useWallet();
 
   const createLoan = async (loanData: LoanData): Promise<IntegrationResult | null> => {
     setLoading(true);
@@ -116,6 +118,5 @@ export const useLoanIntegration = () => {
     getLoanCount,
     loading,
     error,
-    clearError: () => setError(null)
   };
 }; 

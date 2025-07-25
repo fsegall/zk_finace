@@ -6,6 +6,9 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import WalletConnect from "@/components/WalletConnect";
 import {
   Search,
   Bell,
@@ -31,6 +34,8 @@ import {
 
 const InvestorContributions = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile } = useAuth();
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
 
   const contributions = [
@@ -252,23 +257,7 @@ const InvestorContributions = () => {
                   <Bell className="w-5 h-5" />
                 </button>
 
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
-                    <div className="flex flex-col">
-                      <span className="text-body">José Soares</span>
-                      <span className="text-small text-foreground">
-                        @josoa1977
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <Link to="/login">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                    <span className="text-body">Sair</span>
-                  </button>
-                </Link>
+                <WalletConnect />
 
                 <button
                   onClick={toggleTheme}
@@ -297,10 +286,15 @@ const InvestorContributions = () => {
             {/* Header Section */}
             <div className="mb-8">
               <h1 className="text-h2 font-semibold text-foreground mb-2">
-                Lances Contribuídos
+                {t('investor.contributions.title') || 'Lances Contribuídos'}
               </h1>
               <p className="text-body text-foreground">
-                Acompanhe seus investimentos e retornos em tempo real
+                {t('investor.contributions.subtitle') || 'Acompanhe seus investimentos e retornos em tempo real'}
+                {user && (
+                  <span className="block mt-1 text-sm text-muted-foreground">
+                    {t('common.welcome') || 'Olá'}, {profile?.full_name || user.email}
+                  </span>
+                )}
               </p>
             </div>
 

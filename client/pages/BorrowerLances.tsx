@@ -31,6 +31,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useMyLoans, LoanWithDetails } from "../hooks/useMyLoans";
+import WalletConnect from "../components/WalletConnect";
 
 // Tipo unificado para lances (reais e mock)
 interface DisplayLance {
@@ -266,7 +267,7 @@ const BorrowerLances = () => {
         className="absolute inset-0 opacity-20"
         style={{
           background:
-            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #3CFFB1 0%, #002168 70.19%, #00022A 87.98%)",
+            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #004EF6 0%, #002168 70.19%, #00022A 87.98%)",
           filter: "blur(120px)",
         }}
       />
@@ -398,6 +399,8 @@ const BorrowerLances = () => {
 
               {/* User Actions */}
               <div className="flex items-center gap-4">
+                <WalletConnect />
+                
                 <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
                   <Bell className="w-5 h-5" />
                 </button>

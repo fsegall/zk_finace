@@ -17,9 +17,6 @@ interface AuthContextType {
   loginWithPassword: (email: string, password: string) => Promise<void>;
   signupWithPassword: (email: string, password: string, fullName: string) => Promise<void>;
   logout: () => Promise<void>;
-  connectWallet: () => Promise<string | null>; // Metamask
-  disconnectWallet: () => Promise<void>;
-  walletAddress: string | null;
   error: string | null;
 }
 
@@ -30,7 +27,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [roles, setRoles] = useState<AppRole[]>([]);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -103,31 +99,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setSession(null);
     setProfile(null);
     setRoles([]);
-    setWalletAddress(null);
-  };
-
-  // Conexão de carteira (Metamask)
-  const connectWallet = async (): Promise<string | null> => {
-    setError(null);
-    if (!(window as any).ethereum) {
-      setError('Metamask não encontrada');
-      return null;
-    }
-    try {
-      const accounts = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
-      const address = accounts[0];
-      setWalletAddress(address);
-      return address;
-    } catch (err: any) {
-      setError(err.message || 'Erro ao conectar carteira');
-      return null;
-    }
-  };
-
-  // Desconexão de carteira
-  const disconnectWallet = async (): Promise<void> => {
-    setError(null);
-    setWalletAddress(null);
   };
 
   const value: AuthContextType = {
@@ -140,9 +111,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     loginWithPassword,
     signupWithPassword,
     logout,
-    connectWallet,
-    disconnectWallet,
-    walletAddress,
     error,
   };
 

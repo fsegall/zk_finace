@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Edit,
   FileText,
@@ -18,10 +19,12 @@ import {
   Bell,
   User,
 } from "lucide-react";
+import LanguageSwitch from "@/components/LanguageSwitch";
 
 const KYCVerification = () => {
   const { theme, toggleTheme } = useTheme();
   const { user, profile } = useAuth();
+  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -52,52 +55,52 @@ const KYCVerification = () => {
 
   const kycSteps = [
     {
-      title: "KYC Verificação",
+      title: t('kyc.title') || "KYC Verificação",
       steps: [
         {
           icon: Edit,
-          label: "Informações Pessoais",
+          label: t('kyc.personalInfo') || "Informações Pessoais",
           completed: currentStep > 0,
           active: currentStep === 0,
         },
         { 
           icon: FileText, 
-          label: "Verificação ID", 
+          label: t('kyc.idVerification') || "Verificação ID", 
           completed: currentStep > 1,
           active: currentStep === 1,
         },
         { 
           icon: Camera, 
-          label: "Selfie", 
+          label: t('kyc.selfie') || "Selfie", 
           completed: currentStep > 2,
           active: currentStep === 2,
         },
         { 
           icon: CheckCircle, 
-          label: "Review", 
+          label: t('kyc.review') || "Review", 
           completed: currentStep > 3,
           active: currentStep === 3,
         },
       ],
     },
     {
-      title: "Dados de Crédito",
+      title: t('kyc.creditData') || "Dados de Crédito",
       steps: [
         { 
           icon: Info, 
-          label: "Informações Gerais", 
+          label: t('kyc.generalInfo') || "Informações Gerais", 
           completed: currentStep > 4,
           active: currentStep === 4,
         },
         { 
           icon: Scan, 
-          label: "Scanear Garantia", 
+          label: t('kyc.scanCollateral') || "Scanear Garantia", 
           completed: currentStep > 5,
           active: currentStep === 5,
         },
         { 
           icon: BarChart3, 
-          label: "Análise", 
+          label: t('kyc.analysis') || "Análise", 
           completed: currentStep > 6,
           active: currentStep === 6,
         },
@@ -106,23 +109,23 @@ const KYCVerification = () => {
   ];
 
   const stepTitles = [
-    "Informações Pessoais",
-    "Verificação ID",
-    "Selfie",
-    "Review",
-    "Informações Gerais",
-    "Scanear Garantia",
-    "Análise"
+    t('kyc.personalInfo') || "Informações Pessoais",
+    t('kyc.idVerification') || "Verificação ID",
+    t('kyc.selfie') || "Selfie",
+    t('kyc.review') || "Review",
+    t('kyc.generalInfo') || "Informações Gerais",
+    t('kyc.scanCollateral') || "Scanear Garantia",
+    t('kyc.analysis') || "Análise"
   ];
 
   const stepDescriptions = [
-    "Preencha os espaços com suas informações pessoais",
-    "Faça upload dos documentos de identificação",
-    "Tire uma selfie para verificação facial",
-    "Revise todas as informações antes de prosseguir",
-    "Informe seus dados financeiros e de crédito",
-    "Escaneie ou fotografe seus bens como garantia",
-    "Processamento ZK e geração de score de crédito"
+    t('kyc.fillPersonalInfo') || "Preencha os espaços com suas informações pessoais",
+    t('kyc.uploadDocuments') || "Faça upload dos documentos de identificação",
+    t('kyc.takeSelfie') || "Tire uma selfie para verificação facial",
+    t('kyc.reviewInfo') || "Revise todas as informações antes de prosseguir",
+    t('kyc.financialData') || "Informe seus dados financeiros e de crédito",
+    t('kyc.scanAssets') || "Escaneie ou fotografe seus bens como garantia",
+    t('kyc.zkProcessing') || "Processamento ZK e geração de score de crédito"
   ];
 
   return (
@@ -132,7 +135,7 @@ const KYCVerification = () => {
         className="absolute inset-0 opacity-20"
         style={{
           background:
-            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #3CFFB1 0%, #002168 70.19%, #00022A 87.98%)",
+            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #004EF6 0%, #002168 70.19%, #00022A 87.98%)",
           filter: "blur(120px)",
         }}
       />
@@ -198,7 +201,7 @@ const KYCVerification = () => {
             </div>
 
             {/* Title */}
-            <h1 className="text-h2 font-semibold">Solicitação de Crédito</h1>
+            <h1 className="text-h2 font-semibold">{t('kyc.title') || 'Solicitação de Crédito'}</h1>
           </div>
 
           {/* User Actions */}
@@ -212,18 +215,20 @@ const KYCVerification = () => {
                 {user?.user_metadata?.avatar_url && (
                   <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
                 )}
-                <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || t('common.user') || "Usuário"}</span>
                 <span className="text-small text-foreground">
-                  @{user?.email ? user.email.split("@")[0] : "usuario"}
+                  @{user?.email ? user.email.split("@")[0] : t('common.user') || "usuario"}
                 </span>
               </div>
             </div>
 
-                          <Link to="/login">
-                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                  <span className="text-body">Sair</span>
-                </button>
-              </Link>
+            <Link to="/login">
+              <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
+                <span className="text-body">{t('auth.logout') || 'Sair'}</span>
+              </button>
+            </Link>
+
+            <LanguageSwitch />
 
             <button
               onClick={toggleTheme}
@@ -299,15 +304,15 @@ const KYCVerification = () => {
             <div className="max-w-xl mx-auto">
               <Breadcrumb
                 items={[
-                  { label: "Início", href: "/user-selection" },
-                  { label: "KYC Verificação" },
+                  { label: t('common.home') || "Início", href: "/user-selection" },
+                  { label: t('kyc.verification') || "KYC Verificação" },
                 ]}
               />
 
               {/* Form Header */}
               <div className="mb-9 space-y-5">
                 <div className="text-xs text-foreground opacity-80">
-                  Passo {currentStep + 1}/7
+                  {t('kyc.step') || 'Passo'} {currentStep + 1}/7
                 </div>
                 <div className="space-y-3">
                   <h2 className="text-xl font-medium text-foreground">
@@ -324,7 +329,7 @@ const KYCVerification = () => {
                 <div className="space-y-6">
                   <div className="space-y-3">
                     <Input
-                      placeholder="Nome completo"
+                      placeholder={t('kyc.fullName') || "Nome completo"}
                       value={formData.fullName}
                       onChange={(e) =>
                         handleInputChange("fullName", e.target.value)
@@ -341,7 +346,7 @@ const KYCVerification = () => {
                       className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                     />
                     <Input
-                      placeholder="Data de nascimento"
+                      placeholder={t('kyc.birthDate') || "Data de nascimento"}
                       value={formData.birthDate}
                       onChange={(e) =>
                         handleInputChange("birthDate", e.target.value)
@@ -361,7 +366,7 @@ const KYCVerification = () => {
                     </div>
                     <div className="col-span-3">
                       <Input
-                        placeholder="Estado"
+                        placeholder={t('kyc.state') || "Estado"}
                         value={formData.state}
                         onChange={(e) =>
                           handleInputChange("state", e.target.value)
@@ -372,7 +377,7 @@ const KYCVerification = () => {
                   </div>
 
                   <Input
-                    placeholder="Cidade"
+                    placeholder={t('kyc.city') || "Cidade"}
                     value={formData.city}
                     onChange={(e) => handleInputChange("city", e.target.value)}
                     className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
@@ -381,7 +386,7 @@ const KYCVerification = () => {
                   <div className="grid grid-cols-4 gap-3">
                     <div className="col-span-3">
                       <Input
-                        placeholder="Endereço"
+                        placeholder={t('kyc.address') || "Endereço"}
                         value={formData.address}
                         onChange={(e) =>
                           handleInputChange("address", e.target.value)
@@ -390,7 +395,7 @@ const KYCVerification = () => {
                       />
                     </div>
                     <Input
-                      placeholder="Número"
+                      placeholder={t('kyc.number') || "Número"}
                       value={formData.number}
                       onChange={(e) =>
                         handleInputChange("number", e.target.value)
@@ -460,18 +465,18 @@ const KYCVerification = () => {
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm text-foreground opacity-80">Nome</label>
-                          <p className="text-foreground font-medium">{formData.fullName || "Não informado"}</p>
+                          <label className="text-sm text-foreground opacity-80">{t('kyc.fullName') || 'Nome'}</label>
+                          <p className="text-foreground font-medium">{formData.fullName || t('kyc.notInformed') || "Não informado"}</p>
                         </div>
                         <div>
                           <label className="text-sm text-foreground opacity-80">CPF</label>
-                          <p className="text-foreground font-medium">{formData.cpf || "Não informado"}</p>
+                          <p className="text-foreground font-medium">{formData.cpf || t('kyc.notInformed') || "Não informado"}</p>
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm text-foreground opacity-80">Endereço</label>
+                        <label className="text-sm text-foreground opacity-80">{t('kyc.address') || 'Endereço'}</label>
                         <p className="text-foreground font-medium">
-                          {formData.address ? `${formData.address}, ${formData.number} - ${formData.city}, ${formData.state}` : "Não informado"}
+                                                      {formData.address ? `${formData.address}, ${formData.number} - ${formData.city}, ${formData.state}` : t('kyc.notInformed') || "Não informado"}
                         </p>
                       </div>
                       <div className="pt-4 border-t border-muted">
@@ -547,23 +552,20 @@ const KYCVerification = () => {
                       <BarChart3 className="w-12 h-12 mx-auto text-foreground opacity-60" />
                       <div>
                         <h3 className="text-lg font-medium text-foreground mb-2">
-                          Análise com Prova ZK em Andamento
+                          {t('kyc.zkAnalysisInProgress') || 'Análise com Prova ZK em Andamento'}
                         </h3>
                         <p className="text-sm text-foreground opacity-80 mb-4">
-                          Estamos processando seus dados através de nossa tecnologia ZK Finance.
-                          Este processo pode levar até 24 horas.
+                          {t('kyc.processingData') || 'Estamos processando seus dados através de nossa tecnologia ZK Finance. Este processo pode levar até 24 horas.'}
                         </p>
                         
                         {/* ZK Proof Section */}
                         <div className="bg-primary/10 rounded-lg p-4 mb-4 border border-primary/20">
                           <div className="flex items-center gap-2 mb-2">
                             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                            <span className="text-sm font-medium text-primary">Prova ZK de Score de Crédito</span>
+                            <span className="text-sm font-medium text-primary">{t('kyc.zkCreditScoreProof') || 'Prova ZK de Score de Crédito'}</span>
                           </div>
                           <p className="text-xs text-foreground opacity-80 text-left">
-                            Seus dados financeiros e pessoais são processados por algoritmos de IA 
-                            sem serem armazenados. Apenas o score final é gerado através de prova 
-                            zero-knowledge, garantindo total privacidade.
+                            {t('kyc.financialDataProcessed') || 'Seus dados financeiros e pessoais são processados por algoritmos de IA sem serem armazenados. Apenas o score final é gerado através de prova zero-knowledge, garantindo total privacidade.'}
                           </p>
                         </div>
 
@@ -571,13 +573,13 @@ const KYCVerification = () => {
                         <div className="bg-success/10 rounded-lg p-4 mb-4 border border-success/20">
                           <div className="flex items-center gap-2 mb-2">
                             <CheckCircle className="w-4 h-4 text-success" />
-                            <span className="text-sm font-medium text-success">Privacidade Garantida</span>
+                            <span className="text-sm font-medium text-success">{t('kyc.privacyGuaranteed') || 'Privacidade Garantida'}</span>
                           </div>
                           <ul className="text-xs text-foreground opacity-80 text-left space-y-1">
-                            <li>• Dados pessoais não são armazenados</li>
-                            <li>• Processamento via algoritmo ZK</li>
-                            <li>• Score gerado por IA sem retenção de dados</li>
-                            <li>• Conformidade com LGPD</li>
+                            <li>• {t('kyc.personalDataNotStored') || 'Dados pessoais não são armazenados'}</li>
+                            <li>• {t('kyc.processingViaZk') || 'Processamento via algoritmo ZK'}</li>
+                            <li>• {t('kyc.scoreGeneratedByAi') || 'Score gerado por IA sem retenção de dados'}</li>
+                            <li>• {t('kyc.lgpdCompliance') || 'Conformidade com LGPD'}</li>
                           </ul>
                         </div>
 
@@ -586,7 +588,7 @@ const KYCVerification = () => {
                           <div className="bg-gradient-to-r from-primary to-cyan-400 h-2 rounded-full animate-pulse" style={{ width: "60%" }}></div>
                         </div>
                         <p className="text-xs text-foreground opacity-60">
-                          Processando prova ZK... 60%
+                          {t('kyc.processingZkProof') || 'Processando prova ZK...'} 60%
                         </p>
                       </div>
                     </div>
@@ -602,7 +604,7 @@ const KYCVerification = () => {
                       variant="outline"
                       className="w-full h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
                     >
-                      Voltar
+                      {t('common.back') || 'Voltar'}
                     </Button>
                   </Link>
                 ) : (
@@ -611,22 +613,22 @@ const KYCVerification = () => {
                     onClick={handlePrevStep}
                     className="w-40 h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
                   >
-                    Anterior
+                    {t('kyc.previous') || 'Anterior'}
                   </Button>
                 )}
                 
                 {currentStep === 6 ? (
                   <Link to="/borrower/dashboard" className="w-40">
-                    <Button className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
-                      Finalizar
-                    </Button>
+                                      <Button className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
+                    {t('kyc.finish') || 'Finalizar'}
+                  </Button>
                   </Link>
                 ) : (
                   <Button 
                     onClick={handleNextStep}
                     className="w-40 h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
                   >
-                    Próximo
+                    {t('kyc.next') || 'Próximo'}
                   </Button>
                 )}
               </div>

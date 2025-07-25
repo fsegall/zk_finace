@@ -56,6 +56,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useTheme } from "@/contexts/ThemeContext";
+import WalletConnect from "../components/WalletConnect";
 
 const LanceDetails = () => {
   const { id } = useParams();
@@ -196,7 +197,7 @@ const LanceDetails = () => {
         className="absolute inset-0 opacity-20"
         style={{
           background:
-            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #3CFFB1 0%, #002168 70.19%, #00022A 87.98%)",
+            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #004EF6 0%, #002168 70.19%, #00022A 87.98%)",
           filter: "blur(120px)",
         }}
       />
@@ -216,6 +217,7 @@ const LanceDetails = () => {
                 <Breadcrumb items={breadcrumbItems} />
               </div>
               <div className="flex items-center gap-2">
+                <WalletConnect />
                 <Button variant="ghost" size="sm" onClick={toggleTheme}>
                   {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                 </Button>

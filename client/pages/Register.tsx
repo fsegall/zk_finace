@@ -41,16 +41,16 @@ const Register = () => {
         className="absolute inset-0 opacity-30"
         style={{
           background:
-            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #3CFFB1 0%, #002168 70.19%, #00022A 87.98%)",
+            "radial-gradient(50.1% 88.38% at 46.22% 80.46%, #004EF6 0%, #002168 70.19%, #00022A 87.98%)",
           filter: "blur(120px)",
         }}
       />
 
-      <div className="relative z-10 text-center max-w-lg mx-auto px-6">
+      <div className="relative z-10 text-center max-w-lg mx-auto px-4 sm:px-6">
         {/* Logo */}
-        <div className="flex items-center justify-center mb-12">
+        <div className="flex items-center justify-center mb-8 sm:mb-12">
           <svg
-            className="h-12 w-auto"
+            className="h-8 w-auto sm:h-10 md:h-12"
             viewBox="0 0 442 149"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -103,21 +103,21 @@ const Register = () => {
         </div>
 
         {/* Main Content */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           <h1 className="text-h2 font-semibold text-foreground">
             {t('auth.register')}
           </h1>
 
           {/* Social Login */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Button
               variant="outline"
-              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+              className="h-11 sm:h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
               onClick={handleGoogle}
               disabled={formLoading || loading}
             >
               <svg
-                className="w-5 h-5 mr-2"
+                className="w-4 h-4 sm:w-5 sm:h-5 mr-2"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -131,12 +131,12 @@ const Register = () => {
 
             <Button
               variant="outline"
-              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors opacity-50 cursor-not-allowed"
+              className="h-11 sm:h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors opacity-50 cursor-not-allowed"
               disabled={true}
               title={t('auth.comingSoon')}
             >
               <svg
-                className="w-5 h-5 mr-2"
+                className="w-4 h-4 sm:w-5 sm:h-5 mr-2"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -149,14 +149,14 @@ const Register = () => {
 
 
           {/* Form */}
-          <form className="space-y-4" onSubmit={handleSignup}>
+          <form className="space-y-3 sm:space-y-4" onSubmit={handleSignup}>
             <div className="space-y-2">
               <Input
                 type="text"
                 placeholder={t('auth.fullName')}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="h-12 bg-muted border-border"
+                className="h-11 sm:h-12 bg-muted border-border"
                 disabled={formLoading || loading}
               />
             </div>
@@ -167,7 +167,7 @@ const Register = () => {
                 placeholder={t('auth.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-muted border-border"
+                className="h-11 sm:h-12 bg-muted border-border"
                 disabled={formLoading || loading}
               />
             </div>
@@ -178,14 +178,14 @@ const Register = () => {
                 placeholder={t('auth.password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-12 bg-muted border-border"
+                className="h-11 sm:h-12 bg-muted border-border"
                 disabled={formLoading || loading}
               />
             </div>
 
             <Button
               type="submit"
-              className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
+              className="w-full h-11 sm:h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
               disabled={formLoading || loading}
             >
               {formLoading || loading ? t('auth.registering') : t('auth.register')}
@@ -193,10 +193,10 @@ const Register = () => {
           </form>
 
           {error && (
-            <div className="text-red-500 text-sm mt-2">{error}</div>
+            <div className="text-red-500 text-sm mt-2 px-2">{error}</div>
           )}
 
-          <p className="text-body text-foreground">
+          <p className="text-body text-foreground text-sm sm:text-base">
             {t('auth.alreadyHaveAccount')}{" "}
             <Link to="/login" className="text-primary hover:underline">
               {t('auth.login')}

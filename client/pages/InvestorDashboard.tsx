@@ -21,6 +21,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useRBAC } from "../hooks/useRBAC";
 import { useLanguage } from "../contexts/LanguageContext";
 import LanguageSwitch from "../components/LanguageSwitch";
+import WalletConnect from "../components/WalletConnect";
 
 const InvestorDashboard = () => {
   const { theme, toggleTheme } = useTheme();
@@ -30,31 +31,31 @@ const InvestorDashboard = () => {
 
 
   const sidebarItems = [
-    { icon: Home, label: "Dashboard", active: true },
-    { icon: Star, label: "Ranking", active: false },
-    { icon: TrendingUp, label: "Lances Contribuídos", active: false },
-    { icon: Settings, label: "Configurações", active: false },
+    { icon: Home, label: t('dashboard.title'), active: true },
+    { icon: Star, label: t('dashboard.ranking'), active: false },
+    { icon: TrendingUp, label: t('dashboard.contributions'), active: false },
+    { icon: Settings, label: t('settings.title'), active: false },
   ];
 
   const contributions = [
     {
       amount: "R$5.262,56",
       change: "1,5%",
-      status: "Aprovada",
+      status: t('dashboard.approved'),
       statusColor: "text-success",
       bgColor: "bg-success/10",
     },
     {
       amount: "R$5.262,56",
       change: "1,5%",
-      status: "Em Análise",
+      status: t('dashboard.inAnalysis'),
       statusColor: "text-warning",
       bgColor: "bg-warning/10",
     },
     {
       amount: "R$5.262,56",
       change: "1,5%",
-      status: "Não Autorizada",
+      status: t('dashboard.notAuthorized'),
       statusColor: "text-destructive",
       bgColor: "bg-destructive/10",
     },
@@ -212,6 +213,7 @@ const InvestorDashboard = () => {
                   </div>
                 </div>
 
+                <WalletConnect />
                 <LanguageSwitch />
                 <Link to="/login">
                   <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
@@ -237,8 +239,8 @@ const InvestorDashboard = () => {
           <main className="p-6">
             <Breadcrumb 
               items={[
-                { label: "Início", href: "/user-selection" },
-                { label: "Dashboard" },
+                { label: t('common.home'), href: "/user-selection" },
+                { label: t('dashboard.title') },
                 
               ]}
             />
@@ -247,9 +249,11 @@ const InvestorDashboard = () => {
               <div className="space-y-6">
                 {/* Welcome Section */}
                 <div className="px-5">
-                  <h1 className="text-h2 font-semibold mb-2 text-foreground">Olá, José</h1>
+                  <h1 className="text-h2 font-semibold mb-2 text-foreground">
+                    {t('dashboard.welcome')}, {profile?.full_name || user?.email?.split('@')[0] || 'Usuário'}
+                  </h1>
                   <p className="text-body text-foreground">
-                    Você ainda não possui um Saldo ativo
+                    {t('dashboard.noBalance')}
                   </p>
                 </div>
 
@@ -257,19 +261,19 @@ const InvestorDashboard = () => {
                 <div className="bg-card/20 rounded-xl p-8">
                   <div className="space-y-6">
                     <div>
-                      <h2 className="text-h4 font-semibold mb-5 text-foreground">Carteira</h2>
+                      <h2 className="text-h4 font-semibold mb-5 text-foreground">{t('wallet.title')}</h2>
                       <div className="text-h1 font-bold text-foreground">R$ 0,00</div>
                     </div>
 
                     <div className="flex gap-4">
                       <Link to="/investor/deposit">
                         <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
-                          Depositar
+                          {t('dashboard.deposit')}
                         </Button>
                       </Link>
                       <Link to="/investor/withdraw">
                         <Button variant="outline" className="flex-1">
-                          Sacar
+                          {t('dashboard.withdraw')}
                         </Button>
                       </Link>
                     </div>
@@ -279,9 +283,9 @@ const InvestorDashboard = () => {
                 {/* Contributions */}
                 <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-h4 font-semibold text-foreground">Contribuições</h2>
+                    <h2 className="text-h4 font-semibold text-foreground">{t('dashboard.contributions')}</h2>
                     <div className="flex items-center gap-2 text-body text-foreground bg-muted px-3 py-1 rounded">
-                      <span>Últimos 7 dias</span>
+                      <span>{t('dashboard.last7Days')}</span>
                     </div>
                   </div>
 
@@ -317,7 +321,7 @@ const InvestorDashboard = () => {
                 <div className="bg-card/20 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-5">
                     <h2 className="text-h4 font-semibold text-foreground">
-                      Performance de Investimentos
+                      {t('dashboard.investmentPerformance')}
                     </h2>
                     <div className="text-body text-foreground bg-muted px-3 py-1 rounded">
                       APY
@@ -335,7 +339,7 @@ const InvestorDashboard = () => {
                         </div>
                       </div>
                       <div className="text-small text-foreground">
-                        Investido: R$15.000 • Retorno: R$1.230
+                        {t('dashboard.invested')}: R$15.000 • {t('dashboard.return')}: R$1.230
                       </div>
                     </div>
 
@@ -349,7 +353,7 @@ const InvestorDashboard = () => {
                         </div>
                       </div>
                       <div className="text-small text-foreground">
-                        Investido: R$8.500 • Retorno: R$552
+                        {t('dashboard.invested')}: R$8.500 • {t('dashboard.return')}: R$552
                       </div>
                     </div>
 
@@ -363,24 +367,24 @@ const InvestorDashboard = () => {
                         </div>
                       </div>
                       <div className="text-small text-foreground">
-                        Investido: R$12.000 • Retorno: R$696
+                        {t('dashboard.invested')}: R$12.000 • {t('dashboard.return')}: R$696
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-6 pt-4">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="font-semibold text-foreground">APY Médio Total</span>
+                      <span className="font-semibold text-foreground">{t('dashboard.averageAPY')}</span>
                       <span className="font-bold text-primary">6.8%</span>
                     </div>
                     <div className="text-center text-body text-foreground">
-                      Total Investido: R$35.500 • Total Retorno: R$2.478
+                      {t('dashboard.totalInvested')}: R$35.500 • {t('dashboard.totalReturn')}: R$2.478
                     </div>
                   </div>
 
                   <Link to="/investor/investments">
                     <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/80 transition-colors mt-4">
-                      Ver Detalhes dos Investimentos
+                      {t('dashboard.viewInvestmentDetails')}
                     </Button>
                   </Link>
                 </div>
@@ -388,10 +392,10 @@ const InvestorDashboard = () => {
                 {/* Recent Activities */}
                 <div className="bg-card/20 rounded-xl p-6">
                   <h2 className="text-h4 font-semibold mb-4 text-foreground">
-                    Atividades Recentes
+                    {t('dashboard.recentActivities')}
                   </h2>
                   <div className="text-center text-body text-foreground py-8">
-                    Nenhuma atividade recente
+                    {t('dashboard.noRecentActivity')}
                   </div>
                 </div>
               </div>

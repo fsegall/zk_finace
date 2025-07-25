@@ -18,6 +18,7 @@ interface AuthContextType {
   signupWithPassword: (email: string, password: string, fullName: string) => Promise<void>;
   logout: () => Promise<void>;
   connectWallet: () => Promise<string | null>; // Metamask
+  disconnectWallet: () => Promise<void>;
   walletAddress: string | null;
   error: string | null;
 }
@@ -123,6 +124,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Desconexão de carteira
+  const disconnectWallet = async (): Promise<void> => {
+    setError(null);
+    setWalletAddress(null);
+  };
+
   const value: AuthContextType = {
     user,
     session,
@@ -134,6 +141,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signupWithPassword,
     logout,
     connectWallet,
+    disconnectWallet,
     walletAddress,
     error,
   };

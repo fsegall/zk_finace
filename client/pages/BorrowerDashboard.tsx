@@ -23,6 +23,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useRBAC } from "../hooks/useRBAC";
 import { useLanguage } from "../contexts/LanguageContext";
 import LanguageSwitch from "../components/LanguageSwitch";
+import WalletConnect from "../components/WalletConnect";
 
 const BorrowerDashboard = () => {
   const { theme, toggleTheme } = useTheme();
@@ -37,10 +38,10 @@ const BorrowerDashboard = () => {
   };
 
   const sidebarItems = [
-    { icon: Home, label: "Dashboard", active: true },
-    { icon: TrendingUp, label: "Lances", active: false },
-    { icon: Wallet, label: "Carteira", active: false },
-    { icon: Settings, label: "Configurações", active: false },
+    { icon: Home, label: t('dashboard.title'), active: true },
+    { icon: TrendingUp, label: t('dashboard.lances'), active: false },
+    { icon: Wallet, label: t('wallet.title'), active: false },
+    { icon: Settings, label: t('settings.title'), active: false },
   ];
 
   const lances = [
@@ -197,7 +198,7 @@ const BorrowerDashboard = () => {
               className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg"
             >
               <span className="text-xs">←</span>
-              Voltar ao KYC
+              {t('dashboard.backToKYC')}
             </Link>
             <Link
               to="/borrower/support"
@@ -206,7 +207,7 @@ const BorrowerDashboard = () => {
               <div className="w-4 h-4 rounded-full border border-sidebar-foreground flex items-center justify-center">
                 <span className="text-xs">?</span>
               </div>
-              Suporte
+              {t('dashboard.support')}
             </Link>
           </div>
         </div>
@@ -220,7 +221,7 @@ const BorrowerDashboard = () => {
               <div className="relative w-96">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
-                  placeholder="Buscar"
+                  placeholder={t('dashboard.search')}
                   className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground"
                 />
               </div>
@@ -250,6 +251,7 @@ const BorrowerDashboard = () => {
                   </div>
                 </div>
 
+                <WalletConnect />
                 <LanguageSwitch />
                 <button
                   onClick={handleLogout}
@@ -276,9 +278,9 @@ const BorrowerDashboard = () => {
           <main className="p-6">
             <Breadcrumb
               items={[
-                { label: "Início", href: "/user-selection" },
-                { label: "KYC Verificação", href: "/kyc-verification" },
-                { label: "Dashboard" },
+                { label: t('common.home'), href: "/user-selection" },
+                { label: t('kyc.verification'), href: "/kyc-verification" },
+                { label: t('dashboard.title') },
               ]}
             />
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -290,7 +292,7 @@ const BorrowerDashboard = () => {
                     <div className="w-5 h-5 rounded-full bg-gradient-to-r from-primary to-cyan-400 flex items-center justify-center">
                       <Plus className="w-3 h-3 text-primary-foreground" />
                     </div>
-                    <span className="text-body font-medium">Criar novo lance</span>
+                    <span className="text-body font-medium">{t('dashboard.createNewLance')}</span>
                   </div>
 
                   <div className="space-y-4">
@@ -301,9 +303,9 @@ const BorrowerDashboard = () => {
 
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-body font-medium">Nível 1</span>
+                        <span className="text-body font-medium">{t('dashboard.level1')}</span>
                         <span className="text-small text-foreground">
-                          Ver conquistas
+                          {t('dashboard.viewAchievements')}
                         </span>
                       </div>
                       <div className="w-full h-16 bg-gradient-to-r from-cyan-400 to-primary rounded-lg flex items-center justify-center">
@@ -319,21 +321,21 @@ const BorrowerDashboard = () => {
                 <div className="grid grid-cols-1 gap-4">
                   <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">6.56</div>
-                    <div className="text-body text-foreground">
-                      ZK Score
-                    </div>
+                                      <div className="text-body text-foreground">
+                    {t('dashboard.zkScore')}
+                  </div>
                   </div>
                   <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">8</div>
-                    <div className="text-body text-foreground">
-                      Lances Postados
-                    </div>
+                                      <div className="text-body text-foreground">
+                    {t('dashboard.lancesPosted')}
+                  </div>
                   </div>
                   <div className="bg-card/20 rounded-lg p-4 text-center">
                     <div className="text-h4 font-semibold text-foreground">R$300k</div>
-                    <div className="text-body text-foreground">
-                      Total Arrecadado
-                    </div>
+                                      <div className="text-body text-foreground">
+                    {t('dashboard.totalRaised')}
+                  </div>
                   </div>
                 </div>
               </div>
@@ -343,10 +345,10 @@ const BorrowerDashboard = () => {
                 <div className="bg-card/20 rounded-xl p-6 h-full">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-h4 font-semibold">
-                      Crédito Assegurado até a Data
+                      {t('dashboard.securedCreditToDate')}
                     </h2>
                     <div className="flex items-center gap-2 text-body text-foreground">
-                      <span>Meta: R$300.000</span>
+                      <span>{t('dashboard.goal')}: R$300.000</span>
                     </div>
                   </div>
 
@@ -355,7 +357,7 @@ const BorrowerDashboard = () => {
                     <div className="space-y-3">
                       <div className="flex justify-between text-body">
                         <span className="text-foreground">
-                          Progresso da Meta de Aporte Total
+                          {t('dashboard.progressGoal')}
                         </span>
                         <span className="font-semibold text-foreground">67%</span>
                       </div>
@@ -379,7 +381,7 @@ const BorrowerDashboard = () => {
                         R$200.000
                       </div>
                       <div className="text-body text-foreground">
-                        Crédito Assegurado Atual
+                        {t('dashboard.currentSecuredCredit')}
                       </div>
                     </div>
 
@@ -529,22 +531,22 @@ const BorrowerDashboard = () => {
                           {lance.description}
                         </p>
                         <Button variant="outline" size="sm" className="text-xs">
-                          ver detalhes do lance
+                          {t('dashboard.seeLanceDetails')}
                         </Button>
                       </div>
 
                       {/* Stats */}
                       <div className="grid grid-cols-3 gap-4 text-body">
                         <div>
-                          <div className="text-foreground">Valor</div>
+                          <div className="text-foreground">{t('dashboard.value')}</div>
                           <div className="font-semibold text-foreground">{lance.value}</div>
                         </div>
                         <div>
-                          <div className="text-foreground">Interesse</div>
+                          <div className="text-foreground">{t('dashboard.interest')}</div>
                           <div className="font-semibold text-foreground">{lance.interest}</div>
                         </div>
                         <div>
-                          <div className="text-foreground">Expira em</div>
+                          <div className="text-foreground">{t('dashboard.expiresIn')}</div>
                           <div className="font-semibold text-foreground">{lance.expires}</div>
                         </div>
                       </div>
@@ -553,7 +555,7 @@ const BorrowerDashboard = () => {
                       <div className="space-y-2">
                         <div className="flex justify-between text-body">
                           <span className="text-foreground font-semibold">
-                            Progresso
+                            {t('dashboard.progress')}
                           </span>
                           <span className="text-foreground font-semibold">
                             {lance.progress}%
@@ -567,13 +569,13 @@ const BorrowerDashboard = () => {
                         </div>
                         <div className="flex justify-between text-small text-foreground">
                           <span>{lance.raised}</span>
-                          <span>Objetivo: {lance.goal}</span>
+                          <span>{t('dashboard.objective')}: {lance.goal}</span>
                         </div>
                       </div>
 
                       <Link to={`/borrower/credit-request/${lance.id}`}>
                         <Button className="w-full bg-primary hover:bg-primary/80 transition-colors">
-                          Solicitar Crédito
+                          {t('dashboard.requestCredit')}
                         </Button>
                       </Link>
                     </div>

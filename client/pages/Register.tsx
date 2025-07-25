@@ -11,9 +11,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { loginWithGoogle, signupWithPassword, connectWallet, user, loading, error, walletAddress } = useAuth();
+  const { loginWithGoogle, signupWithPassword, user, loading, error } = useAuth();
   const [formLoading, setFormLoading] = useState(false);
-  const [metaMaskLoading, setMetaMaskLoading] = useState(false);
 
   // Redireciona se já estiver logado
   if (user && !loading) {
@@ -35,13 +34,6 @@ const Register = () => {
     navigate("/user-selection");
   };
 
-  const handleMetaMask = async () => {
-    setMetaMaskLoading(true);
-    await connectWallet();
-    setMetaMaskLoading(false);
-    navigate("/user-selection");
-  };
-
   return (
     <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
       {/* Background gradient blur effect */}
@@ -54,7 +46,7 @@ const Register = () => {
         }}
       />
 
-      <div className="relative z-10 text-center max-w-md mx-auto px-6">
+      <div className="relative z-10 text-center max-w-lg mx-auto px-6">
         {/* Logo */}
         <div className="flex items-center justify-center mb-12">
           <svg
@@ -139,27 +131,22 @@ const Register = () => {
 
             <Button
               variant="outline"
-              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
-              onClick={handleMetaMask}
-              disabled={metaMaskLoading}
+              className="h-12 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors opacity-50 cursor-not-allowed"
+              disabled={true}
+              title={t('auth.comingSoon')}
             >
-              <div className="w-5 h-5 mr-2 bg-warning rounded flex items-center justify-center text-warning-foreground text-xs font-bold">
-                M
-              </div>
-              {walletAddress ? t('auth.walletConnected') : "MetaMask"}
+              <svg
+                className="w-5 h-5 mr-2"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              X
             </Button>
           </div>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border" />
-            </div>
-            <div className="relative flex justify-center text-small uppercase">
-              <span className="bg-background px-2 text-foreground">
-                {t('auth.or')}
-              </span>
-            </div>
-          </div>
+
 
           {/* Form */}
           <form className="space-y-4" onSubmit={handleSignup}>

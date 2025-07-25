@@ -53,6 +53,7 @@ const translations = {
     'auth.registering': 'Cadastrando...',
     'auth.walletConnected': 'Carteira conectada',
     'auth.or': 'ou',
+    'auth.comingSoon': 'Em breve',
     
     // Usuário
     'user.welcome': 'Que bom ter você aqui',
@@ -82,6 +83,37 @@ const translations = {
     'dashboard.totalValue': 'Valor Total',
     'dashboard.seeLanceDetails': 'ver detalhes do lance',
     'dashboard.requestCredit': 'Solicitar Crédito',
+    'dashboard.title': 'Dashboard',
+    'dashboard.ranking': 'Ranking',
+    'dashboard.lances': 'Lances',
+    'dashboard.investmentPerformance': 'Performance de Investimentos',
+    'dashboard.recentActivities': 'Atividades Recentes',
+    'dashboard.noRecentActivity': 'Nenhuma atividade recente',
+    'dashboard.averageAPY': 'APY Médio Total',
+    'dashboard.totalInvested': 'Total Investido',
+    'dashboard.totalReturn': 'Total Retorno',
+    'dashboard.viewInvestmentDetails': 'Ver Detalhes dos Investimentos',
+    'dashboard.invested': 'Investido',
+    'dashboard.return': 'Retorno',
+    'dashboard.last7Days': 'Últimos 7 dias',
+    'dashboard.deposit': 'Depositar',
+    'dashboard.withdraw': 'Sacar',
+    'dashboard.contributions': 'Contribuições',
+    'dashboard.approved': 'Aprovada',
+    'dashboard.inAnalysis': 'Em Análise',
+    'dashboard.notAuthorized': 'Não Autorizada',
+    'dashboard.backToKYC': 'Voltar ao KYC',
+    'dashboard.support': 'Suporte',
+    'dashboard.search': 'Buscar',
+    'dashboard.level1': 'Nível 1',
+    'dashboard.viewAchievements': 'Ver conquistas',
+    'dashboard.securedCreditToDate': 'Crédito Assegurado até a Data',
+    'dashboard.progressGoal': 'Progresso da Meta de Aporte Total',
+    'dashboard.currentSecuredCredit': 'Crédito Assegurado Atual',
+    'dashboard.value': 'Valor',
+    'dashboard.interest': 'Interesse',
+    'dashboard.expiresIn': 'Expira em',
+    'dashboard.objective': 'Objetivo',
     
     // Carteira
     'wallet.title': 'Carteira',
@@ -104,6 +136,7 @@ const translations = {
     'wallet.difference': 'Diferença entre quitação imediata e total final',
     'wallet.requestStatement': 'Solicitar Extrato',
     'wallet.negotiateSettlement': 'Negociar Quitação',
+    'wallet.connect': 'Conectar Carteira',
     
     // Configurações
     'settings.title': 'Configurações',
@@ -219,6 +252,7 @@ const translations = {
     'kyc.next': 'Próximo',
     'kyc.finish': 'Finalizar',
     'kyc.backToKyc': 'Voltar ao KYC',
+    'kyc.verification': 'KYC Verificação',
     
     // Geral
     'common.back': 'Voltar',
@@ -329,6 +363,7 @@ const translations = {
     'auth.registering': 'Registering...',
     'auth.walletConnected': 'Wallet connected',
     'auth.or': 'or',
+    'auth.comingSoon': 'Coming soon',
     
     // User
     'user.welcome': 'Great to have you here',
@@ -358,6 +393,37 @@ const translations = {
     'dashboard.totalValue': 'Total Value',
     'dashboard.seeLanceDetails': 'see lance details',
     'dashboard.requestCredit': 'Request Credit',
+    'dashboard.title': 'Dashboard',
+    'dashboard.ranking': 'Ranking',
+    'dashboard.lances': 'Lances',
+    'dashboard.investmentPerformance': 'Investment Performance',
+    'dashboard.recentActivities': 'Recent Activities',
+    'dashboard.noRecentActivity': 'No recent activity',
+    'dashboard.averageAPY': 'Average Total APY',
+    'dashboard.totalInvested': 'Total Invested',
+    'dashboard.totalReturn': 'Total Return',
+    'dashboard.viewInvestmentDetails': 'View Investment Details',
+    'dashboard.invested': 'Invested',
+    'dashboard.return': 'Return',
+    'dashboard.last7Days': 'Last 7 days',
+    'dashboard.deposit': 'Deposit',
+    'dashboard.withdraw': 'Withdraw',
+    'dashboard.contributions': 'Contributions',
+    'dashboard.approved': 'Approved',
+    'dashboard.inAnalysis': 'In Analysis',
+    'dashboard.notAuthorized': 'Not Authorized',
+    'dashboard.backToKYC': 'Back to KYC',
+    'dashboard.support': 'Support',
+    'dashboard.search': 'Search',
+    'dashboard.level1': 'Level 1',
+    'dashboard.viewAchievements': 'View achievements',
+    'dashboard.securedCreditToDate': 'Secured Credit to Date',
+    'dashboard.progressGoal': 'Total Contribution Goal Progress',
+    'dashboard.currentSecuredCredit': 'Current Secured Credit',
+    'dashboard.value': 'Value',
+    'dashboard.interest': 'Interest',
+    'dashboard.expiresIn': 'Expires in',
+    'dashboard.objective': 'Objective',
     
     // Wallet
     'wallet.title': 'Wallet',
@@ -380,6 +446,7 @@ const translations = {
     'wallet.difference': 'Difference between immediate settlement and final total',
     'wallet.requestStatement': 'Request Statement',
     'wallet.negotiateSettlement': 'Negotiate Settlement',
+    'wallet.connect': 'Connect Wallet',
     
     // Settings
     'settings.title': 'Settings',
@@ -495,6 +562,7 @@ const translations = {
     'kyc.next': 'Next',
     'kyc.finish': 'Finish',
     'kyc.backToKyc': 'Back to KYC',
+    'kyc.verification': 'KYC Verification',
     
     // General
     'common.back': 'Back',

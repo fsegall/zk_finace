@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 🚀 Script de Deploy Simplificado - Sepolia
-# Versão simplificada que funciona
+# Versão corrigida
 
 set -e
 
@@ -44,7 +44,8 @@ if [ ! -f "../.env" ]; then
     exit 1
 fi
 
-source ../.env
+# Carregar variáveis de forma mais segura
+export $(grep -v '^#' ../.env | xargs)
 
 if [ -z "$SEPOLIA_RPC_URL" ] || [ -z "$PRIVATE_KEY" ]; then
     error "SEPOLIA_RPC_URL ou PRIVATE_KEY não definidas"
@@ -76,7 +77,7 @@ mkdir -p logs
 DEPLOY_LOG="logs/deploy_sepolia_$(date +%Y%m%d_%H%M%S).log"
 
 # Executar deploy
-forge script script/DeployLoan.s.sol \
+forge script scripts/DeployLoan.s.sol \
     --rpc-url "$SEPOLIA_RPC_URL" \
     --private-key "$PRIVATE_KEY" \
     --broadcast \

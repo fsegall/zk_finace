@@ -273,8 +273,8 @@ const BorrowerLances = () => {
       />
 
       <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block w-64 bg-sidebar p-6">
           {/* Logo */}
           <div className="flex items-center mb-8">
             <svg

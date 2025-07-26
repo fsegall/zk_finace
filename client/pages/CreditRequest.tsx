@@ -33,6 +33,10 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link, useParams } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import MobileMenu from "../components/MobileMenu";
+import WalletConnect from "../components/WalletConnect";
 
 const CreditRequest = () => {
   const { theme, toggleTheme } = useTheme();
@@ -118,8 +122,8 @@ const CreditRequest = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Nome Completo
@@ -165,7 +169,7 @@ const CreditRequest = () => {
                   className="bg-muted border-border"
                 />
               </div>
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2">
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Endereço
                 </label>
@@ -215,8 +219,8 @@ const CreditRequest = () => {
 
       case 2:
         return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Valor Solicitado
@@ -241,7 +245,7 @@ const CreditRequest = () => {
                   className="bg-muted border-border"
                 />
               </div>
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2">
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Finalidade do Empréstimo
                 </label>
@@ -252,7 +256,7 @@ const CreditRequest = () => {
                   className="bg-muted border-border"
                 />
               </div>
-              <div className="md:col-span-2">
+              <div className="sm:col-span-2">
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Garantia/Collateral
                 </label>
@@ -269,8 +273,8 @@ const CreditRequest = () => {
 
       case 3:
         return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Renda Mensal
@@ -339,12 +343,12 @@ const CreditRequest = () => {
 
       case 4:
         return (
-          <div className="space-y-6">
-            <div className="bg-card/20 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-card/20 rounded-lg p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">
                 Upload de Documentos
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     RG ou CNH (Frente e Verso)
@@ -439,13 +443,13 @@ const CreditRequest = () => {
 
       case 5:
         return (
-          <div className="space-y-6">
-            <div className="bg-card/20 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-card/20 rounded-lg p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">
                 Resumo da Solicitação
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                 <div>
                   <h4 className="font-medium text-foreground mb-3">Dados Pessoais</h4>
                   <div className="space-y-2 text-sm">
@@ -470,9 +474,9 @@ const CreditRequest = () => {
                 </div>
               </div>
               
-              <div className="mt-6 pt-6 border-t border-border">
+              <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border">
                 <h4 className="font-medium text-foreground mb-3">Informações Financeiras</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
                     <div className="text-lg font-bold text-foreground">
                       R$ {parseInt(formData.monthlyIncome).toLocaleString('pt-BR')}
@@ -495,10 +499,10 @@ const CreditRequest = () => {
               </div>
             </div>
             
-            <div className="bg-primary/10 rounded-lg p-6 border border-primary/20">
-              <div className="flex items-center gap-3 mb-4">
-                <CheckCircle className="w-6 h-6 text-primary" />
-                <h3 className="text-lg font-semibold text-foreground">
+            <div className="bg-primary/10 rounded-lg p-4 sm:p-6 border border-primary/20">
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <h3 className="text-base sm:text-lg font-semibold text-foreground">
                   Análise ZK Proof
                 </h3>
               </div>
@@ -536,8 +540,8 @@ const CreditRequest = () => {
       />
 
       <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block w-64 bg-sidebar p-6">
           {/* Logo */}
           <div className="flex items-center mb-8">
             <svg
@@ -649,55 +653,66 @@ const CreditRequest = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card/20 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+          <header className="bg-card/20 px-4 sm:px-6 py-3 sm:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <Link to="/borrower/lances">
-                  <Button variant="outline" size="sm">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+                    <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                     Voltar aos Lances
                   </Button>
                 </Link>
               </div>
 
               {/* User Actions */}
-              <div className="flex items-center gap-4">
-                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
-
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">Maria Cardoso</span>
-                    <span className="text-xs text-foreground">
-                      @maaria_89
-                    </span>
-                  </div>
+              <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-3 lg:gap-4">
+                {/* Mobile Menu */}
+                <MobileMenu userType="borrower" />
+                
+                {/* Mobile Wallet - Always Visible */}
+                <div className="lg:hidden">
+                  <WalletConnect />
                 </div>
-
-                <Link to="/login">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                    <span className="text-sm">Sair</span>
+                
+                {/* Desktop Actions */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                    <Bell className="w-5 h-5" />
                   </button>
-                </Link>
 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-                >
-                  {theme === 'dark' ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </button>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                      <User className="w-4 h-4" />
+                      <span className="text-sm">Maria Cardoso</span>
+                      <span className="text-xs text-foreground">
+                        @maaria_89
+                      </span>
+                    </div>
+                  </div>
+
+                  <Link to="/login">
+                    <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
+                      <span className="text-sm">Sair</span>
+                    </button>
+                  </Link>
+
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </header>
 
           {/* Main Content */}
-          <main className="p-6">
+          <main className="p-4 sm:p-6">
             <Breadcrumb
               items={[
                 { label: "Início", href: "/user-selection" },
@@ -708,20 +723,20 @@ const CreditRequest = () => {
             />
 
             {/* Lance Info Card */}
-            <div className="bg-card/20 rounded-xl p-6 mb-8 border border-border/50">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
-                    <User className="w-6 h-6" />
+            <div className="bg-card/20 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-border/50">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-0">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-full flex items-center justify-center">
+                    <User className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
-                    <h2 className="text-h3 font-bold text-foreground mb-1">
+                    <h2 className="text-lg sm:text-h3 font-bold text-foreground mb-1">
                       {lanceData.title}
                     </h2>
-                    <p className="text-body text-foreground mb-2">
+                    <p className="text-sm sm:text-body text-foreground mb-2">
                       {lanceData.description}
                     </p>
-                    <div className="flex items-center gap-4 text-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
                       <Badge variant="secondary" className="bg-secondary/20 text-secondary">
                         {lanceData.category}
                       </Badge>
@@ -729,48 +744,48 @@ const CreditRequest = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-h4 font-bold text-foreground">{lanceData.value}</div>
-                  <div className="text-body text-foreground">{lanceData.interest}</div>
-                  <div className="text-small text-foreground">Expira em {lanceData.expires}</div>
+                <div className="text-left sm:text-right">
+                  <div className="text-lg sm:text-h4 font-bold text-foreground">{lanceData.value}</div>
+                  <div className="text-sm sm:text-body text-foreground">{lanceData.interest}</div>
+                  <div className="text-xs sm:text-small text-foreground">Expira em {lanceData.expires}</div>
                 </div>
               </div>
             </div>
 
             {/* Steps Progress */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <h1 className="text-h1 font-bold text-foreground">
+            <div className="mb-6 sm:mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4">
+                <h1 className="text-xl sm:text-h1 font-bold text-foreground">
                   Solicitar Crédito
                 </h1>
-                <div className="text-body text-foreground">
+                <div className="text-sm sm:text-body text-foreground">
                   Passo {currentStep} de {steps.length}
                 </div>
               </div>
               
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 overflow-x-auto pb-2">
                 {steps.map((step, index) => (
-                  <div key={step.id} className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-colors ${
+                  <div key={step.id} className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border-2 transition-colors ${
                       currentStep >= step.id
                         ? "bg-primary border-primary text-primary-foreground"
                         : "bg-muted border-border text-foreground"
                     }`}>
                       {currentStep > step.id ? (
-                        <CheckCircle className="w-5 h-5" />
+                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                       ) : (
-                        <step.icon className="w-5 h-5" />
+                        <step.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                       )}
                     </div>
-                    <div className="hidden md:block">
-                      <div className={`text-sm font-medium ${
+                    <div className="hidden sm:block">
+                      <div className={`text-xs sm:text-sm font-medium ${
                         currentStep >= step.id ? "text-foreground" : "text-foreground/60"
                       }`}>
                         {step.title}
                       </div>
                     </div>
                     {index < steps.length - 1 && (
-                      <div className={`w-16 h-1 rounded-full ${
+                      <div className={`w-8 sm:w-12 lg:w-16 h-1 rounded-full ${
                         currentStep > step.id ? "bg-primary" : "bg-muted"
                       }`} />
                     )}
@@ -780,35 +795,35 @@ const CreditRequest = () => {
             </div>
 
             {/* Form Content */}
-            <div className="bg-card/20 rounded-xl p-8 border border-border/50">
+            <div className="bg-card/20 rounded-xl p-4 sm:p-6 lg:p-8 border border-border/50">
               {renderStepContent()}
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-between mt-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mt-6 sm:mt-8">
               <Button
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 w-full sm:w-auto"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Anterior
               </Button>
               
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
                 <Link to="/borrower/lances">
-                  <Button variant="outline">
+                  <Button variant="outline" className="w-full sm:w-auto">
                     Cancelar
                   </Button>
                 </Link>
                 
                 {currentStep < steps.length ? (
-                  <Button onClick={nextStep} className="bg-primary hover:bg-primary/80">
+                  <Button onClick={nextStep} className="bg-primary hover:bg-primary/80 w-full sm:w-auto">
                     Próximo
                   </Button>
                 ) : (
-                  <Button className="bg-primary hover:bg-primary/80">
+                  <Button className="bg-primary hover:bg-primary/80 w-full sm:w-auto">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     Enviar Solicitação
                   </Button>

@@ -20,6 +20,8 @@ import {
   User,
 } from "lucide-react";
 import LanguageSwitch from "@/components/LanguageSwitch";
+import MobileMenu from "@/components/MobileMenu";
+import WalletConnect from "@/components/WalletConnect";
 
 const KYCVerification = () => {
   const { theme, toggleTheme } = useTheme();
@@ -142,13 +144,13 @@ const KYCVerification = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-20">
+        <header className="px-4 sm:px-6 lg:px-20 py-3 sm:py-4 lg:py-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+            <div className="flex items-center gap-4 sm:gap-8 lg:gap-20">
             {/* Logo */}
             <div className="flex items-center">
               <svg
-                className="h-8 w-auto"
+                className="h-6 w-auto sm:h-7 lg:h-8"
                 viewBox="0 0 442 149"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -201,75 +203,86 @@ const KYCVerification = () => {
             </div>
 
             {/* Title */}
-            <h1 className="text-h2 font-semibold">{t('kyc.title') || 'Solicitação de Crédito'}</h1>
+            <h1 className="text-h3 sm:text-h2 font-semibold">{t('kyc.title') || 'Solicitação de Crédito'}</h1>
           </div>
 
           {/* User Actions */}
-          <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-              <Bell className="w-5 h-5" />
-            </button>
-
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                {user?.user_metadata?.avatar_url && (
-                  <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                )}
-                <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || t('common.user') || "Usuário"}</span>
-                <span className="text-small text-foreground">
-                  @{user?.email ? user.email.split("@")[0] : t('common.user') || "usuario"}
-                </span>
-              </div>
+          <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-3 lg:gap-4">
+            {/* Mobile Menu */}
+            <MobileMenu />
+            
+            {/* Mobile Wallet - Always Visible */}
+            <div className="lg:hidden">
+              <WalletConnect />
             </div>
-
-            <Link to="/login">
-              <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                <span className="text-body">{t('auth.logout') || 'Sair'}</span>
+            
+            {/* Desktop Actions */}
+            <div className="hidden lg:flex items-center gap-6">
+              <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                <Bell className="w-5 h-5" />
               </button>
-            </Link>
 
-            <LanguageSwitch />
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                  {user?.user_metadata?.avatar_url && (
+                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                  )}
+                  <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || t('common.user') || "Usuário"}</span>
+                  <span className="text-xs text-foreground">
+                    @{user?.email ? user.email.split("@")[0] : t('common.user') || "usuario"}
+                  </span>
+                </div>
+              </div>
 
-            <button
-              onClick={toggleTheme}
-              className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
+              <Link to="/login">
+                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
+                  <span className="text-sm">{t('auth.logout') || 'Sair'}</span>
+                </button>
+              </Link>
+
+              <LanguageSwitch />
+
+              <button
+                onClick={toggleTheme}
+                className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
         </header>
 
         {/* Main Content */}
-        <div className="flex min-h-[calc(100vh-117px)]">
+        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-117px)]">
           {/* Sidebar - Process Steps */}
-                        <div className="w-80 px-20 py-10">
-            <div className="w-60 space-y-10">
+                        <div className="w-full lg:w-80 px-4 sm:px-8 lg:px-20 py-6 sm:py-8 lg:py-10">
+            <div className="w-full lg:w-60 space-y-6 sm:space-y-8 lg:space-y-10">
               {kycSteps.map((section, sectionIndex) => (
                 <div key={sectionIndex}>
                   {/* Section Title */}
-                  <div className="bg-muted/50 rounded-lg px-5 py-3 mb-5 text-center">
-                    <h3 className="font-bold text-h5 text-foreground">{section.title}</h3>
+                  <div className="bg-muted/50 rounded-lg px-3 sm:px-4 lg:px-5 py-2 sm:py-3 mb-3 sm:mb-4 lg:mb-5 text-center">
+                    <h3 className="font-bold text-sm sm:text-base lg:text-h5 text-foreground">{section.title}</h3>
                   </div>
 
                   {/* Steps */}
-                  <div className="space-y-5">
+                  <div className="space-y-3 sm:space-y-4 lg:space-y-5">
                     {section.steps.map((step, stepIndex) => (
                       <div key={stepIndex}>
-                        <div className="flex items-center justify-end gap-3">
+                        <div className="flex items-center justify-end gap-2 sm:gap-3">
                           <span
-                            className={`text-small font-bold ${
+                            className={`text-xs sm:text-sm font-bold ${
                               step.active ? "text-foreground" : "text-foreground opacity-60"
                             }`}
                           >
                             {step.label}
                           </span>
                           <div
-                            className={`w-9 h-9 rounded-full flex items-center justify-center ${
+                            className={`w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full flex items-center justify-center ${
                               step.completed
                                 ? "bg-primary"
                                 : step.active
@@ -278,7 +291,7 @@ const KYCVerification = () => {
                             }`}
                           >
                             <step.icon
-                              className={`w-4 h-4 ${
+                              className={`w-3 h-3 sm:w-4 sm:h-4 ${
                                 step.completed || step.active
                                   ? "text-primary-foreground"
                                   : "text-foreground opacity-60"
@@ -287,8 +300,8 @@ const KYCVerification = () => {
                           </div>
                         </div>
                         {stepIndex < section.steps.length - 1 && (
-                          <div className="flex justify-end pr-4 py-2">
-                            <div className="w-0.5 h-7 bg-muted/30"></div>
+                          <div className="flex justify-end pr-3 sm:pr-4 py-1 sm:py-2">
+                            <div className="w-0.5 h-5 sm:h-6 lg:h-7 bg-muted/30"></div>
                           </div>
                         )}
                       </div>
@@ -300,8 +313,8 @@ const KYCVerification = () => {
           </div>
 
           {/* Form Content */}
-          <div className="flex-1 px-20 py-10">
-            <div className="max-w-xl mx-auto">
+          <div className="flex-1 px-4 sm:px-8 lg:px-20 py-6 sm:py-8 lg:py-10">
+            <div className="max-w-md sm:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto">
               <Breadcrumb
                 items={[
                   { label: t('common.home') || "Início", href: "/user-selection" },
@@ -310,15 +323,15 @@ const KYCVerification = () => {
               />
 
               {/* Form Header */}
-              <div className="mb-9 space-y-5">
-                <div className="text-xs text-foreground opacity-80">
+              <div className="mb-6 sm:mb-8 lg:mb-9 space-y-3 sm:space-y-4 lg:space-y-5">
+                <div className="text-xs sm:text-sm text-foreground opacity-80">
                   {t('kyc.step') || 'Passo'} {currentStep + 1}/7
                 </div>
-                <div className="space-y-3">
-                  <h2 className="text-xl font-medium text-foreground">
+                <div className="space-y-2 sm:space-y-3">
+                  <h2 className="text-lg sm:text-xl font-medium text-foreground">
                     {stepTitles[currentStep]}
                   </h2>
-                  <p className="text-sm text-foreground">
+                  <p className="text-xs sm:text-sm text-foreground">
                     {stepDescriptions[currentStep]}
                   </p>
                 </div>
@@ -326,24 +339,24 @@ const KYCVerification = () => {
 
               {/* Step Content */}
               {currentStep === 0 && (
-                <div className="space-y-6">
-                  <div className="space-y-3">
+                <div className="space-y-4 sm:space-y-5 lg:space-y-6">
+                  <div className="space-y-2 sm:space-y-3">
                     <Input
                       placeholder={t('kyc.fullName') || "Nome completo"}
                       value={formData.fullName}
                       onChange={(e) =>
                         handleInputChange("fullName", e.target.value)
                       }
-                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                      className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     <Input
                       placeholder="CPF"
                       value={formData.cpf}
                       onChange={(e) => handleInputChange("cpf", e.target.value)}
-                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                      className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                     />
                     <Input
                       placeholder={t('kyc.birthDate') || "Data de nascimento"}
@@ -351,27 +364,27 @@ const KYCVerification = () => {
                       onChange={(e) =>
                         handleInputChange("birthDate", e.target.value)
                       }
-                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                      className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                     />
                   </div>
 
-                  <div className="grid grid-cols-5 gap-3">
-                    <div className="col-span-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 sm:gap-3">
+                    <div className="col-span-1 sm:col-span-2">
                       <Input
                         placeholder="CEP"
                         value={formData.cep}
                         onChange={(e) => handleInputChange("cep", e.target.value)}
-                        className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                        className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                       />
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-1 sm:col-span-3">
                       <Input
                         placeholder={t('kyc.state') || "Estado"}
                         value={formData.state}
                         onChange={(e) =>
                           handleInputChange("state", e.target.value)
                         }
-                        className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                        className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                       />
                     </div>
                   </div>
@@ -380,18 +393,18 @@ const KYCVerification = () => {
                     placeholder={t('kyc.city') || "Cidade"}
                     value={formData.city}
                     onChange={(e) => handleInputChange("city", e.target.value)}
-                    className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                    className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                   />
 
-                  <div className="grid grid-cols-4 gap-3">
-                    <div className="col-span-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-3">
+                    <div className="col-span-1 sm:col-span-3">
                       <Input
                         placeholder={t('kyc.address') || "Endereço"}
                         value={formData.address}
                         onChange={(e) =>
                           handleInputChange("address", e.target.value)
                         }
-                        className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                        className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                       />
                     </div>
                     <Input
@@ -400,7 +413,7 @@ const KYCVerification = () => {
                       onChange={(e) =>
                         handleInputChange("number", e.target.value)
                       }
-                      className="h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
+                      className="h-11 sm:h-12 bg-muted/50 border-border placeholder:text-foreground text-foreground"
                     />
                   </div>
                 </div>
@@ -546,23 +559,23 @@ const KYCVerification = () => {
               )}
 
               {currentStep === 6 && (
-                <div className="space-y-6">
-                  <div className="bg-muted/30 rounded-lg p-6">
-                    <div className="text-center space-y-4">
-                      <BarChart3 className="w-12 h-12 mx-auto text-foreground opacity-60" />
-                      <div>
-                        <h3 className="text-lg font-medium text-foreground mb-2">
+                <div className="space-y-4 sm:space-y-5 lg:space-y-6">
+                  <div className="bg-muted/30 rounded-lg p-4 sm:p-5 lg:p-6">
+                    <div className="text-center space-y-3 sm:space-y-4">
+                      <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 mx-auto text-foreground opacity-60" />
+                      <div className="space-y-3 sm:space-y-4">
+                        <h3 className="text-base sm:text-lg font-medium text-foreground mb-2">
                           {t('kyc.zkAnalysisInProgress') || 'Análise com Prova ZK em Andamento'}
                         </h3>
-                        <p className="text-sm text-foreground opacity-80 mb-4">
+                        <p className="text-xs sm:text-sm text-foreground opacity-80 mb-3 sm:mb-4">
                           {t('kyc.processingData') || 'Estamos processando seus dados através de nossa tecnologia ZK Finance. Este processo pode levar até 24 horas.'}
                         </p>
                         
                         {/* ZK Proof Section */}
-                        <div className="bg-primary/10 rounded-lg p-4 mb-4 border border-primary/20">
+                        <div className="bg-primary/10 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4 border border-primary/20">
                           <div className="flex items-center gap-2 mb-2">
                             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                            <span className="text-sm font-medium text-primary">{t('kyc.zkCreditScoreProof') || 'Prova ZK de Score de Crédito'}</span>
+                            <span className="text-xs sm:text-sm font-medium text-primary">{t('kyc.zkCreditScoreProof') || 'Prova ZK de Score de Crédito'}</span>
                           </div>
                           <p className="text-xs text-foreground opacity-80 text-left">
                             {t('kyc.financialDataProcessed') || 'Seus dados financeiros e pessoais são processados por algoritmos de IA sem serem armazenados. Apenas o score final é gerado através de prova zero-knowledge, garantindo total privacidade.'}
@@ -570,10 +583,10 @@ const KYCVerification = () => {
                         </div>
 
                         {/* Privacy Notice */}
-                        <div className="bg-success/10 rounded-lg p-4 mb-4 border border-success/20">
+                        <div className="bg-success/10 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4 border border-success/20">
                           <div className="flex items-center gap-2 mb-2">
-                            <CheckCircle className="w-4 h-4 text-success" />
-                            <span className="text-sm font-medium text-success">{t('kyc.privacyGuaranteed') || 'Privacidade Garantida'}</span>
+                            <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-success" />
+                            <span className="text-xs sm:text-sm font-medium text-success">{t('kyc.privacyGuaranteed') || 'Privacidade Garantida'}</span>
                           </div>
                           <ul className="text-xs text-foreground opacity-80 text-left space-y-1">
                             <li>• {t('kyc.personalDataNotStored') || 'Dados pessoais não são armazenados'}</li>
@@ -597,12 +610,12 @@ const KYCVerification = () => {
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-4 mt-20">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-12 sm:mt-16 lg:mt-20">
                 {currentStep === 0 ? (
-                  <Link to="/login" className="w-40">
+                  <Link to="/login" className="w-full sm:w-40">
                     <Button
                       variant="outline"
-                      className="w-full h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+                      className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
                     >
                       {t('common.back') || 'Voltar'}
                     </Button>
@@ -611,22 +624,22 @@ const KYCVerification = () => {
                   <Button
                     variant="outline"
                     onClick={handlePrevStep}
-                    className="w-40 h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+                    className="w-full sm:w-40 h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
                   >
                     {t('kyc.previous') || 'Anterior'}
                   </Button>
                 )}
                 
                 {currentStep === 6 ? (
-                  <Link to="/borrower/dashboard" className="w-40">
-                                      <Button className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
+                  <Link to="/borrower/dashboard" className="w-full sm:w-40">
+                                      <Button className="w-full h-11 sm:h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
                     {t('kyc.finish') || 'Finalizar'}
                   </Button>
                   </Link>
                 ) : (
                   <Button 
                     onClick={handleNextStep}
-                    className="w-40 h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
+                    className="w-full sm:w-40 h-11 sm:h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
                   >
                     {t('kyc.next') || 'Próximo'}
                   </Button>

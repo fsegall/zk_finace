@@ -12,6 +12,12 @@ import {
 } from "@/components/ui/select";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import { useRBAC } from "../hooks/useRBAC";
+import { useMenu } from "../contexts/MenuContext";
+import LanguageSwitch from "../components/LanguageSwitch";
+import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 import {
   ArrowLeft,
   Upload,
@@ -29,7 +35,10 @@ import {
 
 const CollateralRegistration = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, profile } = useAuth();
+  const { user, profile, logout } = useAuth();
+  const { t } = useLanguage();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
+  const { isMobileMenuOpen } = useMenu();
   const [formData, setFormData] = useState({
     type: "",
     brand: "",
@@ -43,6 +52,10 @@ const CollateralRegistration = () => {
     invoice: null,
     photos: [],
   });
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -80,13 +93,13 @@ const CollateralRegistration = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-20">
+        <header className="px-4 lg:px-20 py-3 lg:py-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+            <div className="flex items-center gap-4 lg:gap-20">
               {/* Logo */}
               <div className="flex items-center">
                 <svg
-                  className="h-8 w-auto"
+                  className="h-6 lg:h-8 w-auto"
                   viewBox="0 0 442 149"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -139,43 +152,56 @@ const CollateralRegistration = () => {
               </div>
 
               {/* Title */}
-              <h1 className="text-h2 font-semibold text-foreground">Cadastrar Colateral</h1>
+              <h1 className="text-xl lg:text-2xl font-semibold text-foreground">Registro de Garantia</h1>
             </div>
 
             {/* User Actions */}
-            <div className="flex items-center gap-4">
-              <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                <Bell className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                  {user?.user_metadata?.avatar_url && (
-                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                  )}
-                  <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
-                  <span className="text-small text-foreground">
-                    @{user?.email ? user.email.split("@")[0] : "usuario"}
-                  </span>
-                </div>
+            <div className="flex items-center justify-between lg:justify-end gap-3 lg:gap-4">
+              {/* Mobile Menu */}
+              <MobileMenu userType="borrower" />
+              
+              {/* Mobile Wallet - Always Visible */}
+              <div className="lg:hidden">
+                <WalletConnect />
               </div>
-
-              <Link to="/login">
-                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                  <span className="text-body">Sair</span>
+              
+              {/* Desktop Actions */}
+              <div className="hidden lg:flex items-center gap-6">
+                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                  <Bell className="w-5 h-5" />
                 </button>
-              </Link>
 
-              <button
-                onClick={toggleTheme}
-                className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-              >
-                {theme === 'dark' ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
+                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                    <span className="text-xs text-foreground">
+                      @{user?.email ? user.email.split("@")[0] : "usuario"}
+                    </span>
+                  </div>
+                </div>
+
+                <LanguageSwitch />
+                <button
+                  onClick={handleLogout}
+                  className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                >
+                  <span className="text-sm">{t('auth.logout')}</span>
+                </button>
+
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                >
+                  {theme === 'dark' ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </header>

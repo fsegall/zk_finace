@@ -19,10 +19,23 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import { useRBAC } from "../hooks/useRBAC";
+import { useMenu } from "../contexts/MenuContext";
+import LanguageSwitch from "../components/LanguageSwitch";
+import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 
 const InvestorRanking = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, profile } = useAuth();
+  const { user, profile, logout } = useAuth();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
+  const { t } = useLanguage();
+  const { isMobileMenuOpen } = useMenu();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   const sidebarItems = [
     { icon: Home, label: "Dashboard", active: false },
@@ -82,13 +95,13 @@ const InvestorRanking = () => {
         }}
       />
 
-      <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+      <div className="relative z-10 flex flex-col lg:flex-row">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block w-full lg:w-64 bg-sidebar p-4 lg:p-6 transition-all duration-300">
           {/* Logo */}
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-6 lg:mb-8">
             <svg
-              className="h-8 w-auto"
+              className="h-6 lg:h-8 w-auto"
               viewBox="0 0 442 149"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -187,55 +200,73 @@ const InvestorRanking = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card/20 px-6 py-4">
-            <div className="flex items-center justify-between">
+          <header className="bg-card/20 px-4 lg:px-6 py-3 lg:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
               {/* Search */}
-              <div className="relative w-96">
+              <div className="relative w-full lg:w-96">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar"
-                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground text-sm"
                 />
               </div>
 
               {/* User Actions */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    {user?.user_metadata?.avatar_url && (
-                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                    )}
-                    <div className="flex flex-col">
-                      <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
-                      <span className="text-small text-muted-foreground">
-                        @{user?.email ? user.email.split("@")[0] : "usuario"}
-                      </span>
+              <div className="flex items-center justify-between lg:justify-end gap-3 lg:gap-4">
+                {/* Mobile Menu */}
+                <MobileMenu userType="investor" />
+                
+                {/* Mobile Wallet - Always Visible */}
+                <div className="lg:hidden">
+                  <WalletConnect />
+                </div>
+                
+                {/* Desktop Actions */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                    <Bell className="w-5 h-5" />
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                      {user?.user_metadata?.avatar_url && (
+                        <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                      )}
+                      <div className="flex flex-col">
+                        <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                        <span className="text-xs text-muted-foreground">
+                          @{user?.email ? user.email.split("@")[0] : "usuario"}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <Link to="/login">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                    <span className="text-body">Sair</span>
+                  <WalletConnect />
+                  <LanguageSwitch />
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                  >
+                    <span className="text-sm">{t('auth.logout')}</span>
                   </button>
-                </Link>
 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-                >
-                  {theme === 'dark' ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </button>
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </header>
 
           {/* Dashboard Content */}
-          <main className="p-6">
+          <main className="p-4 lg:p-6">
             <div className="max-w-4xl mx-auto">
               <Breadcrumb
                 items={[
@@ -246,11 +277,11 @@ const InvestorRanking = () => {
               />
 
               {/* Header */}
-              <div className="flex items-center justify-between mb-8">
-                <h1 className="text-h2 font-semibold text-foreground">Top Lances</h1>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 lg:mb-8">
+                <h1 className="text-xl lg:text-2xl font-semibold text-foreground">Top Lances</h1>
                 <div className="flex items-center gap-2">
-                  <Filter className="w-5 h-5" />
-                  <span className="text-body text-foreground">Filtrar</span>
+                  <Filter className="w-4 lg:w-5 h-4 lg:h-5" />
+                  <span className="text-sm lg:text-base text-foreground">Filtrar</span>
                 </div>
               </div>
 
@@ -259,22 +290,22 @@ const InvestorRanking = () => {
                 {topLances.map((lance) => (
                   <div
                     key={lance.id}
-                    className="bg-card/20 rounded-xl p-6"
+                    className="bg-card/20 rounded-xl p-4 lg:p-6"
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-8">
                       {/* Left side - Project info */}
                       <div className="flex-1">
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
-                            <User className="w-4 h-4" />
+                        <div className="flex items-center gap-3 lg:gap-4 mb-3 lg:mb-4">
+                          <div className="w-6 lg:w-8 h-6 lg:h-8 bg-muted rounded-full flex items-center justify-center">
+                            <User className="w-3 lg:w-4 h-3 lg:h-4" />
                           </div>
-                          <div className="flex items-center gap-3">
-                            <span className="text-body font-medium text-foreground">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                            <span className="text-sm lg:text-base font-medium text-foreground">
                               {lance.author}
                             </span>
                             <Badge
                               variant="secondary"
-                              className="bg-secondary/20 text-secondary flex items-center gap-1"
+                              className="bg-secondary/20 text-secondary flex items-center gap-1 w-fit"
                             >
                               <Star className="w-3 h-3 fill-current" />
                               {lance.level}
@@ -282,11 +313,11 @@ const InvestorRanking = () => {
                           </div>
                         </div>
 
-                        <h3 className="text-h4 font-semibold mb-2 text-foreground">
+                        <h3 className="text-lg lg:text-xl font-semibold mb-2 lg:mb-3 text-foreground">
                           {lance.title}
                         </h3>
 
-                        <div className="grid grid-cols-3 gap-8 text-body">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-8 text-sm lg:text-base">
                           <div>
                             <div className="text-foreground mb-1">
                               Valor
@@ -311,11 +342,11 @@ const InvestorRanking = () => {
                       </div>
 
                       {/* Right side - Actions */}
-                      <div className="flex items-center gap-4 ml-8">
-                        <Button variant="outline" size="sm">
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:gap-4 lg:ml-8">
+                        <Button variant="outline" size="sm" className="w-full sm:w-auto">
                           Ver detalhes do lance
                         </Button>
-                        <Button className="bg-primary hover:bg-primary/80 transition-colors">
+                        <Button className="bg-primary hover:bg-primary/80 transition-colors w-full sm:w-auto">
                           Investir
                         </Button>
                       </div>

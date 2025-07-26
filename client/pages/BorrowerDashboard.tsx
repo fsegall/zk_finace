@@ -12,24 +12,61 @@ import {
   ChevronDown,
   Plus,
   Filter,
+  ArrowLeft,
+  Calendar,
+  DollarSign,
+  Percent,
+  Clock,
+  Eye,
+  Edit,
+  Trash2,
+  CheckCircle,
+  XCircle,
+  AlertCircle,
+  FileText,
+  Upload,
+  MapPin,
+  Phone,
+  Mail,
+  Building,
+  Target,
+  Shield,
+  CreditCard,
+  Landmark,
+  Smartphone,
+  Save,
+  Send,
+  Image,
+  Video,
+  Link as LinkIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useRBAC } from "../hooks/useRBAC";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useMenu } from "../contexts/MenuContext";
 import LanguageSwitch from "../components/LanguageSwitch";
 import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 
 const BorrowerDashboard = () => {
   const { theme, toggleTheme } = useTheme();
   const { t } = useLanguage();
   const { logout, user, profile } = useAuth();
   const { isAdmin, isLender, isBorrower } = useRBAC();
+  const { isMobileMenuOpen } = useMenu();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -101,13 +138,13 @@ const BorrowerDashboard = () => {
         }}
       />
 
-      <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+      <div className="relative z-10 flex flex-col lg:flex-row">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className={`hidden lg:block w-full lg:w-64 bg-sidebar p-4 lg:p-6 transition-all duration-300`}>
           {/* Logo */}
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-6 lg:mb-8">
             <svg
-              className="h-8 w-auto"
+              className="h-6 w-auto lg:h-8"
               viewBox="0 0 442 149"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -160,51 +197,51 @@ const BorrowerDashboard = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="space-y-2">
+          <nav className="space-y-1 lg:space-y-2">
             <Link
               to="/borrower/dashboard"
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
-              <Home className="w-4 h-4" />
+              <Home className="w-3 h-3 lg:w-4 lg:h-4" />
               Dashboard
             </Link>
             <Link
               to="/borrower/lances"
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
-              <TrendingUp className="w-4 h-4" />
+              <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4" />
               Lances
             </Link>
             <Link
               to="/borrower/wallet"
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
-              <Wallet className="w-4 h-4" />
+              <Wallet className="w-3 h-3 lg:w-4 lg:h-4" />
               Carteira
             </Link>
             <Link
               to="/borrower/settings"
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
-              <Settings className="w-4 h-4" />
+              <Settings className="w-3 h-3 lg:w-4 lg:h-4" />
               Configurações
             </Link>
           </nav>
 
           {/* Support */}
-          <div className="mt-auto pt-8 space-y-2">
+          <div className="mt-auto pt-6 lg:pt-8 space-y-1 lg:space-y-2">
             <Link
               to="/kyc-verification"
-              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg"
+              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 text-xs lg:text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg`}
             >
               <span className="text-xs">←</span>
               {t('dashboard.backToKYC')}
             </Link>
             <Link
               to="/borrower/support"
-              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg"
+              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 text-xs lg:text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg`}
             >
-              <div className="w-4 h-4 rounded-full border border-sidebar-foreground flex items-center justify-center">
+              <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full border border-sidebar-foreground flex items-center justify-center">
                 <span className="text-xs">?</span>
               </div>
               {t('dashboard.support')}
@@ -215,372 +252,252 @@ const BorrowerDashboard = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card/20 px-6 py-4">
-            <div className="flex items-center justify-between">
+          <header className="bg-card/20 px-4 lg:px-6 py-3 lg:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
               {/* Search */}
-              <div className="relative w-96">
+              <div className="relative w-full lg:w-96">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder={t('dashboard.search')}
-                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground text-sm"
                 />
               </div>
 
               {/* User Actions */}
-              <div className="flex items-center gap-4">
-                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
-
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    {user?.user_metadata?.avatar_url && (
-                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                    )}
-                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
-                    <span className="text-xs text-foreground">
-                      @{user?.email ? user.email.split("@")[0] : "usuario"}
-                    </span>
-                    {isAdmin && (
-                      <Link to="/admin" className="ml-2 px-2 py-0.5 rounded bg-primary text-primary-foreground text-xs hover:underline">
-                        Admin
-                      </Link>
-                    )}
-                    {isLender && <span className="ml-2 px-2 py-0.5 rounded bg-success text-success-foreground text-xs">Investidor</span>}
-                    {isBorrower && <span className="ml-2 px-2 py-0.5 rounded bg-warning text-warning-foreground text-xs">Tomador</span>}
-                  </div>
+              <div className="flex items-center justify-between lg:justify-end gap-3 lg:gap-4">
+                {/* Mobile Menu */}
+                <MobileMenu userType="borrower" />
+                
+                {/* Mobile Wallet - Always Visible */}
+                <div className="lg:hidden">
+                  <WalletConnect />
                 </div>
+                
+                {/* Desktop Actions */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                    <Bell className="w-5 h-5" />
+                  </button>
 
-                <WalletConnect />
-                <LanguageSwitch />
-                <button
-                  onClick={handleLogout}
-                  className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
-                >
-                  <span className="text-sm">{t('auth.logout')}</span>
-                </button>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                      {user?.user_metadata?.avatar_url && (
+                        <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                      )}
+                      <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                      <span className="text-xs text-foreground">
+                        @{user?.email ? user.email.split("@")[0] : "usuario"}
+                      </span>
+                      {isAdmin && (
+                        <Link to="/admin" className="ml-2 px-2 py-0.5 rounded bg-primary text-primary-foreground text-xs hover:underline">
+                          Admin
+                        </Link>
+                      )}
+                      {isLender && <span className="ml-2 px-2 py-0.5 rounded bg-success text-success-foreground text-xs">Investidor</span>}
+                      {isBorrower && <span className="ml-2 px-2 py-0.5 rounded bg-warning text-warning-foreground text-xs">Tomador</span>}
+                    </div>
+                  </div>
 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-                >
-                  {theme === 'dark' ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </button>
+                  <WalletConnect />
+                  <LanguageSwitch />
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                  >
+                    <span className="text-sm">{t('auth.logout')}</span>
+                  </button>
+
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </header>
 
-          {/* Dashboard Content */}
-          <main className="p-6">
+          {/* Main Content Area */}
+          <main className="p-4 lg:p-6">
             <Breadcrumb
               items={[
-                { label: t('common.home'), href: "/user-selection" },
-                { label: t('kyc.verification'), href: "/kyc-verification" },
-                { label: t('dashboard.title') },
+                { label: "Início", href: "/user-selection" },
+                { label: "Dashboard" },
               ]}
             />
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              {/* Left Column - Stats and Criar Lance */}
-              <div className="lg:col-span-1 space-y-6">
-                {/* Create New Lance */}
-                <div className="bg-card/20 rounded-xl p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-r from-primary to-cyan-400 flex items-center justify-center">
-                      <Plus className="w-3 h-3 text-primary-foreground" />
-                    </div>
-                    <span className="text-body font-medium">{t('dashboard.createNewLance')}</span>
-                  </div>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <div className="h-1 w-16 bg-gradient-to-r from-primary to-cyan-400 rounded-full"></div>
-                      <div className="h-1 flex-1 bg-muted rounded-full"></div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-body font-medium">{t('dashboard.level1')}</span>
-                        <span className="text-small text-foreground">
-                          {t('dashboard.viewAchievements')}
-                        </span>
-                      </div>
-                      <div className="w-full h-16 bg-gradient-to-r from-cyan-400 to-primary rounded-lg flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-warning">★</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="bg-card/20 rounded-lg p-4 text-center">
-                    <div className="text-h4 font-semibold text-foreground">6.56</div>
-                                      <div className="text-body text-foreground">
-                    {t('dashboard.zkScore')}
-                  </div>
-                  </div>
-                  <div className="bg-card/20 rounded-lg p-4 text-center">
-                    <div className="text-h4 font-semibold text-foreground">8</div>
-                                      <div className="text-body text-foreground">
-                    {t('dashboard.lancesPosted')}
-                  </div>
-                  </div>
-                  <div className="bg-card/20 rounded-lg p-4 text-center">
-                    <div className="text-h4 font-semibold text-foreground">R$300k</div>
-                                      <div className="text-body text-foreground">
-                    {t('dashboard.totalRaised')}
-                  </div>
-                  </div>
-                </div>
+            <div className="mt-6 lg:mt-8">
+              {/* Welcome Section */}
+              <div className="mb-6 lg:mb-8">
+                <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">
+                  {t('dashboard.welcome')}, {profile?.full_name || user?.user_metadata?.full_name || "Usuário"}!
+                </h1>
+                <p className="text-foreground">
+                  {t('dashboard.subtitle')}
+                </p>
               </div>
 
-              {/* Center Column - Credit Progress */}
-              <div className="lg:col-span-2">
-                <div className="bg-card/20 rounded-xl p-6 h-full">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-h4 font-semibold">
-                      {t('dashboard.securedCreditToDate')}
-                    </h2>
-                    <div className="flex items-center gap-2 text-body text-foreground">
-                      <span>{t('dashboard.goal')}: R$300.000</span>
+              {/* Quick Actions */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+                <Link
+                  to="/borrower/create-lance"
+                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors border border-border"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                      <Plus className="w-5 h-5 text-primary" />
                     </div>
+                    <h3 className="text-lg font-semibold text-foreground">
+                      {t('dashboard.createLance')}
+                    </h3>
                   </div>
+                  <p className="text-sm text-foreground">
+                    {t('dashboard.createLanceDesc')}
+                  </p>
+                </Link>
 
-                  {/* Progress Bar */}
-                  <div className="space-y-6">
-                    <div className="space-y-3">
-                      <div className="flex justify-between text-body">
-                        <span className="text-foreground">
-                          {t('dashboard.progressGoal')}
-                        </span>
-                        <span className="font-semibold text-foreground">67%</span>
-                      </div>
-                      <div className="w-full bg-muted rounded-full h-4">
-                        <div
-                          className="bg-gradient-to-r from-primary to-cyan-400 h-4 rounded-full relative overflow-hidden"
-                          style={{ width: "67%" }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between text-small text-foreground">
-                        <span>R$0</span>
-                        <span>R$300.000</span>
-                      </div>
+                <Link
+                  to="/borrower/lances"
+                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors border border-border"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-success/20 rounded-lg flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5 text-success" />
                     </div>
-
-                    {/* Current Amount */}
-                    <div className="bg-gradient-to-r from-primary/10 to-cyan-400/10 rounded-lg p-6 text-center">
-                      <div className="text-h1 font-bold text-primary mb-2">
-                        R$200.000
-                      </div>
-                      <div className="text-body text-foreground">
-                        {t('dashboard.currentSecuredCredit')}
-                      </div>
-                    </div>
-
-                    {/* Timeline */}
-                    <div className="grid grid-cols-3 gap-4 text-body">
-                      <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <div className="font-semibold text-foreground">R$50.000</div>
-                        <div className="text-small text-foreground">
-                          Jan 2024
-                        </div>
-                      </div>
-                      <div className="text-center p-3 bg-muted/50 rounded-lg">
-                        <div className="font-semibold text-foreground">R$75.000</div>
-                        <div className="text-small text-foreground">
-                          Fev 2024
-                        </div>
-                      </div>
-                      <div className="text-center p-3 bg-primary/10 rounded-lg border border-primary/20">
-                        <div className="font-semibold text-primary">
-                          R$75.000
-                        </div>
-                        <div className="text-small text-foreground">
-                          Mar 2024
-                        </div>
-                      </div>
-                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">
+                      {t('dashboard.viewLances')}
+                    </h3>
                   </div>
-                </div>
+                  <p className="text-sm text-foreground">
+                    {t('dashboard.viewLancesDesc')}
+                  </p>
+                </Link>
+
+                <Link
+                  to="/borrower/wallet"
+                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors border border-border"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-warning/20 rounded-lg flex items-center justify-center">
+                      <Wallet className="w-5 h-5 text-warning" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">
+                      {t('dashboard.wallet')}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-foreground">
+                    {t('dashboard.walletDesc')}
+                  </p>
+                </Link>
+
+                <Link
+                  to="/kyc-verification"
+                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors border border-border"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-info/20 rounded-lg flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-info" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground">
+                      {t('dashboard.kyc')}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-foreground">
+                    {t('dashboard.kycDesc')}
+                  </p>
+                </Link>
               </div>
 
-              {/* Right Column - Collateral */}
-              <div className="lg:col-span-1">
-                <div className="bg-card/20 rounded-xl p-6 h-full">
-                  <div className="flex items-center justify-between mb-5">
-                    <h2 className="text-h4 font-semibold">
-                      Colaterais Cadastrados
-                    </h2>
-                  </div>
-
-                  <div className="space-y-4 mb-6">
-                    <div className="p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-4">
-                        <div className="bg-muted px-2 py-1 rounded text-body font-semibold">
-                          Eletrônico
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-body opacity-80">
-                            Mackbook Apple 16 Pro...
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-body font-semibold">
-                            R$52.454,32
-                          </div>
-                          <div className="text-small text-foreground">
-                            14/02/2025
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-4">
-                        <div className="bg-muted px-2 py-1 rounded text-body font-semibold">
-                          Casa
-                        </div>
-                        <div className="flex-1">
-                          <div className="text-body opacity-80">
-                            Guarda Roupa Madeira...
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-body font-semibold">
-                            R$52.454,32
-                          </div>
-                          <div className="text-small text-foreground">
-                            14/02/2025
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                                      <div className="pt-4 mb-4">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-body">Valor Total</span>
-                      <span className="font-bold text-foreground">R$100.000,00</span>
-                    </div>
-                  </div>
-
-                  <Link to="/borrower/collateral">
-                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/80 transition-colors">
-                      Cadastrar Colateral
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Meus Lances Section */}
-            <div className="mt-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-h2 font-semibold text-foreground">Meus Lances</h2>
-                <div className="flex items-center gap-2">
-                  <Filter className="w-5 h-5" />
-                  <span className="text-body text-foreground">Filtrar</span>
-                  <Link to="/borrower/create-lance">
-                    <Button className="bg-primary hover:bg-primary/80 transition-colors">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Criar Lance
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {lances.map((lance) => (
-                  <div
-                    key={lance.id}
-                    className="bg-card/20 rounded-xl p-6"
+              {/* Recent Lances */}
+              <div className="bg-card/20 rounded-xl p-4 lg:p-6 border border-border">
+                <div className="flex items-center justify-between mb-4 lg:mb-6">
+                  <h2 className="text-xl lg:text-2xl font-semibold text-foreground">
+                    {t('dashboard.recentLances')}
+                  </h2>
+                  <Link
+                    to="/borrower/lances"
+                    className="text-primary hover:text-primary/80 transition-colors text-sm"
                   >
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
-                          <User className="w-4 h-4" />
+                    {t('dashboard.viewAll')} →
+                  </Link>
+                </div>
+
+                <div className="space-y-4">
+                  {lances.map((lance) => (
+                    <div
+                      key={lance.id}
+                      className="bg-muted/50 rounded-lg p-4 lg:p-6 hover:bg-muted/70 transition-colors"
+                    >
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="text-lg font-semibold text-foreground">
+                              {lance.title}
+                            </h3>
+                            <Badge variant="secondary" className="text-xs">
+                              {lance.category}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-foreground mb-3">
+                            {lance.description}
+                          </p>
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-foreground">
+                            <span className="flex items-center gap-1">
+                              <User className="w-4 h-4" />
+                              {lance.author}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <DollarSign className="w-4 h-4" />
+                              {lance.value}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Percent className="w-4 h-4" />
+                              {lance.interest}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-4 h-4" />
+                              {lance.expires}
+                            </span>
+                          </div>
                         </div>
-                        <span className="text-body font-medium">
-                          {lance.author}
-                        </span>
+
+                        <div className="flex flex-col items-end gap-3">
+                          <div className="text-right">
+                            <div className="text-lg font-semibold text-foreground">
+                              {lance.raised}
+                            </div>
+                            <div className="text-sm text-foreground">
+                              de {lance.goal}
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-32">
+                            <div className="flex items-center justify-between text-sm mb-1">
+                              <span className="text-foreground">{t('dashboard.progress')}</span>
+                              <span className="text-foreground">{lance.progress}%</span>
+                            </div>
+                            <div className="w-full bg-muted rounded-full h-2">
+                              <div
+                                className="bg-primary h-2 rounded-full transition-all duration-300"
+                                style={{ width: `${lance.progress}%` }}
+                              />
+                            </div>
+                          </div>
+                          <Link
+                            to={`/borrower/lance/${lance.id}`}
+                            className="bg-primary hover:bg-primary/80 text-primary-foreground px-4 py-2 rounded-lg text-sm transition-colors"
+                          >
+                            {t('dashboard.viewDetails')}
+                          </Link>
+                        </div>
                       </div>
-                      <Badge
-                        variant="secondary"
-                                                    className="bg-secondary/20 text-secondary"
-                      >
-                        {lance.category}
-                      </Badge>
                     </div>
-
-                    {/* Content */}
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-h5 mb-2 text-foreground">
-                          {lance.title}
-                        </h3>
-                        <p className="text-body text-foreground mb-3">
-                          {lance.description}
-                        </p>
-                        <Button variant="outline" size="sm" className="text-xs">
-                          {t('dashboard.seeLanceDetails')}
-                        </Button>
-                      </div>
-
-                      {/* Stats */}
-                      <div className="grid grid-cols-3 gap-4 text-body">
-                        <div>
-                          <div className="text-foreground">{t('dashboard.value')}</div>
-                          <div className="font-semibold text-foreground">{lance.value}</div>
-                        </div>
-                        <div>
-                          <div className="text-foreground">{t('dashboard.interest')}</div>
-                          <div className="font-semibold text-foreground">{lance.interest}</div>
-                        </div>
-                        <div>
-                          <div className="text-foreground">{t('dashboard.expiresIn')}</div>
-                          <div className="font-semibold text-foreground">{lance.expires}</div>
-                        </div>
-                      </div>
-
-                      {/* Progress */}
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-body">
-                          <span className="text-foreground font-semibold">
-                            {t('dashboard.progress')}
-                          </span>
-                          <span className="text-foreground font-semibold">
-                            {lance.progress}%
-                          </span>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-2">
-                          <div
-                            className="bg-gradient-to-r from-cyan-400 to-primary h-2 rounded-full"
-                            style={{ width: `${lance.progress}%` }}
-                          ></div>
-                        </div>
-                        <div className="flex justify-between text-small text-foreground">
-                          <span>{lance.raised}</span>
-                          <span>{t('dashboard.objective')}: {lance.goal}</span>
-                        </div>
-                      </div>
-
-                      <Link to={`/borrower/credit-request/${lance.id}`}>
-                        <Button className="w-full bg-primary hover:bg-primary/80 transition-colors">
-                          {t('dashboard.requestCredit')}
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </main>

@@ -57,6 +57,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useCreateLoan } from "../hooks/useCreateLoan";
 import { useCreditAnalysis, useMockCreditAnalysis } from "../hooks/useCreditAnalysis";
 import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 
 const CreateLance = () => {
   const { theme, toggleTheme } = useTheme();
@@ -950,8 +951,8 @@ const CreateLance = () => {
       />
 
       <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block w-64 bg-sidebar p-6">
           {/* Logo */}
           <div className="flex items-center mb-8">
             <svg
@@ -1063,59 +1064,70 @@ const CreateLance = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card/20 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+          <header className="bg-card/20 px-4 sm:px-6 py-3 sm:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <Link to="/borrower/lances">
-                  <Button variant="outline" size="sm">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+                    <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                     Voltar aos Lances
                   </Button>
                 </Link>
               </div>
 
               {/* User Actions */}
-              <div className="flex items-center gap-4">
-                <WalletConnect />
+              <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-3 lg:gap-4">
+                {/* Mobile Menu */}
+                <MobileMenu userType="borrower" />
                 
-                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
-
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    {user?.user_metadata?.avatar_url && (
-                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                    )}
-                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
-                    <span className="text-xs text-foreground">
-                      @{user?.email ? user.email.split("@")[0] : "usuario"}
-                    </span>
-                  </div>
+                {/* Mobile Wallet - Always Visible */}
+                <div className="lg:hidden">
+                  <WalletConnect />
                 </div>
-
-                <Link to="/login">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                    <span className="text-sm">Sair</span>
+                
+                {/* Desktop Actions */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <WalletConnect />
+                  
+                  <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                    <Bell className="w-5 h-5" />
                   </button>
-                </Link>
 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-                >
-                  {theme === 'dark' ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </button>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                      {user?.user_metadata?.avatar_url && (
+                        <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                      )}
+                      <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                      <span className="text-xs text-foreground">
+                        @{user?.email ? user.email.split("@")[0] : "usuario"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <Link to="/login">
+                    <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
+                      <span className="text-sm">Sair</span>
+                    </button>
+                  </Link>
+
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </header>
 
           {/* Main Content */}
-          <main className="p-6">
+          <main className="p-4 sm:p-6">
             <Breadcrumb
               items={[
                 { label: "Início", href: "/user-selection" },
@@ -1126,46 +1138,40 @@ const CreateLance = () => {
             />
 
             {/* Header */}
-            <div className="text-center mb-8">
-              <h1 className="text-h1 font-bold text-foreground mb-2">
+            <div className="text-center mb-6 sm:mb-8">
+              <h1 className="text-h2 sm:text-h1 font-bold text-foreground mb-2">
                 Criar Novo Lance
               </h1>
-              <p className="text-body text-foreground">
+              <p className="text-sm sm:text-body text-foreground">
                 Preencha as informações para criar seu pedido de empréstimo
               </p>
             </div>
 
             {/* Steps Progress */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-body text-foreground">
+            <div className="mb-6 sm:mb-8">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <div className="text-sm sm:text-body text-foreground">
                   Passo {currentStep} de {steps.length}
                 </div>
               </div>
               
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 overflow-x-auto pb-2">
                 {steps.map((step, index) => (
-                  <div key={step.id} className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-colors ${
+                  <div key={step.id} className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border-2 transition-colors ${
                       currentStep >= step.id
-                        ? "bg-primary border-primary text-primary-foreground"
-                        : "bg-muted border-border text-foreground"
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-muted text-muted-foreground"
                     }`}>
-                      {currentStep > step.id ? (
-                        <CheckCircle className="w-5 h-5" />
-                      ) : (
-                        <step.icon className="w-5 h-5" />
-                      )}
+                      <step.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
-                    <div className="hidden md:block">
-                      <div className={`text-sm font-medium ${
-                        currentStep >= step.id ? "text-foreground" : "text-foreground/60"
-                      }`}>
-                        {step.title}
-                      </div>
-                    </div>
+                    <span className={`text-xs sm:text-sm font-medium ${
+                      currentStep >= step.id ? "text-foreground" : "text-muted-foreground"
+                    }`}>
+                      {step.title}
+                    </span>
                     {index < steps.length - 1 && (
-                      <div className={`w-16 h-1 rounded-full ${
+                      <div className={`w-8 sm:w-12 lg:w-16 h-1 rounded-full ${
                         currentStep > step.id ? "bg-primary" : "bg-muted"
                       }`} />
                     )}
@@ -1175,7 +1181,7 @@ const CreateLance = () => {
             </div>
 
             {/* Form Content */}
-            <div className="bg-card/20 rounded-xl p-8 border border-border/50">
+            <div className="bg-card/20 rounded-xl p-4 sm:p-6 lg:p-8 border border-border/50">
               {renderStepContent()}
             </div>
 

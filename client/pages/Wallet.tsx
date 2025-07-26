@@ -6,6 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import { useRBAC } from "../hooks/useRBAC";
+import { useMenu } from "../contexts/MenuContext";
+import LanguageSwitch from "../components/LanguageSwitch";
+import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 import {
   ArrowLeft,
   Calendar,
@@ -25,7 +31,14 @@ import {
 
 const Wallet = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, profile } = useAuth();
+  const { user, profile, logout } = useAuth();
+  const { t } = useLanguage();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
+  const { isMobileMenuOpen } = useMenu();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   const walletData = {
     saldoDevedor: "R$ 45.000,00",
@@ -56,13 +69,13 @@ const Wallet = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-20">
+        <header className="px-4 lg:px-20 py-3 lg:py-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+            <div className="flex items-center gap-4 lg:gap-20">
               {/* Logo */}
               <div className="flex items-center">
                 <svg
-                  className="h-8 w-auto"
+                  className="h-6 lg:h-8 w-auto"
                   viewBox="0 0 442 149"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -115,49 +128,62 @@ const Wallet = () => {
               </div>
 
               {/* Title */}
-              <h1 className="text-h2 font-semibold text-foreground">Carteira</h1>
+              <h1 className="text-xl lg:text-2xl font-semibold text-foreground">Carteira</h1>
             </div>
 
             {/* User Actions */}
-            <div className="flex items-center gap-4">
-              <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                <Bell className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                  {user?.user_metadata?.avatar_url && (
-                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                  )}
-                  <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
-                  <span className="text-small text-foreground">
-                    @{user?.email ? user.email.split("@")[0] : "usuario"}
-                  </span>
-                </div>
+            <div className="flex items-center justify-between lg:justify-end gap-3 lg:gap-4">
+              {/* Mobile Menu */}
+              <MobileMenu userType="borrower" />
+              
+              {/* Mobile Wallet - Always Visible */}
+              <div className="lg:hidden">
+                <WalletConnect />
               </div>
-
-              <Link to="/login">
-                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                  <span className="text-body">Sair</span>
+              
+              {/* Desktop Actions */}
+              <div className="hidden lg:flex items-center gap-6">
+                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                  <Bell className="w-5 h-5" />
                 </button>
-              </Link>
 
-              <button
-                onClick={toggleTheme}
-                className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-              >
-                {theme === 'dark' ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
+                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                    <span className="text-xs text-foreground">
+                      @{user?.email ? user.email.split("@")[0] : "usuario"}
+                    </span>
+                  </div>
+                </div>
+
+                <LanguageSwitch />
+                <button
+                  onClick={handleLogout}
+                  className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                >
+                  <span className="text-sm">{t('auth.logout')}</span>
+                </button>
+
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                >
+                  {theme === 'dark' ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="px-6 lg:px-20 py-8">
+        <main className="px-4 lg:px-20 py-4 lg:py-8">
           <Breadcrumb
             items={[
               { label: "Início", href: "/user-selection" },
@@ -170,96 +196,97 @@ const Wallet = () => {
             {/* Back Button */}
             <Link
               to="/borrower/dashboard"
-              className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-4 lg:mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
-              Voltar ao Dashboard
+              <span className="hidden sm:inline">Voltar ao Dashboard</span>
+              <span className="sm:hidden">Voltar</span>
             </Link>
 
             {/* Main Wallet Overview */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
               {/* Saldo Devedor */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                    <DollarSign className="w-5 h-5 text-primary" />
+              <div className="bg-card/20 rounded-xl p-4 lg:p-6">
+                <div className="flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                  <div className="w-8 lg:w-10 h-8 lg:h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <DollarSign className="w-4 lg:w-5 h-4 lg:h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-h5 font-semibold text-foreground">Saldo Devedor</h3>
-                    <p className="text-body text-foreground">Valor total em aberto</p>
+                    <h3 className="text-base lg:text-lg font-semibold text-foreground">Saldo Devedor</h3>
+                    <p className="text-xs lg:text-sm text-foreground">Valor total em aberto</p>
                   </div>
                 </div>
-                <div className="text-h2 font-bold text-foreground mb-2">
+                <div className="text-xl lg:text-2xl font-bold text-foreground mb-2">
                   {walletData.saldoDevedor}
                 </div>
-                <div className="flex items-center gap-2 text-small text-foreground">
-                  <TrendingUp className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs lg:text-sm text-foreground">
+                  <TrendingUp className="w-3 lg:w-4 h-3 lg:h-4" />
                   <span>Atualizado hoje</span>
                 </div>
               </div>
 
               {/* Prazo de Pagamento */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-warning/20 rounded-lg flex items-center justify-center">
-                    <Calendar className="w-5 h-5 text-warning" />
+              <div className="bg-card/20 rounded-xl p-4 lg:p-6">
+                <div className="flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                  <div className="w-8 lg:w-10 h-8 lg:h-10 bg-warning/20 rounded-lg flex items-center justify-center">
+                    <Calendar className="w-4 lg:w-5 h-4 lg:h-5 text-warning" />
                   </div>
                   <div>
-                    <h3 className="text-h5 font-semibold text-foreground">Prazo de Pagamento</h3>
-                    <p className="text-body text-foreground">Tempo restante</p>
+                    <h3 className="text-base lg:text-lg font-semibold text-foreground">Prazo de Pagamento</h3>
+                    <p className="text-xs lg:text-sm text-foreground">Tempo restante</p>
                   </div>
                 </div>
-                <div className="text-h2 font-bold text-foreground mb-2">
+                <div className="text-xl lg:text-2xl font-bold text-foreground mb-2">
                   {walletData.prazoPagamento}
                 </div>
-                <div className="flex items-center gap-2 text-small text-foreground">
-                  <Clock className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs lg:text-sm text-foreground">
+                  <Clock className="w-3 lg:w-4 h-3 lg:h-4" />
                   <span>{walletData.mesesRestantes} meses restantes</span>
                 </div>
               </div>
 
               {/* Próximo Vencimento */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-success/20 rounded-lg flex items-center justify-center">
-                    <CreditCard className="w-5 h-5 text-success" />
+              <div className="bg-card/20 rounded-xl p-4 lg:p-6">
+                <div className="flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                  <div className="w-8 lg:w-10 h-8 lg:h-10 bg-success/20 rounded-lg flex items-center justify-center">
+                    <CreditCard className="w-4 lg:w-5 h-4 lg:h-5 text-success" />
                   </div>
                   <div>
-                    <h3 className="text-h5 font-semibold text-foreground">Próximo Vencimento</h3>
-                    <p className="text-body text-foreground">Próxima parcela</p>
+                    <h3 className="text-base lg:text-lg font-semibold text-foreground">Próximo Vencimento</h3>
+                    <p className="text-xs lg:text-sm text-foreground">Próxima parcela</p>
                   </div>
                 </div>
-                <div className="text-h2 font-bold text-foreground mb-2">
+                <div className="text-xl lg:text-2xl font-bold text-foreground mb-2">
                   {walletData.proximoVencimento}
                 </div>
-                <div className="flex items-center gap-2 text-small text-foreground">
-                  <DollarSign className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs lg:text-sm text-foreground">
+                  <DollarSign className="w-3 lg:w-4 h-3 lg:h-4" />
                   <span>{walletData.valorParcela}</span>
                 </div>
               </div>
             </div>
 
             {/* Detailed Information */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
               {/* Credores */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <Users className="w-6 h-6 text-primary" />
-                  <h3 className="text-h4 font-semibold text-foreground">Credores</h3>
+              <div className="bg-card/20 rounded-xl p-4 lg:p-6">
+                <div className="flex items-center gap-2 lg:gap-3 mb-4 lg:mb-6">
+                  <Users className="w-5 lg:w-6 h-5 lg:h-6 text-primary" />
+                  <h3 className="text-lg lg:text-xl font-semibold text-foreground">Credores</h3>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3 lg:space-y-4">
                   {walletData.credores.map((credor, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                          <User className="w-4 h-4 text-primary" />
+                    <div key={index} className="flex items-center justify-between p-3 lg:p-4 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-2 lg:gap-3">
+                        <div className="w-6 lg:w-8 h-6 lg:h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                          <User className="w-3 lg:w-4 h-3 lg:h-4 text-primary" />
                         </div>
                         <div>
-                          <div className="text-body font-medium text-foreground">{credor.nome}</div>
-                          <div className="text-small text-foreground">{credor.valor}</div>
+                          <div className="text-sm lg:text-base font-medium text-foreground">{credor.nome}</div>
+                          <div className="text-xs lg:text-sm text-foreground">{credor.valor}</div>
                         </div>
                       </div>
-                      <Badge variant="secondary" className="bg-success/20 text-success">
+                      <Badge variant="secondary" className="bg-success/20 text-success text-xs">
                         {credor.status}
                       </Badge>
                     </div>
@@ -268,34 +295,34 @@ const Wallet = () => {
               </div>
 
               {/* Quitação e Totais */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <PieChart className="w-6 h-6 text-primary" />
-                  <h3 className="text-h4 font-semibold text-foreground">Quitação e Totais</h3>
+              <div className="bg-card/20 rounded-xl p-4 lg:p-6">
+                <div className="flex items-center gap-2 lg:gap-3 mb-4 lg:mb-6">
+                  <PieChart className="w-5 lg:w-6 h-5 lg:h-6 text-primary" />
+                  <h3 className="text-lg lg:text-xl font-semibold text-foreground">Quitação e Totais</h3>
                 </div>
-                <div className="space-y-4">
-                  <div className="p-4 bg-muted/50 rounded-lg">
+                <div className="space-y-3 lg:space-y-4">
+                  <div className="p-3 lg:p-4 bg-muted/50 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-body font-medium text-foreground">Quitação Imediata</span>
-                      <span className="text-h5 font-bold text-foreground">{walletData.montanteQuitacaoImediata}</span>
+                      <span className="text-sm lg:text-base font-medium text-foreground">Quitação Imediata</span>
+                      <span className="text-base lg:text-lg font-bold text-foreground">{walletData.montanteQuitacaoImediata}</span>
                     </div>
-                    <p className="text-small text-foreground">Valor para quitar todo o débito hoje</p>
+                    <p className="text-xs lg:text-sm text-foreground">Valor para quitar todo o débito hoje</p>
                   </div>
                   
-                  <div className="p-4 bg-muted/50 rounded-lg">
+                  <div className="p-3 lg:p-4 bg-muted/50 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-body font-medium text-foreground">Total Final</span>
-                      <span className="text-h5 font-bold text-foreground">{walletData.montanteTotalFinal}</span>
+                      <span className="text-sm lg:text-base font-medium text-foreground">Total Final</span>
+                      <span className="text-base lg:text-lg font-bold text-foreground">{walletData.montanteTotalFinal}</span>
                     </div>
-                    <p className="text-small text-foreground">Montante total após juros no final do contrato</p>
+                    <p className="text-xs lg:text-sm text-foreground">Montante total após juros no final do contrato</p>
                   </div>
 
-                  <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
+                  <div className="p-3 lg:p-4 bg-primary/10 rounded-lg border border-primary/20">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-body font-medium text-primary">Economia na Quitação</span>
-                      <span className="text-h5 font-bold text-primary">R$ 10.500,00</span>
+                      <span className="text-sm lg:text-base font-medium text-primary">Economia na Quitação</span>
+                      <span className="text-base lg:text-lg font-bold text-primary">R$ 10.500,00</span>
                     </div>
-                    <p className="text-small text-foreground">Diferença entre quitação imediata e total final</p>
+                    <p className="text-xs lg:text-sm text-foreground">Diferença entre quitação imediata e total final</p>
                   </div>
                 </div>
               </div>

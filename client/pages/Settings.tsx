@@ -6,7 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import WalletConnect from "../components/WalletConnect";
+import LanguageSwitch from "../components/LanguageSwitch";
+import MobileMenu from "../components/MobileMenu";
 import {
   ArrowLeft,
   User,
@@ -31,7 +34,8 @@ import {
 
 const Settings = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, profile } = useAuth();
+  const { user, profile, logout } = useAuth();
+  const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
 
@@ -72,13 +76,13 @@ const Settings = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-20">
+        <header className="px-4 sm:px-6 lg:px-20 py-3 sm:py-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+            <div className="flex items-center justify-between lg:justify-start gap-4 lg:gap-20">
               {/* Logo */}
               <div className="flex items-center">
                 <svg
-                  className="h-8 w-auto"
+                  className="h-6 w-auto sm:h-8"
                   viewBox="0 0 442 149"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -131,51 +135,65 @@ const Settings = () => {
               </div>
 
               {/* Title */}
-              <h1 className="text-h2 font-semibold text-foreground">Configurações</h1>
+              <h1 className="text-xl sm:text-h2 font-semibold text-foreground">Configurações</h1>
             </div>
 
             {/* User Actions */}
-            <div className="flex items-center gap-4">
-              <WalletConnect />
+            <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-3 lg:gap-4">
+              {/* Mobile Menu */}
+              <MobileMenu />
               
-              <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                <Bell className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                  {user?.user_metadata?.avatar_url && (
-                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                  )}
-                  <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
-                  <span className="text-small text-foreground">
-                    @{user?.email ? user.email.split("@")[0] : "usuario"}
-                  </span>
-                </div>
+              {/* Mobile Wallet - Always Visible */}
+              <div className="lg:hidden">
+                <WalletConnect />
               </div>
-
-              <Link to="/login">
-                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                  <span className="text-body">Sair</span>
+              
+              {/* Desktop Actions */}
+              <div className="hidden lg:flex items-center gap-6">
+                <WalletConnect />
+                
+                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                  <Bell className="w-5 h-5" />
                 </button>
-              </Link>
 
-              <button
-                onClick={toggleTheme}
-                className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-              >
-                {theme === 'dark' ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
+                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                    <span className="text-xs text-foreground hidden xl:block">
+                      @{user?.email ? user.email.split("@")[0] : "usuario"}
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={logout}
+                  className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                >
+                  <span className="text-sm">Sair</span>
+                </button>
+
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                >
+                  {theme === 'dark' ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </button>
+
+                <LanguageSwitch />
+              </div>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="px-6 lg:px-20 py-8">
+        <main className="px-4 sm:px-6 lg:px-20 py-4 sm:py-8">
           <Breadcrumb
             items={[
               { label: "Início", href: "/user-selection" },
@@ -188,28 +206,28 @@ const Settings = () => {
             {/* Back Button */}
             <Link
               to="/borrower/dashboard"
-              className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-4 sm:mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
-              Voltar ao Dashboard
+              <span className="text-sm sm:text-base">Voltar ao Dashboard</span>
             </Link>
 
             {/* Settings Sections */}
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {/* Profile Settings */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <User className="w-6 h-6 text-primary" />
-                  <h2 className="text-h4 font-semibold text-foreground">Perfil</h2>
+              <div className="bg-card/20 rounded-xl p-4 sm:p-6">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                  <User className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                  <h2 className="text-lg sm:text-h4 font-semibold text-foreground">Perfil</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Nome Completo</label>
                     <Input
                       value={profileData.fullName}
                       onChange={(e) => handleInputChange("fullName", e.target.value)}
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
 
@@ -219,7 +237,7 @@ const Settings = () => {
                       type="email"
                       value={profileData.email}
                       onChange={(e) => handleInputChange("email", e.target.value)}
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
 
@@ -228,7 +246,7 @@ const Settings = () => {
                     <Input
                       value={profileData.phone}
                       onChange={(e) => handleInputChange("phone", e.target.value)}
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
 
@@ -237,21 +255,21 @@ const Settings = () => {
                     <Input
                       value={profileData.cpf}
                       onChange={(e) => handleInputChange("cpf", e.target.value)}
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
 
-                  <div className="space-y-2 md:col-span-2">
+                  <div className="space-y-2 sm:col-span-2">
                     <label className="text-sm font-medium text-foreground">Endereço</label>
                     <Input
                       value={profileData.address}
                       onChange={(e) => handleInputChange("address", e.target.value)}
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
                 </div>
 
-                <div className="flex justify-end mt-6">
+                <div className="flex justify-end mt-4 sm:mt-6">
                   <Button className="bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
                     Salvar Alterações
                   </Button>
@@ -259,21 +277,21 @@ const Settings = () => {
               </div>
 
               {/* Security Settings */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <Shield className="w-6 h-6 text-primary" />
-                  <h2 className="text-h4 font-semibold text-foreground">Segurança</h2>
+              <div className="bg-card/20 rounded-xl p-4 sm:p-6">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                  <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                  <h2 className="text-lg sm:text-h4 font-semibold text-foreground">Segurança</h2>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-foreground">Senha Atual</label>
                       <div className="relative">
                         <Input
                           type={showPassword ? "text" : "password"}
                           placeholder="••••••••••••"
-                          className="h-12 bg-muted border-border placeholder:text-foreground pr-10"
+                          className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground pr-10"
                         />
                         <button
                           type="button"
@@ -295,7 +313,7 @@ const Settings = () => {
                         <Input
                           type={showNewPassword ? "text" : "password"}
                           placeholder="••••••••••••"
-                          className="h-12 bg-muted border-border placeholder:text-foreground pr-10"
+                          className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground pr-10"
                         />
                         <button
                           type="button"
@@ -321,96 +339,96 @@ const Settings = () => {
               </div>
 
               {/* Notification Settings */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <Bell className="w-6 h-6 text-primary" />
-                  <h2 className="text-h4 font-semibold text-foreground">Notificações</h2>
+              <div className="bg-card/20 rounded-xl p-4 sm:p-6">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                  <Bell className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                  <h2 className="text-lg sm:text-h4 font-semibold text-foreground">Notificações</h2>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Mail className="w-5 h-5 text-primary" />
+                      <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                       <div>
-                        <div className="text-body font-medium text-foreground">Notificações por Email</div>
-                        <div className="text-small text-foreground">Receber atualizações por email</div>
+                        <div className="text-sm sm:text-base font-medium text-foreground">Notificações por Email</div>
+                        <div className="text-xs sm:text-sm text-foreground">Receber atualizações por email</div>
                       </div>
                     </div>
                     <button
                       onClick={() => handleNotificationChange("email", !notifications.email)}
-                      className={`w-12 h-6 rounded-full transition-colors ${
+                      className={`w-10 h-6 sm:w-12 sm:h-6 rounded-full transition-colors ${
                         notifications.email ? "bg-primary" : "bg-muted"
                       }`}
                     >
                       <div
-                        className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                          notifications.email ? "translate-x-6" : "translate-x-1"
+                        className={`w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full transition-transform ${
+                          notifications.email ? "translate-x-5 sm:translate-x-6" : "translate-x-1"
                         }`}
                       />
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Smartphone className="w-5 h-5 text-primary" />
+                      <Smartphone className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                       <div>
-                        <div className="text-body font-medium text-foreground">Notificações por SMS</div>
-                        <div className="text-small text-foreground">Receber alertas por SMS</div>
+                        <div className="text-sm sm:text-base font-medium text-foreground">Notificações por SMS</div>
+                        <div className="text-xs sm:text-sm text-foreground">Receber alertas por SMS</div>
                       </div>
                     </div>
                     <button
                       onClick={() => handleNotificationChange("sms", !notifications.sms)}
-                      className={`w-12 h-6 rounded-full transition-colors ${
+                      className={`w-10 h-6 sm:w-12 sm:h-6 rounded-full transition-colors ${
                         notifications.sms ? "bg-primary" : "bg-muted"
                       }`}
                     >
                       <div
-                        className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                          notifications.sms ? "translate-x-6" : "translate-x-1"
+                        className={`w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full transition-transform ${
+                          notifications.sms ? "translate-x-5 sm:translate-x-6" : "translate-x-1"
                         }`}
                       />
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Bell className="w-5 h-5 text-primary" />
+                      <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                       <div>
-                        <div className="text-body font-medium text-foreground">Notificações Push</div>
-                        <div className="text-small text-foreground">Receber notificações no navegador</div>
+                        <div className="text-sm sm:text-base font-medium text-foreground">Notificações Push</div>
+                        <div className="text-xs sm:text-sm text-foreground">Receber notificações no navegador</div>
                       </div>
                     </div>
                     <button
                       onClick={() => handleNotificationChange("push", !notifications.push)}
-                      className={`w-12 h-6 rounded-full transition-colors ${
+                      className={`w-10 h-6 sm:w-12 sm:h-6 rounded-full transition-colors ${
                         notifications.push ? "bg-primary" : "bg-muted"
                       }`}
                     >
                       <div
-                        className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                          notifications.push ? "translate-x-6" : "translate-x-1"
+                        className={`w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full transition-transform ${
+                          notifications.push ? "translate-x-5 sm:translate-x-6" : "translate-x-1"
                         }`}
                       />
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center justify-between p-3 sm:p-4 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <Globe className="w-5 h-5 text-primary" />
+                      <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                       <div>
-                        <div className="text-body font-medium text-foreground">Marketing</div>
-                        <div className="text-small text-foreground">Receber ofertas e novidades</div>
+                        <div className="text-sm sm:text-base font-medium text-foreground">Marketing</div>
+                        <div className="text-xs sm:text-sm text-foreground">Receber ofertas e novidades</div>
                       </div>
                     </div>
                     <button
                       onClick={() => handleNotificationChange("marketing", !notifications.marketing)}
-                      className={`w-12 h-6 rounded-full transition-colors ${
+                      className={`w-10 h-6 sm:w-12 sm:h-6 rounded-full transition-colors ${
                         notifications.marketing ? "bg-primary" : "bg-muted"
                       }`}
                     >
                       <div
-                        className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                          notifications.marketing ? "translate-x-6" : "translate-x-1"
+                        className={`w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full transition-transform ${
+                          notifications.marketing ? "translate-x-5 sm:translate-x-6" : "translate-x-1"
                         }`}
                       />
                     </button>
@@ -419,33 +437,33 @@ const Settings = () => {
               </div>
 
               {/* Theme Settings */}
-              <div className="bg-card/20 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <SettingsIcon className="w-6 h-6 text-primary" />
-                  <h2 className="text-h4 font-semibold text-foreground">Aparência</h2>
+              <div className="bg-card/20 rounded-xl p-4 sm:p-6">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                  <SettingsIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                  <h2 className="text-lg sm:text-h4 font-semibold text-foreground">Aparência</h2>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                <div className="flex items-center justify-between p-3 sm:p-4 bg-muted/50 rounded-lg">
                   <div className="flex items-center gap-3">
                     {theme === 'dark' ? (
-                      <Moon className="w-5 h-5 text-primary" />
+                      <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                     ) : (
-                      <Sun className="w-5 h-5 text-primary" />
+                      <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                     )}
                     <div>
-                      <div className="text-body font-medium text-foreground">Tema Escuro</div>
-                      <div className="text-small text-foreground">Alternar entre tema claro e escuro</div>
+                      <div className="text-sm sm:text-base font-medium text-foreground">Tema Escuro</div>
+                      <div className="text-xs sm:text-sm text-foreground">Alternar entre tema claro e escuro</div>
                     </div>
                   </div>
                   <button
                     onClick={toggleTheme}
-                    className={`w-12 h-6 rounded-full transition-colors ${
+                    className={`w-10 h-6 sm:w-12 sm:h-6 rounded-full transition-colors ${
                       theme === 'dark' ? "bg-primary" : "bg-muted"
                     }`}
                   >
                     <div
-                      className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                        theme === 'dark' ? "translate-x-6" : "translate-x-1"
+                      className={`w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full transition-transform ${
+                        theme === 'dark' ? "translate-x-5 sm:translate-x-6" : "translate-x-1"
                       }`}
                     />
                   </button>

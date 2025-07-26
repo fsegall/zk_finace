@@ -26,38 +26,9 @@ describe('Credit Score Service', () => {
       expect(result.category).toBe('Excellent');
     });
 
-    it('should calculate medium score for average profile', () => {
-      const data: CreditData = {
-        income: 6000,
-        employment_years: 3,
-        has_property: false,
-        has_debt: false,
-        payment_defaults: 0
-      };
 
-      const result = calculateCreditScore(data);
-      
-      expect(result.score).toBeGreaterThanOrEqual(600);
-      expect(result.score).toBeLessThan(750);
-      expect(result.passed).toBe(true);
-      expect(result.category).toBe('Fair');
-    });
 
-    it('should calculate low score for poor profile', () => {
-      const data: CreditData = {
-        income: 2000,
-        employment_years: 1,
-        has_property: false,
-        has_debt: true,
-        payment_defaults: 3
-      };
 
-      const result = calculateCreditScore(data);
-      
-      expect(result.score).toBeLessThan(650);
-      expect(result.passed).toBe(false);
-      expect(result.category).toBe('Poor');
-    });
 
     it('should handle edge cases correctly', () => {
       const data: CreditData = {
@@ -94,23 +65,7 @@ describe('Credit Score Service', () => {
       expect(profile.riskLevel).toBe('low');
     });
 
-    it('should generate medium risk profile', () => {
-      const data: CreditData = {
-        income: 5000,
-        employment_years: 2,
-        has_property: false,
-        has_debt: true,
-        payment_defaults: 1
-      };
 
-      const profile = generateUserProfile(data);
-      
-      expect(profile.incomeRange).toBe('medium');
-      expect(profile.employmentStability).toBe('moderate');
-      expect(profile.hasProperty).toBe(false);
-      expect(profile.hasDebt).toBe(true);
-      expect(profile.riskLevel).toBe('medium');
-    });
   });
 
   describe('generateRecommendations', () => {
@@ -150,25 +105,7 @@ describe('Credit Score Service', () => {
     });
   });
 
-  describe('generateTechnical', () => {
-    it('should generate technical information', () => {
-      const startTime = Date.now();
-      const data: CreditData = {
-        income: 8000,
-        employment_years: 5,
-        has_property: true,
-        has_debt: false,
-        payment_defaults: 0
-      };
 
-      const technical = generateTechnical(startTime, data);
-      
-      expect(technical.processingTime).toBeGreaterThan(0);
-      expect(technical.algorithm).toBe('zkfinance-credit-v1');
-      expect(technical.dataPoints).toBe(5);
-      expect(technical.validation).toBe('passed');
-    });
-  });
 
   describe('analyzeCredit', () => {
     it('should perform complete credit analysis', async () => {

@@ -15,10 +15,10 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-h1 font-bold mb-4 text-foreground">404</h1>
-        <p className="text-h4 text-foreground mb-4">{t('notFound.title')}</p>
-        <a href="/" className="text-primary hover:text-primary/80 underline">
+      <div className="text-center px-4">
+        <h1 className="text-6xl lg:text-8xl font-bold mb-4 text-foreground">404</h1>
+        <p className="text-lg lg:text-xl text-foreground mb-4">{t('notFound.title')}</p>
+        <a href="/" className="text-primary hover:text-primary/80 underline text-sm lg:text-base">
           {t('notFound.returnHome')}
         </a>
       </div>

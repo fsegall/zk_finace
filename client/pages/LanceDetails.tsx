@@ -48,6 +48,7 @@ import {
   RotateCcw,
   Sun,
   Moon,
+  Bell,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -56,7 +57,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 
 const LanceDetails = () => {
   const { id } = useParams();
@@ -205,35 +209,49 @@ const LanceDetails = () => {
       <div className="relative z-10">
         {/* Header */}
         <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+          <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <Link to="/borrower/lances">
-                  <Button variant="ghost" size="sm">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
+                    <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                     Voltar
                   </Button>
                 </Link>
                 <Breadcrumb items={breadcrumbItems} />
               </div>
-              <div className="flex items-center gap-2">
-                <WalletConnect />
-                <Button variant="ghost" size="sm" onClick={toggleTheme}>
-                  {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                </Button>
+              <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-3 lg:gap-4">
+                {/* Mobile Menu */}
+                <MobileMenu userType="borrower" />
+                
+                {/* Mobile Wallet - Always Visible */}
+                <div className="lg:hidden">
+                  <WalletConnect />
+                </div>
+                
+                {/* Desktop Actions */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <WalletConnect />
+                  <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                    <Bell className="w-5 h-5" />
+                  </button>
+                  <Button variant="ghost" size="sm" onClick={toggleTheme}>
+                    {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         </header>
 
-        <div className="container mx-auto px-4 py-6">
-          <main className="space-y-6">
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
+          <main className="space-y-4 sm:space-y-6">
             {/* Header Card */}
             <Card className="bg-card/20 border-border/50">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
+              <CardHeader className="p-4 sm:p-6">
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-0">
+                  <div className="flex-1 space-y-3 sm:space-y-4">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
                       <Badge variant="secondary" className="bg-secondary/20 text-secondary">
                         {lance.category}
                       </Badge>
@@ -247,15 +265,15 @@ const LanceDetails = () => {
                         </div>
                       </Badge>
                     </div>
-                    <CardTitle className="text-2xl font-bold text-foreground mb-2">
+                    <CardTitle className="text-xl sm:text-2xl font-bold text-foreground mb-2">
                       {lance.title}
                     </CardTitle>
-                    <CardDescription className="text-body text-foreground/80 mb-4">
+                    <CardDescription className="text-sm sm:text-body text-foreground/80 mb-3 sm:mb-4">
                       {lance.description}
                     </CardDescription>
                     
                     {/* Author Info */}
-                    <div className="flex items-center gap-4 text-sm text-foreground/70">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-foreground/70">
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4" />
                         <span>{lance.author}</span>
@@ -272,13 +290,13 @@ const LanceDetails = () => {
                   </div>
                   
                   {/* Actions */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row items-center gap-2">
                     <Button variant="outline" size="sm">
-                      <Share2 className="w-4 h-4 mr-2" />
+                      <Share2 className="w-4 h-4 mr-1 sm:mr-2" />
                       Compartilhar
                     </Button>
                     <Button variant="outline" size="sm">
-                      <Edit className="w-4 h-4 mr-2" />
+                      <Edit className="w-4 h-4 mr-1 sm:mr-2" />
                       Editar
                     </Button>
                     <Button variant="outline" size="sm">
@@ -291,22 +309,22 @@ const LanceDetails = () => {
 
             {/* Progress Overview */}
             <Card className="bg-card/20 border-border/50">
-              <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <CardContent className="p-4 sm:p-6">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground mb-1">{lance.progress}%</div>
+                    <div className="text-lg sm:text-2xl font-bold text-foreground mb-1">{lance.progress}%</div>
                     <div className="text-sm text-foreground/70">Progresso</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground mb-1">{lance.raised}</div>
+                    <div className="text-lg sm:text-2xl font-bold text-foreground mb-1">{lance.raised}</div>
                     <div className="text-sm text-foreground/70">Arrecadado</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground mb-1">{lance.investors}</div>
+                    <div className="text-lg sm:text-2xl font-bold text-foreground mb-1">{lance.investors}</div>
                     <div className="text-sm text-foreground/70">Investidores</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-foreground mb-1">{lance.daysLeft}</div>
+                    <div className="text-lg sm:text-2xl font-bold text-foreground mb-1">{lance.daysLeft}</div>
                     <div className="text-sm text-foreground/70">Dias Restantes</div>
                   </div>
                 </div>
@@ -330,8 +348,8 @@ const LanceDetails = () => {
             </Card>
 
             {/* Tabs */}
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-5 bg-card/20 border-border/50">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 bg-card/20 border-border/50 overflow-x-auto">
                 <TabsTrigger value="overview" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                   <BarChart3 className="w-4 h-4 mr-2" />
                   Visão Geral
@@ -355,18 +373,18 @@ const LanceDetails = () => {
               </TabsList>
 
               {/* Overview Tab */}
-              <TabsContent value="overview" className="space-y-6">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                   {/* Key Metrics */}
                   <Card className="lg:col-span-2 bg-card/20 border-border/50">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <TrendingUp className="w-5 h-5" />
+                    <CardHeader className="p-4 sm:p-6">
+                      <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                        <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
                         Métricas Principais
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <CardContent className="p-4 sm:p-6">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                         <div className="text-center p-4 bg-muted/30 rounded-lg">
                           <div className="text-2xl font-bold text-foreground mb-1">{lance.value}</div>
                           <div className="text-sm text-foreground/70">Valor Total</div>
@@ -633,14 +651,14 @@ const LanceDetails = () => {
             </Tabs>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-center gap-4 pt-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4 sm:pt-6">
               <Link to={`/borrower/credit-request/${lance.id}`}>
-                <Button className="bg-primary hover:bg-primary/80 transition-colors px-8">
+                <Button className="bg-primary hover:bg-primary/80 transition-colors px-6 sm:px-8 w-full sm:w-auto">
                   <DollarSign className="w-4 h-4 mr-2" />
                   Solicitar Crédito
                 </Button>
               </Link>
-              <Button variant="outline" className="px-8">
+              <Button variant="outline" className="px-6 sm:px-8 w-full sm:w-auto">
                 <Share2 className="w-4 h-4 mr-2" />
                 Compartilhar Lance
               </Button>

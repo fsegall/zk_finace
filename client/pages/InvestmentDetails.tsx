@@ -53,11 +53,26 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link, useParams } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import { useRBAC } from "../hooks/useRBAC";
+import { useMenu } from "../contexts/MenuContext";
+import LanguageSwitch from "../components/LanguageSwitch";
+import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 
 const InvestmentDetails = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile, logout } = useAuth();
+  const { t } = useLanguage();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
+  const { isMobileMenuOpen } = useMenu();
   const { investmentId } = useParams();
   const [activeTab, setActiveTab] = useState("overview");
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   // Simulando dados do investimento baseado no ID
   const investment = {
@@ -243,13 +258,13 @@ const InvestmentDetails = () => {
         }}
       />
 
-      <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+      <div className="relative z-10 flex flex-col lg:flex-row">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block w-full lg:w-64 bg-sidebar p-4 lg:p-6 transition-all duration-300">
           {/* Logo */}
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-6 lg:mb-8">
             <svg
-              className="h-8 w-auto"
+              className="h-6 lg:h-8 w-auto"
               viewBox="0 0 442 149"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -318,10 +333,17 @@ const InvestmentDetails = () => {
               Ranking
             </Link>
             <Link
-              to="/investor/contributions"
+              to="/investor/investments"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <TrendingUp className="w-4 h-4" />
+              Investimentos
+            </Link>
+            <Link
+              to="/investor/contributions"
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+            >
+              <Building className="w-4 h-4" />
               Lances Contribuídos
             </Link>
             <Link
@@ -348,57 +370,73 @@ const InvestmentDetails = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card/20 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+          <header className="bg-card/20 px-4 lg:px-6 py-3 lg:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+              <div className="flex items-center gap-3 lg:gap-4">
                 <Link to="/investor/investments">
                   <Button variant="outline" size="sm">
                     <ArrowLeft className="w-4 h-4 mr-2" />
-                    Voltar aos Investimentos
+                    <span className="hidden sm:inline">Voltar aos Investimentos</span>
+                    <span className="sm:hidden">Voltar</span>
                   </Button>
                 </Link>
               </div>
 
               {/* User Actions */}
-              <div className="flex items-center gap-4">
-                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
+              <div className="flex items-center justify-between lg:justify-end gap-3 lg:gap-4">
+                {/* Mobile Menu */}
+                <MobileMenu userType="investor" />
+                
+                {/* Mobile Wallet - Always Visible */}
+                <div className="lg:hidden">
+                  <WalletConnect />
+                </div>
+                
+                {/* Desktop Actions */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                    <Bell className="w-5 h-5" />
+                  </button>
 
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <User className="w-4 h-4" />
-                    <div className="flex flex-col">
-                      <span className="text-body">José Soares</span>
-                      <span className="text-small text-muted-foreground">
-                        @josoa1977
-                      </span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                      {user?.user_metadata?.avatar_url && (
+                        <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                      )}
+                      <div className="flex flex-col">
+                        <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                        <span className="text-xs text-muted-foreground">
+                          @{user?.email ? user.email.split("@")[0] : "usuario"}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <Link to="/login">
-                  <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                    <span className="text-body">Sair</span>
+                  <LanguageSwitch />
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                  >
+                    <span className="text-sm">{t('auth.logout')}</span>
                   </button>
-                </Link>
 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-                >
-                  {theme === 'dark' ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </button>
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </header>
 
           {/* Main Content */}
-          <main className="p-6">
+          <main className="p-4 lg:p-6">
             <Breadcrumb
               items={[
                 { label: "Início", href: "/user-selection" },
@@ -409,21 +447,21 @@ const InvestmentDetails = () => {
             />
 
             {/* Investment Header */}
-            <div className="bg-card/20 rounded-xl p-6 mb-6 border border-border/50">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center">
-                    <Building className="w-8 h-8" />
+            <div className="bg-card/20 rounded-xl p-4 lg:p-6 mb-4 lg:mb-6 border border-border/50">
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-0 mb-3 lg:mb-4">
+                <div className="flex items-center gap-3 lg:gap-4">
+                  <div className="w-12 lg:w-16 h-12 lg:h-16 bg-muted rounded-full flex items-center justify-center">
+                    <Building className="w-6 lg:w-8 h-6 lg:h-8" />
                   </div>
                   <div>
-                    <h1 className="text-h2 font-bold text-foreground mb-2">
+                    <h1 className="text-xl lg:text-2xl font-bold text-foreground mb-2">
                       {investment.title}
                     </h1>
-                    <p className="text-body text-foreground mb-3 max-w-2xl">
+                    <p className="text-sm lg:text-base text-foreground mb-3 max-w-2xl">
                       {investment.description}
                     </p>
-                    <div className="flex items-center gap-3">
-                      <Badge variant="secondary" className="bg-secondary/20 text-secondary">
+                    <div className="flex flex-wrap items-center gap-2 lg:gap-3">
+                      <Badge variant="secondary" className="bg-secondary/20 text-secondary text-xs">
                         {investment.category}
                       </Badge>
                       <Badge variant="outline" className={getRiskColor(investment.risk)}>

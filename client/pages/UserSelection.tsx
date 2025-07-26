@@ -17,16 +17,16 @@ const UserSelection = () => {
         }}
       />
 
-      <div className="relative z-10 text-center max-w-md mx-auto px-6">
+      <div className="relative z-10 text-center max-w-md sm:max-w-lg lg:max-w-xl mx-auto px-4 sm:px-6">
         {/* Header with Language Switch */}
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
           <LanguageSwitch />
         </div>
         
         {/* Logo */}
-        <div className="flex items-center justify-center mb-12">
+        <div className="flex items-center justify-center mb-8 sm:mb-10 lg:mb-12">
           <svg
-            className="h-12 w-auto"
+            className="h-8 w-auto sm:h-10 lg:h-12"
             viewBox="0 0 442 149"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -79,20 +79,20 @@ const UserSelection = () => {
         </div>
 
         {/* Main Content */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           <div className="space-y-4">
-            <p className="text-foreground text-body">
+            <p className="text-foreground text-body text-sm sm:text-base">
               {t('user.welcome')}
             </p>
-            <h1 className="text-h2 text-foreground">
+            <h1 className="text-h3 sm:text-h2 text-foreground">
               {t('user.howToUse')}
             </h1>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <Link to="/kyc-verification">
               <Button
-                className="w-full h-14 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+                className="w-full h-12 sm:h-14 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors text-sm sm:text-base"
                 variant="outline"
               >
                 {t('user.wantCredit')}
@@ -101,7 +101,7 @@ const UserSelection = () => {
 
             <Link to="/investor/dashboard">
               <Button
-                className="w-full h-14 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors"
+                className="w-full h-12 sm:h-14 bg-card/20 hover:bg-accent hover:text-accent-foreground text-foreground transition-colors text-sm sm:text-base"
                 variant="outline"
               >
                 {t('user.wantInvest')}

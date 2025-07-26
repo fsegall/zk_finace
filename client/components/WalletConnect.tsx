@@ -1,192 +1,230 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useLanguage } from "../contexts/LanguageContext";
+import { useState } from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useWallet } from "../hooks/useWallet";
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { CircleDot, Zap, ChevronDown, AlertCircle, Info } from 'lucide-react';
-import { useEffect } from 'react';
+import { useLanguage } from "../contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import {
+  ChevronDown,
+  CircleDot,
+  Zap,
+  Wallet,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
 
 const WalletConnect = () => {
   const { t } = useLanguage();
   const { 
-    chainId, 
+    address, 
+    isConnected, 
+    isConnecting, 
+    disconnect, 
+    formatAddress, 
     isSwitching, 
+    chainId, 
     error, 
-    switchNetwork, 
-    clearError, 
+    clearError,
     walletType,
+    isNetworkCompatible,
     getWalletRecommendation,
-    isNetworkCompatible 
+    switchNetwork 
   } = useWallet();
-
-  const isVoltaChain = chainId === 73799; // Volta (Polkadot/ZK)
-  const isSepoliaChain = chainId === 11155111; // Sepolia (EVM)
-
-  // Clear error after 5 seconds
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => {
-        clearError();
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [error, clearError]);
-
-  const getChainIcon = () => {
-    if (isVoltaChain) {
-      return <CircleDot className="w-4 h-4" />;
-    }
-    return <Zap className="w-4 h-4" />;
-  };
-
-  const getChainName = () => {
-    if (isVoltaChain) return 'Volta (ZK)';
-    if (isSepoliaChain) return 'Sepolia (EVM)';
-    return 'Rede não suportada';
-  };
-
-  const getWalletIcon = () => {
-    switch (walletType) {
-      case 'MetaMask':
-        return '🦊';
-      case 'SubWallet':
-        return '🔵';
-      case 'WalletConnect':
-        return '🔗';
-      default:
-        // Fallback para EVM: ícone de raio
-        return <Zap className="w-4 h-4 text-yellow-500" />;
-    }
-  };
-
-  const handleSwitchNetwork = async (networkId: number) => {
-    await switchNetwork(networkId);
-  };
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const networks = [
-    { 
-      id: 11155111, 
-      name: t('wallet.sepolia') || 'Sepolia',
-      description: t('wallet.sepoliaDescription') || 'Contrato de Loans EVM',
-      icon: <Zap className="w-3 h-3" />,
-      compatibility: {
-        MetaMask: '✅ Nativo',
-        SubWallet: '✅ Bridge',
-        WalletConnect: '✅ Suporte',
-      }
+    {
+      id: 'sepolia',
+      name: t('wallet.sepolia'),
+      description: t('wallet.sepoliaDescription'),
+      chainId: 11155111,
+      icon: Zap,
+      type: 'evm' as const,
+      isConnected: chainId === 11155111,
+      isLimited: !isNetworkCompatible(11155111),
     },
-    { 
-      id: 73799, 
-      name: t('wallet.volta') || 'Volta',
-      description: t('wallet.voltaDescription') || 'Provas ZK ZKVerify',
-      icon: <CircleDot className="w-3 h-3" />,
-      compatibility: {
-        MetaMask: '⚠️ Bridge',
-        SubWallet: '✅ Nativo',
-        WalletConnect: '✅ Suporte',
-      }
+    {
+      id: 'volta',
+      name: t('wallet.volta'),
+      description: t('wallet.voltaDescription'),
+      chainId: 73799,
+      icon: CircleDot,
+      type: 'polkadot' as const,
+      isConnected: chainId === 73799,
+      isLimited: !isNetworkCompatible(73799),
     },
   ];
 
+  const handleNetworkSwitch = async (network: typeof networks[0]) => {
+    if (network.isConnected) return;
+    
+    try {
+      await switchNetwork(network.chainId);
+      setIsDropdownOpen(false);
+    } catch (err) {
+      console.error('Failed to switch network:', err);
+    }
+  };
+
+  const getWalletIcon = (type: string) => {
+    switch (type) {
+      case 'metamask':
+        return <Zap className="w-4 h-4" />;
+      case 'subwallet':
+        return <CircleDot className="w-4 h-4" />;
+      default:
+        return <Zap className="w-4 h-4" />;
+    }
+  };
+
+  const getCurrentNetwork = () => {
+    return networks.find(network => network.chainId === chainId) || networks[0];
+  };
+
+  const currentNetwork = getCurrentNetwork();
   const recommendation = getWalletRecommendation();
 
   return (
-    <div className="flex items-center gap-6">
-      <ConnectButton 
-        label={t('wallet.connect')}
-        showBalance={false}
-        chainStatus="none"
-        accountStatus={{
-          smallScreen: 'avatar',
-          largeScreen: 'full',
-        }}
-      />
-      
-      {chainId && (
-        <div className="flex items-center gap-6">
-          <Badge variant="outline" className="text-xs flex items-center gap-3">
-            {getChainIcon()}
-            {getChainName()}
-          </Badge>
-          
-          <DropdownMenu>
+    <div className="flex items-center gap-3">
+      {/* Mobile: Compact Connect Button */}
+      <div className="sm:hidden">
+        <ConnectButton
+          chainStatus="none"
+          showBalance={false}
+          accountStatus={{
+            smallScreen: 'avatar',
+            largeScreen: 'full',
+          }}
+        />
+      </div>
+
+      {/* Desktop: Full Wallet Connect */}
+      <div className="hidden sm:flex items-center gap-3">
+        <ConnectButton
+          chainStatus="none"
+          showBalance={false}
+          accountStatus={{
+            smallScreen: 'avatar',
+            largeScreen: 'full',
+          }}
+        />
+
+        {/* Network Switcher */}
+        {isConnected && (
+          <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger asChild>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="h-8 px-2 text-xs"
-                disabled={isSwitching}
+              <motion.button
+                className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-background hover:bg-accent transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                {isSwitching ? (t('wallet.switching') || 'Trocando...') : (t('wallet.switchNetworks') || 'Mudar Redes')}
-                <ChevronDown className="w-3 h-3 ml-1" />
-              </Button>
+                <currentNetwork.icon className="w-4 h-4" />
+                <span className="hidden md:inline text-sm font-medium">
+                  {t('wallet.switchNetworks')}
+                </span>
+                <ChevronDown className="w-3 h-3" />
+              </motion.button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-72 bg-background border-border">
-              {/* Informações da carteira */}
-              <div className="p-2 border-b border-border">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  {getWalletIcon()}
-                  <span>{walletType}</span>
+
+            <DropdownMenuContent 
+              align="end" 
+              className="w-72 bg-background border-border"
+              sideOffset={8}
+            >
+              {/* Wallet Info */}
+              <div className="p-3 border-b border-border">
+                <div className="flex items-center gap-2 mb-2">
+                  <Wallet className="w-4 h-4" />
+                  <span className="text-sm font-medium">
+                    {walletType === 'MetaMask' ? 'MetaMask' : 'SubWallet'}
+                  </span>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {formatAddress}
                 </div>
               </div>
 
-              {/* Recomendação */}
-              {recommendation && (
-                <div className="p-2 border-b border-border bg-blue-50 dark:bg-blue-950">
-                  <div className="flex items-center gap-2 text-xs text-blue-700 dark:text-blue-300">
-                    <Info className="w-3 h-3" />
-                    {recommendation}
-                  </div>
-                </div>
-              )}
-
-              {/* Erro */}
-              {error && (
-                <div className="p-2 border-b">
-                  <div className="flex items-center gap-2 text-xs text-red-600">
-                    <AlertCircle className="w-3 h-3" />
-                    {error}
-                  </div>
-                </div>
-              )}
-
-              {/* Redes */}
-              {networks.map((network) => {
-                const isCompatible = isNetworkCompatible(network.id);
-                const isCurrentNetwork = chainId === network.id;
-                
-                return (
+              {/* Network Options */}
+              <div className="p-2">
+                {networks.map((network) => (
                   <DropdownMenuItem
                     key={network.id}
-                    onClick={() => handleSwitchNetwork(network.id)}
-                    className={`flex items-center gap-2 cursor-pointer p-3 ${
-                      isCurrentNetwork ? 'bg-accent' : ''
-                    } ${isSwitching ? 'opacity-50 cursor-not-allowed' : ''} ${
-                      !isCompatible ? 'opacity-60' : ''
-                    }`}
-                    disabled={isSwitching}
+                    className="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-accent"
+                    onClick={() => handleNetworkSwitch(network)}
+                    disabled={network.isConnected || isSwitching}
                   >
-                    {network.icon}
-                    <div className="flex-1">
-                      <div className="font-medium">{network.name}</div>
-                      <div className="text-xs text-muted-foreground">{network.description}</div>
-                      <div className="text-xs text-muted-foreground mt-1">
-                        {network.compatibility[walletType as keyof typeof network.compatibility]}
+                    <div className="flex items-center gap-3">
+                      <network.icon className="w-4 h-4" />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium">
+                          {network.name}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {network.description}
+                        </span>
                       </div>
                     </div>
-                    {isCurrentNetwork && (
-                      <Badge variant="secondary" className="text-xs">{t('wallet.connected') || 'Conectado'}</Badge>
-                    )}
-                    {!isCompatible && (
-                      <Badge variant="outline" className="text-xs text-orange-600">{t('wallet.limited') || 'Limitado'}</Badge>
-                    )}
+                    
+                    <div className="flex items-center gap-2">
+                      {network.isConnected && (
+                        <Badge variant="secondary" className="text-xs">
+                          {t('wallet.connected')}
+                        </Badge>
+                      )}
+                      {network.isLimited && !network.isConnected && (
+                        <Badge variant="destructive" className="text-xs">
+                          {t('wallet.limited')}
+                        </Badge>
+                      )}
+                      {network.isConnected && (
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                      )}
+                      {network.isLimited && !network.isConnected && (
+                        <AlertCircle className="w-4 h-4 text-red-500" />
+                      )}
+                    </div>
                   </DropdownMenuItem>
-                );
-              })}
+                ))}
+              </div>
+
+              {/* Recommendation */}
+              {recommendation && (
+                <div className="p-3 border-t border-border bg-blue-50 dark:bg-blue-950">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                    <div className="text-xs text-blue-700 dark:text-blue-300">
+                      <p>{recommendation}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        )}
+      </div>
+
+      {/* Error Display */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute top-full mt-2 p-2 bg-destructive text-destructive-foreground rounded text-xs"
+        >
+          {error}
+          <button 
+            onClick={clearError}
+            className="ml-2 underline"
+          >
+            Dismiss
+          </button>
+        </motion.div>
       )}
     </div>
   );

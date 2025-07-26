@@ -38,10 +38,17 @@ import {
 } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useRBAC } from "../hooks/useRBAC";
+import { useMenu } from "../contexts/MenuContext";
+import LanguageSwitch from "../components/LanguageSwitch";
 import WalletConnect from "../components/WalletConnect";
+import MobileMenu from "../components/MobileMenu";
 
 const InvestorWithdraw = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user, profile, logout } = useAuth();
   const [amount, setAmount] = useState("");
   const [withdrawMethod, setWithdrawMethod] = useState("pix");
   const [step, setStep] = useState(1);
@@ -51,6 +58,13 @@ const InvestorWithdraw = () => {
     account: "",
     type: "checking",
   });
+  const { t } = useLanguage();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
+  const { isMobileMenuOpen } = useMenu();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   const withdrawMethods = [
     {
@@ -97,24 +111,24 @@ const InvestorWithdraw = () => {
         }}
       />
 
-      <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+      <div className="relative z-10 flex flex-col lg:flex-row">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block w-full lg:w-64 bg-sidebar p-4 lg:p-6 transition-all duration-300">
           {/* Logo */}
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-6 lg:mb-8">
             <svg
-              className="h-8 w-auto"
+              className="h-6 lg:h-8 w-auto"
               viewBox="0 0 442 149"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 d="M183.51 17.6662L137.39 73.6984C136.202 75.1416 136.238 77.2343 137.476 78.6349L183.51 130.726H145.26L104.084 80.8508C101.865 78.1628 101.895 74.2696 104.155 71.6164L150.12 17.6662H183.51Z"
-                fill="url(#paint0_linear_logo_investor)"
+                fill="url(#paint0_linear_logo_withdraw)"
               />
               <path
                 d="M7.05114 41.1235V18.5115H104.405C109.602 18.5115 112.592 24.4224 109.511 28.6088L53.9792 104.075C52.747 105.75 53.9426 108.114 56.0217 108.114H103.205L104.262 130.938H16.0969C9.75866 130.938 6.19971 123.641 10.1016 118.646L70.6606 41.1235H7.05114Z"
-                fill="url(#paint1_linear_logo_investor)"
+                fill="url(#paint1_linear_logo_withdraw)"
               />
               <text
                 fill="white"
@@ -130,7 +144,7 @@ const InvestorWithdraw = () => {
               </text>
               <defs>
                 <linearGradient
-                  id="paint0_linear_logo_investor"
+                  id="paint0_linear_logo_withdraw"
                   x1="114.487"
                   y1="150.065"
                   x2="160.147"
@@ -141,7 +155,7 @@ const InvestorWithdraw = () => {
                   <stop offset="0.975962" stopColor="#004EF6" />
                 </linearGradient>
                 <linearGradient
-                  id="paint1_linear_logo_investor"
+                  id="paint1_linear_logo_withdraw"
                   x1="20.414"
                   y1="150.168"
                   x2="54.1142"
@@ -172,11 +186,32 @@ const InvestorWithdraw = () => {
               Ranking
             </Link>
             <Link
-              to="/investor/contributions"
+              to="/investor/investments"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <TrendingUp className="w-4 h-4" />
+              Investimentos
+            </Link>
+            <Link
+              to="/investor/contributions"
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+            >
+              <Building className="w-4 h-4" />
               Lances Contribuídos
+            </Link>
+            <Link
+              to="/investor/deposit"
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+            >
+              <Wallet className="w-4 h-4" />
+              Depositar
+            </Link>
+            <Link
+              to="/investor/withdraw"
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors bg-sidebar-accent text-sidebar-accent-foreground`}
+            >
+              <DollarSign className="w-4 h-4 text-primary" />
+              Sacar
             </Link>
             <Link
               to="/investor/settings"

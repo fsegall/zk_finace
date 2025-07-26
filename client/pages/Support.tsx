@@ -6,7 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import WalletConnect from "../components/WalletConnect";
+import LanguageSwitch from "../components/LanguageSwitch";
+import MobileMenu from "../components/MobileMenu";
 import {
   ArrowLeft,
   HelpCircle,
@@ -30,7 +33,8 @@ import {
 
 const Support = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, profile } = useAuth();
+  const { user, profile, logout } = useAuth();
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
@@ -127,13 +131,13 @@ const Support = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <header className="px-6 lg:px-20 py-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-20">
+        <header className="px-4 sm:px-6 lg:px-20 py-3 sm:py-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
+            <div className="flex items-center justify-between lg:justify-start gap-4 lg:gap-20">
               {/* Logo */}
               <div className="flex items-center">
                 <svg
-                  className="h-8 w-auto"
+                  className="h-6 w-auto sm:h-8"
                   viewBox="0 0 442 149"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -186,51 +190,65 @@ const Support = () => {
               </div>
 
               {/* Title */}
-              <h1 className="text-h2 font-semibold text-foreground">Suporte</h1>
+              <h1 className="text-xl sm:text-h2 font-semibold text-foreground">Suporte</h1>
             </div>
 
             {/* User Actions */}
-            <div className="flex items-center gap-4">
-              <WalletConnect />
+            <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-3 lg:gap-4">
+              {/* Mobile Menu */}
+              <MobileMenu />
               
-              <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                <Bell className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                  {user?.user_metadata?.avatar_url && (
-                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
-                  )}
-                  <span className="text-body">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
-                  <span className="text-small text-foreground">
-                    @{user?.email ? user.email.split("@")[0] : "usuario"}
-                  </span>
-                </div>
+              {/* Mobile Wallet - Always Visible */}
+              <div className="lg:hidden">
+                <WalletConnect />
               </div>
-
-              <Link to="/login">
-                <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
-                  <span className="text-body">Sair</span>
+              
+              {/* Desktop Actions */}
+              <div className="hidden lg:flex items-center gap-6">
+                <WalletConnect />
+                
+                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                  <Bell className="w-5 h-5" />
                 </button>
-              </Link>
 
-              <button
-                onClick={toggleTheme}
-                className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-              >
-                {theme === 'dark' ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                    {user?.user_metadata?.avatar_url && (
+                      <img src={user.user_metadata.avatar_url} alt="avatar" className="w-6 h-6 rounded-full" />
+                    )}
+                    <span className="text-sm">{profile?.full_name || user?.user_metadata?.full_name || user?.email || "Usuário"}</span>
+                    <span className="text-xs text-foreground hidden xl:block">
+                      @{user?.email ? user.email.split("@")[0] : "usuario"}
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={logout}
+                  className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                >
+                  <span className="text-sm">Sair</span>
+                </button>
+
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                >
+                  {theme === 'dark' ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </button>
+
+                <LanguageSwitch />
+              </div>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="px-6 lg:px-20 py-8">
+        <main className="px-4 sm:px-6 lg:px-20 py-4 sm:py-8">
           <Breadcrumb
             items={[
               { label: "Início", href: "/user-selection" },
@@ -243,35 +261,35 @@ const Support = () => {
             {/* Back Button */}
             <Link
               to="/borrower/dashboard"
-              className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-4 sm:mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
-              Voltar ao Dashboard
+              <span className="text-sm sm:text-base">Voltar ao Dashboard</span>
             </Link>
 
             {/* Hero Section */}
-            <div className="bg-card/20 rounded-xl p-8 mb-8 text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <HelpCircle className="w-8 h-8 text-primary" />
+            <div className="bg-card/20 rounded-xl p-6 sm:p-8 mb-6 sm:mb-8 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
               </div>
-              <h2 className="text-h3 font-semibold text-foreground mb-2">
+              <h2 className="text-lg sm:text-h3 font-semibold text-foreground mb-2">
                 Como podemos ajudar?
               </h2>
-              <p className="text-body text-foreground max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base text-foreground max-w-2xl mx-auto">
                 Encontre respostas rápidas para suas dúvidas ou entre em contato com nossa equipe de suporte especializada.
               </p>
             </div>
 
             {/* Contact Methods */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
               {contactMethods.map((method, index) => (
-                <div key={index} className="bg-card/20 rounded-xl p-6 text-center">
-                  <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <method.icon className="w-6 h-6 text-primary" />
+                <div key={index} className="bg-card/20 rounded-xl p-4 sm:p-6 text-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <method.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                   </div>
-                  <h3 className="text-h5 font-semibold text-foreground mb-1">{method.title}</h3>
-                  <p className="text-small text-foreground mb-3">{method.description}</p>
-                  <div className="text-body font-medium text-foreground mb-4">{method.value}</div>
+                  <h3 className="text-base sm:text-h5 font-semibold text-foreground mb-1">{method.title}</h3>
+                  <p className="text-xs sm:text-sm text-foreground mb-2 sm:mb-3">{method.description}</p>
+                  <div className="text-sm sm:text-base font-medium text-foreground mb-3 sm:mb-4">{method.value}</div>
                   <Button className="w-full bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
                     {method.action}
                   </Button>
@@ -280,43 +298,43 @@ const Support = () => {
             </div>
 
             {/* FAQ Section */}
-            <div className="bg-card/20 rounded-xl p-6 mb-8">
-              <div className="flex items-center gap-3 mb-6">
-                <HelpCircle className="w-6 h-6 text-primary" />
-                <h3 className="text-h4 font-semibold text-foreground">Perguntas Frequentes</h3>
+            <div className="bg-card/20 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
+              <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <h3 className="text-lg sm:text-h4 font-semibold text-foreground">Perguntas Frequentes</h3>
               </div>
 
               {/* Search */}
-              <div className="relative mb-6">
+              <div className="relative mb-4 sm:mb-6">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar nas perguntas frequentes..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-muted border-border placeholder:text-foreground"
+                  className="pl-10 h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                 />
               </div>
 
               {/* FAQ Items */}
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {filteredFaq.map((faq, index) => (
                   <div key={index} className="border border-border rounded-lg overflow-hidden">
                     <button
-                      className="w-full p-4 text-left bg-muted/50 hover:bg-muted/70 transition-colors"
+                      className="w-full p-3 sm:p-4 text-left bg-muted/50 hover:bg-muted/70 transition-colors"
                       onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-body font-medium text-foreground">{faq.question}</span>
+                        <span className="text-sm sm:text-base font-medium text-foreground">{faq.question}</span>
                         {expandedFaq === index ? (
-                          <ChevronUp className="w-5 h-5 text-foreground" />
+                          <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 text-foreground" />
+                          <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
                         )}
                       </div>
                     </button>
                     {expandedFaq === index && (
-                      <div className="p-4 bg-background">
-                        <p className="text-body text-foreground">{faq.answer}</p>
+                      <div className="p-3 sm:p-4 bg-background">
+                        <p className="text-sm sm:text-base text-foreground">{faq.answer}</p>
                       </div>
                     )}
                   </div>
@@ -325,25 +343,25 @@ const Support = () => {
             </div>
 
             {/* Resources Section */}
-            <div className="bg-card/20 rounded-xl p-6 mb-8">
-              <div className="flex items-center gap-3 mb-6">
-                <FileText className="w-6 h-6 text-primary" />
-                <h3 className="text-h4 font-semibold text-foreground">Recursos Úteis</h3>
+            <div className="bg-card/20 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
+              <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <h3 className="text-lg sm:text-h4 font-semibold text-foreground">Recursos Úteis</h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 {resources.map((resource, index) => (
-                  <div key={index} className="bg-muted/50 rounded-lg p-4 hover:bg-muted/70 transition-colors">
-                    <div className="flex items-center gap-3 mb-3">
-                      <resource.icon className="w-5 h-5 text-primary" />
+                  <div key={index} className="bg-muted/50 rounded-lg p-3 sm:p-4 hover:bg-muted/70 transition-colors">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                      <resource.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                       <Badge variant="secondary" className="text-xs">
                         {resource.type}
                       </Badge>
                     </div>
-                    <h4 className="text-body font-medium text-foreground mb-1">{resource.title}</h4>
-                    <p className="text-small text-foreground mb-3">{resource.description}</p>
+                    <h4 className="text-sm sm:text-base font-medium text-foreground mb-1">{resource.title}</h4>
+                    <p className="text-xs sm:text-sm text-foreground mb-2 sm:mb-3">{resource.description}</p>
                     <Button variant="outline" size="sm" className="w-full">
-                      <ExternalLink className="w-4 h-4 mr-2" />
+                      <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                       Acessar
                     </Button>
                   </div>
@@ -352,47 +370,47 @@ const Support = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-card/20 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <MessageCircle className="w-6 h-6 text-primary" />
-                <h3 className="text-h4 font-semibold text-foreground">Enviar Mensagem</h3>
+            <div className="bg-card/20 rounded-xl p-4 sm:p-6">
+              <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <h3 className="text-lg sm:text-h4 font-semibold text-foreground">Enviar Mensagem</h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-3 sm:space-y-4">
                   <div>
                     <label className="text-sm font-medium text-foreground">Assunto</label>
                     <Input
                       placeholder="Digite o assunto da sua mensagem"
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-foreground">Mensagem</label>
                     <textarea
                       placeholder="Descreva sua dúvida ou problema..."
-                      className="w-full h-32 px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder:text-foreground resize-none"
+                      className="w-full h-24 sm:h-32 px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder:text-foreground resize-none"
                     />
                   </div>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div>
                     <label className="text-sm font-medium text-foreground">Email</label>
                     <Input
                       type="email"
                       placeholder="seu@email.com"
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-foreground">Telefone (opcional)</label>
                     <Input
                       placeholder="(11) 99999-9999"
-                      className="h-12 bg-muted border-border placeholder:text-foreground"
+                      className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
                     />
                   </div>
-                  <div className="pt-4">
-                    <Button className="w-full h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
+                  <div className="pt-2 sm:pt-4">
+                    <Button className="w-full h-11 sm:h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors">
                       <Send className="w-4 h-4 mr-2" />
                       Enviar Mensagem
                     </Button>

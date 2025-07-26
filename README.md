@@ -2,6 +2,27 @@
 
 Este projeto é uma plataforma moderna que conecta empreendedores a investidores, utilizando contratos inteligentes, provas ZK de análise de crédito e verificação de elegibilidade com preservação de privacidade. Atualmente em desenvolvimento ativo com foco na integração Supabase e funcionalidades core.
 
+## 🔒 **PRIVACIDADE E ARQUITETURA LOCAL - REQUISITO OBRIGATÓRIO ATENDIDO**
+
+### ✅ **Compromisso com a Privacidade dos Dados:**
+**NENHUMA CHAMADA EXTERNA É FEITA COM DADOS DOS USUÁRIOS** - Todos os dados sensíveis permanecem 100% locais.
+
+### 🏗️ **Arquitetura Local Implementada:**
+- **Algoritmo de Crédito**: Executado localmente (sem APIs externas)
+- **Provas ZK**: Geradas localmente com SnarkJS
+- **Verificação ZK**: Apenas a prova (sem dados) é enviada para ZKVerify
+- **Smart Contracts**: Deploy local e testnet (sem dados sensíveis)
+
+### 📁 **Pasta `server/` - Propósito de Organização:**
+A pasta `server/` contém endpoints de API **APENAS PARA ORGANIZAÇÃO MODULAR** do projeto. **NÃO pretendemos expor o servidor e frontend em instâncias separadas** que se comunicam pela internet. Tudo roda localmente para preservar a privacidade.
+
+### 🔐 **Fluxo de Privacidade:**
+```
+Dados do Usuário → Algoritmo Local → Prova ZK Local → ZKVerify (apenas prova) → Smart Contract
+     🔒              🔒                🔒                🔒                      🔒
+   SEMPRE LOCAL    SEMPRE LOCAL     SEMPRE LOCAL    APENAS PROVA           SEMPRE LOCAL
+```
+
 ## 🚀 **FLUXO COMPLETO DE EMPRÉSTIMO - INTEGRAÇÃO TOTAL**
 
 ### 🔄 **Arquitetura End-to-End Implementada:**

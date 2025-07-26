@@ -1,138 +1,108 @@
-# ⚖️ Módulo `foundry/` — Contrato Inteligente de Empréstimo 
+# 🏦 ZKFinance - Smart Contract Documentation
 
-Este módulo conterá o contrato inteligente responsável por formalizar e executar os empréstimos da plataforma entre-chain-lend. Utiliza o framework [Foundry](https://book.getfoundry.sh/) para desenvolvimento, teste e deploy em redes EVM.
-
----
-
-## 🎯 Objetivo
-
-- Registrar pedidos de empréstimo validados por prova ZK
-- Permitir financiamento peer-to-peer com controle de saldo
-- Controlar reembolso, prazo e eventuais juros
-- Verificar se o usuário possui `passed = 1` via input público
+Welcome to the ZKFinance smart contract documentation. This directory contains all the necessary files for understanding, deploying, and interacting with the LoanManager smart contract.
 
 ---
 
-## ⚙️ Stack
+## 📚 Documentation Files
 
-- [Foundry](https://book.getfoundry.sh/)
-- Solidity >= 0.8.x
-- Testnet Ethereum (Sepolia, Goerli, etc)
-- Viem (no frontend) para interação
-- zk-credit para validação prévia
+### 🇧🇷 Portuguese
+- **[README_FOUNDRY.md](README_FOUNDRY.md)** - Complete contract documentation with real functions
+- **[DEPLOY.md](DEPLOY.md)** - Deployment guide and troubleshooting
 
----
-
-## 📁 Estrutura Recomendada
-
-```
-foundry/
-├── src/
-│   └── LoanManager.sol         # Contrato principal
-├── script/
-│   └── DeployLoan.s.sol         # Script de deploy
-├── test/
-│   └── LoanManager.t.sol       # Testes com Forge
-├── foundry.toml
-└── README.md
-```
+### 🇺🇸 English
+- **[README_FOUNDRY_EN.md](README_FOUNDRY_EN.md)** - Complete contract documentation (English)
+- **[DEPLOY_EN.md](DEPLOY_EN.md)** - Deployment guide and troubleshooting (English)
 
 ---
 
-## 🔒 Regras de Negócio Esperadas
+## 🚀 Quick Start
 
-- O contrato recebe uma função `createLoanRequest(...)`
-  - Exige `passed == true` como input público (verificado via frontend)
-- A função `fundLoan(...)` registra o financiamento por outro endereço
-- A função `repayLoan(...)` permite reembolso com ou sem juros
-- Pode incluir lógica de reputação, penalidade, e registro histórico
-
----
-
-## 🧪 Testes
-
-- Use `forge test -vv` para testar os fluxos:
-  - Criação de pedido
-  - Financiamento
-  - Reembolso
-  - Tentativas inválidas
-
-> Executa os testes definidos em `test/*.t.sol` com verbosidade estendida.
-
----
-
-## 🚀 Deploy
-
-Utilize Foundry para deploy em testnet:
-
+### Deploy to Sepolia
 ```bash
-forge script script/DeployLoan.s.sol --rpc-url $SEPOLIA_RPC --private-key $KEY --broadcast --verify
+cd foundry
+./scripts/deploy_sepolia.sh
 ```
 
----
-
-## 🔗 Integração com Frontend
-
-- O endereço do contrato `LoanManager` deve ser exportado e consumido pelo frontend na tela de financiamento e quitação.
-- O frontend usa Viem para ler e escrever no contrato
-- A lógica de `passed = 1` deve ser verificada **antes** do contrato ser chamado
-- O contrato confia apenas em entradas públicas (sem prova ZK direta)
-
----
-
-## ⚙️ Scripts e Comandos
-
-### 🧪 Testes locais
-
+### Run Tests
 ```bash
 forge test -vv
 ```
 
-> Executa os testes definidos em `test/*.t.sol` com verbosidade estendida.
-
----
-
-### 🚀 Deploy para a testnet Sepolia (Infura)
-
+### Compile
 ```bash
-forge script script/DeployLoan.s.sol \
-  --rpc-url $SEPOLIA_RPC_URL \
-  --private-key $PRIVATE_KEY \
-  --broadcast \
-  --verify
+forge build
 ```
 
-> Realiza o deploy do contrato para a testnet e salva os artefatos em `broadcast/`.
+---
+
+## 📋 Contract Information
+
+- **Name**: LoanManager
+- **Address**: `0x4923d19707d957d9d9dfa9ddbb04a23276b37dc2`
+- **Network**: Sepolia Testnet
+- **Status**: ✅ Verified
+- **Deploy Date**: 2024-12-25
 
 ---
 
-## ✅ Pré-requisitos
+## 🔗 Links
 
-- Foundry (`forge`, `cast`, etc.) instalado
-- Variáveis de ambiente definidas:
-  - `SEPOLIA_RPC_URL`
-  - `PRIVATE_KEY` (com saldo de SepoliaETH)
-
----
-
-## 🔐 Segurança
-
-Nunca compartilhe o conteúdo do `.env`. Adicione-o ao `.gitignore`.
-
-
+- **Etherscan**: https://sepolia.etherscan.io/address/0x4923d19707d957d9d9dfa9ddbb04a23276b37dc2
+- **Foundry Book**: https://book.getfoundry.sh/
+- **Sepolia Faucet**: https://sepoliafaucet.com/
 
 ---
 
-## 💡 Extensões futuras
+## 📁 Directory Structure
 
-- Verificar `proof` diretamente no contrato (via verifier on-chain)
-- Suporte a múltiplos financiadores por pedido
-- Cálculo de score on-chain como fallback (caso ZK falhe)
+```
+foundry/
+├── src/
+│   └── LoanManager.sol         # Main contract
+├── scripts/
+│   ├── DeployLoan.s.sol        # Deployment script
+│   └── deploy_sepolia.sh       # Automated deployment
+├── test/
+│   └── LoanManager.t.sol       # Tests
+├── broadcast/                  # Deployment history
+├── README.md                   # This file
+├── README_FOUNDRY.md          # Portuguese documentation
+├── README_FOUNDRY_EN.md       # English documentation
+├── DEPLOY.md                  # Portuguese deployment guide
+├── DEPLOY_EN.md               # English deployment guide
+└── foundry.toml               # Foundry configuration
+```
 
 ---
 
-## 🧾 Histórico
+## 🎯 Main Features
 
-- Último contrato implantado: `0x9EA26472ddFD1C14F02e1D8B16Bad0904758599e` na Sepolia
+- ✅ **Loan Request Creation** - Create loan requests with ZK validation
+- ✅ **Peer-to-Peer Funding** - Multiple funders can contribute
+- ✅ **Interest Calculation** - Automatic interest calculation and distribution
+- ✅ **Repayment Management** - Secure repayment with funder distribution
+- ✅ **ZK Integration** - Commitment hash storage for ZK proof validation
 
-> Desenvolvido como parte do MVP entre-chain-lend por Felipe Segall
+---
+
+## 🔐 Security
+
+- All functions include comprehensive validations
+- Access control for borrower-only operations
+- Deadline enforcement for loan terms
+- Funding limit enforcement
+- Secure payment distribution
+
+---
+
+## 📞 Support
+
+For questions or issues:
+- **GitHub Issues**: Project repository
+- **Documentation**: See files above
+- **Contract**: Verified on Etherscan
+
+---
+
+**Developed by Felipe Segall for ZKFinance** 🚀 

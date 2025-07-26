@@ -15,7 +15,7 @@ async function main() {
     const testId = `${timestamp}-${randomHash}`;
     console.log('🆔 Teste ID:', testId);
     // Carrega verification key (já registrada)
-    const buildPath = path.join(process.cwd(), 'zk-credit', 'build');
+    const buildPath = path.join(process.cwd(), 'build');
     const vkeyPath = path.join(buildPath, 'verification_key.json');
     const vkey = JSON.parse(fs.readFileSync(vkeyPath, 'utf-8'));
     const formattedVkey = formatVerificationKeyForZKVerify(vkey);

@@ -8,7 +8,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useRBAC } from "@/hooks/useRBAC";
+import { useMenu } from "@/contexts/MenuContext";
+import LanguageSwitch from "@/components/LanguageSwitch";
 import WalletConnect from "@/components/WalletConnect";
+import MobileMenu from "@/components/MobileMenu";
 import {
   Search,
   Bell,
@@ -34,9 +38,15 @@ import {
 
 const InvestorContributions = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, profile } = useAuth();
+  const { user, profile, logout } = useAuth();
   const { t } = useLanguage();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
+  const { isMobileMenuOpen } = useMenu();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   const contributions = [
     {
@@ -133,13 +143,13 @@ const InvestorContributions = () => {
         }}
       />
 
-      <div className="relative z-10 flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-sidebar p-6">
+      <div className="relative z-10 flex flex-col lg:flex-row">
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block w-full lg:w-64 bg-sidebar p-4 lg:p-6 transition-all duration-300">
           {/* Logo */}
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-6 lg:mb-8">
             <svg
-              className="h-8 w-auto"
+              className="h-6 lg:h-8 w-auto"
               viewBox="0 0 442 149"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -238,43 +248,61 @@ const InvestorContributions = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card/20 px-6 py-4">
-            <div className="flex items-center justify-between">
+          <header className="bg-card/20 px-4 lg:px-6 py-3 lg:py-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
               {/* Search */}
-              <div className="relative w-96">
+              <div className="relative w-full lg:w-96">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground" />
                 <Input
                   placeholder="Buscar por tomador ou projeto..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground"
+                  className="pl-10 bg-muted border-0 text-foreground placeholder:text-foreground text-sm"
                 />
               </div>
 
               {/* User Actions */}
-              <div className="flex items-center gap-4">
-                <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
+              <div className="flex items-center justify-between lg:justify-end gap-3 lg:gap-4">
+                {/* Mobile Menu */}
+                <MobileMenu userType="investor" />
+                
+                {/* Mobile Wallet - Always Visible */}
+                <div className="lg:hidden">
+                  <WalletConnect />
+                </div>
+                
+                {/* Desktop Actions */}
+                <div className="hidden lg:flex items-center gap-6">
+                  <button className="p-2 hover:bg-muted/50 rounded-lg transition-colors">
+                    <Bell className="w-5 h-5" />
+                  </button>
 
-                <WalletConnect />
+                  <WalletConnect />
+                  <LanguageSwitch />
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors"
+                  >
+                    <span className="text-sm">{t('auth.logout')}</span>
+                  </button>
 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
-                >
-                  {theme === 'dark' ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </button>
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 hover:bg-muted/50 rounded-lg transition-colors"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </header>
 
           {/* Dashboard Content */}
-          <main className="p-6">
+          <main className="p-4 lg:p-6">
             <Breadcrumb
               items={[
                 { label: "Início", href: "/user-selection" },
@@ -284,14 +312,14 @@ const InvestorContributions = () => {
             />
 
             {/* Header Section */}
-            <div className="mb-8">
-              <h1 className="text-h2 font-semibold text-foreground mb-2">
+            <div className="mb-6 lg:mb-8">
+              <h1 className="text-xl lg:text-2xl font-semibold text-foreground mb-2">
                 {t('investor.contributions.title') || 'Lances Contribuídos'}
               </h1>
-              <p className="text-body text-foreground">
+              <p className="text-sm lg:text-base text-foreground">
                 {t('investor.contributions.subtitle') || 'Acompanhe seus investimentos e retornos em tempo real'}
                 {user && (
-                  <span className="block mt-1 text-sm text-muted-foreground">
+                  <span className="block mt-1 text-xs lg:text-sm text-muted-foreground">
                     {t('common.welcome') || 'Olá'}, {profile?.full_name || user.email}
                   </span>
                 )}
@@ -299,16 +327,16 @@ const InvestorContributions = () => {
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
               <Card className="bg-card/20 border-0">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <DollarSign className="w-4 h-4" />
+                  <CardTitle className="text-xs lg:text-sm font-medium text-foreground flex items-center gap-2">
+                    <DollarSign className="w-3 lg:w-4 h-3 lg:h-4" />
                     Total Investido
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-h3 font-bold text-foreground">
+                  <div className="text-lg lg:text-xl font-bold text-foreground">
                     R$ {totalInvested.toLocaleString('pt-BR')}
                   </div>
                   <p className="text-xs text-foreground mt-1">
@@ -319,13 +347,13 @@ const InvestorContributions = () => {
 
               <Card className="bg-card/20 border-0">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <TrendingUpIcon className="w-4 h-4" />
+                  <CardTitle className="text-xs lg:text-sm font-medium text-foreground flex items-center gap-2">
+                    <TrendingUpIcon className="w-3 lg:w-4 h-3 lg:h-4" />
                     Já Recebido
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-h3 font-bold text-foreground">
+                  <div className="text-lg lg:text-xl font-bold text-foreground">
                     R$ {totalReceived.toLocaleString('pt-BR')}
                   </div>
                   <p className="text-xs text-foreground mt-1">
@@ -336,13 +364,13 @@ const InvestorContributions = () => {
 
               <Card className="bg-card/20 border-0">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Target className="w-4 h-4" />
+                  <CardTitle className="text-xs lg:text-sm font-medium text-foreground flex items-center gap-2">
+                    <Target className="w-3 lg:w-4 h-3 lg:h-4" />
                     Expectativa Total
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-h3 font-bold text-foreground">
+                  <div className="text-lg lg:text-xl font-bold text-foreground">
                     R$ {totalExpected.toLocaleString('pt-BR')}
                   </div>
                   <p className="text-xs text-foreground mt-1">
@@ -353,13 +381,13 @@ const InvestorContributions = () => {
 
               <Card className="bg-card/20 border-0">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4" />
+                  <CardTitle className="text-xs lg:text-sm font-medium text-foreground flex items-center gap-2">
+                    <CheckCircle className="w-3 lg:w-4 h-3 lg:h-4" />
                     Status Geral
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-h3 font-bold text-success">
+                  <div className="text-lg lg:text-xl font-bold text-success">
                     100% Adimplente
                   </div>
                   <p className="text-xs text-foreground mt-1">
@@ -370,30 +398,30 @@ const InvestorContributions = () => {
             </div>
 
             {/* Contributions List */}
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-h4 font-semibold text-foreground">
+            <div className="space-y-4 lg:space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+                <h2 className="text-lg lg:text-xl font-semibold text-foreground">
                   Projetos Ativos
                 </h2>
-                <Badge variant="secondary" className="bg-success/20 text-success">
+                <Badge variant="secondary" className="bg-success/20 text-success w-fit">
                   {filteredContributions.length} projetos
                 </Badge>
               </div>
 
               {filteredContributions.map((contribution) => (
                 <Card key={contribution.id} className="bg-card/20 border-0">
-                  <CardContent className="p-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <CardContent className="p-4 lg:p-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                       {/* Project Info */}
-                      <div className="space-y-4">
+                      <div className="space-y-3 lg:space-y-4">
                         <div>
-                          <h3 className="text-h5 font-semibold text-foreground mb-1">
+                          <h3 className="text-base lg:text-lg font-semibold text-foreground mb-1">
                             {contribution.project}
                           </h3>
-                          <p className="text-body text-foreground mb-2">
+                          <p className="text-sm lg:text-base text-foreground mb-2">
                             Tomador: {contribution.borrower}
                           </p>
-                          <div className="flex items-center gap-2">
+                          <div className="flex flex-wrap items-center gap-2">
                             <Badge variant="outline" className="text-xs">
                               {contribution.category}
                             </Badge>
@@ -412,7 +440,7 @@ const InvestorContributions = () => {
 
                         {/* Progress */}
                         <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between text-xs lg:text-sm">
                             <span className="text-foreground">Progresso do Contrato</span>
                             <span className="text-foreground font-medium">
                               {Math.round(((contribution.totalMonths - contribution.monthsRemaining) / contribution.totalMonths) * 100)}%
@@ -434,25 +462,25 @@ const InvestorContributions = () => {
                       </div>
 
                       {/* Financial Info */}
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="text-center p-3 bg-muted/50 rounded-lg">
-                            <div className="text-sm text-foreground mb-1">Investido</div>
-                            <div className="text-h5 font-bold text-foreground">
+                      <div className="space-y-3 lg:space-y-4">
+                        <div className="grid grid-cols-2 gap-3 lg:gap-4">
+                          <div className="text-center p-2 lg:p-3 bg-muted/50 rounded-lg">
+                            <div className="text-xs lg:text-sm text-foreground mb-1">Investido</div>
+                            <div className="text-sm lg:text-base font-bold text-foreground">
                               R$ {contribution.amountInvested.toLocaleString('pt-BR')}
                             </div>
                           </div>
-                          <div className="text-center p-3 bg-muted/50 rounded-lg">
-                            <div className="text-sm text-foreground mb-1">Recebido</div>
-                            <div className="text-h5 font-bold text-success">
+                          <div className="text-center p-2 lg:p-3 bg-muted/50 rounded-lg">
+                            <div className="text-xs lg:text-sm text-foreground mb-1">Recebido</div>
+                            <div className="text-sm lg:text-base font-bold text-success">
                               R$ {contribution.amountReceived.toLocaleString('pt-BR')}
                             </div>
                           </div>
                         </div>
 
-                        <div className="text-center p-4 bg-gradient-to-r from-primary/10 to-cyan-400/10 rounded-lg">
-                          <div className="text-sm text-foreground mb-1">Expectativa Final</div>
-                          <div className="text-h4 font-bold text-primary">
+                        <div className="text-center p-3 lg:p-4 bg-gradient-to-r from-primary/10 to-cyan-400/10 rounded-lg">
+                          <div className="text-xs lg:text-sm text-foreground mb-1">Expectativa Final</div>
+                          <div className="text-base lg:text-lg font-bold text-primary">
                             R$ {contribution.expectedReturn.toLocaleString('pt-BR')}
                           </div>
                           <div className="text-xs text-foreground mt-1">
@@ -462,36 +490,36 @@ const InvestorContributions = () => {
                       </div>
 
                       {/* Payment Info */}
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <CheckCircle className="w-4 h-4 text-success" />
-                          <span className="text-sm font-medium text-success">
+                      <div className="space-y-3 lg:space-y-4">
+                        <div className="flex items-center gap-2 mb-2 lg:mb-3">
+                          <CheckCircle className="w-3 lg:w-4 h-3 lg:h-4 text-success" />
+                          <span className="text-xs lg:text-sm font-medium text-success">
                             {contribution.status}
                           </span>
                         </div>
 
-                        <div className="space-y-3">
+                        <div className="space-y-2 lg:space-y-3">
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-foreground">Parcela Mensal:</span>
-                            <span className="text-sm font-medium text-foreground">
+                            <span className="text-xs lg:text-sm text-foreground">Parcela Mensal:</span>
+                            <span className="text-xs lg:text-sm font-medium text-foreground">
                               R$ {contribution.monthlyPayment.toLocaleString('pt-BR')}
                             </span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-foreground">Último Pagamento:</span>
-                            <span className="text-sm font-medium text-foreground">
+                            <span className="text-xs lg:text-sm text-foreground">Último Pagamento:</span>
+                            <span className="text-xs lg:text-sm font-medium text-foreground">
                               {contribution.lastPayment}
                             </span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-foreground">Próximo Pagamento:</span>
-                            <span className="text-sm font-medium text-foreground">
+                            <span className="text-xs lg:text-sm text-foreground">Próximo Pagamento:</span>
+                            <span className="text-xs lg:text-sm font-medium text-foreground">
                               {contribution.nextPayment}
                             </span>
                           </div>
                         </div>
 
-                        <div className="pt-3 border-t border-muted">
+                        <div className="pt-2 lg:pt-3 border-t border-muted">
                           <Button variant="outline" className="w-full text-xs">
                             Ver Detalhes
                           </Button>
@@ -504,14 +532,14 @@ const InvestorContributions = () => {
             </div>
 
             {/* Adimplência Banner */}
-            <div className="mt-8 p-6 bg-success/10 border border-success/20 rounded-xl">
-              <div className="flex items-center gap-3 mb-3">
-                <CheckCircle className="w-6 h-6 text-success" />
-                <h3 className="text-h5 font-semibold text-success">
+            <div className="mt-6 lg:mt-8 p-4 lg:p-6 bg-success/10 border border-success/20 rounded-xl">
+              <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3">
+                <CheckCircle className="w-4 lg:w-6 h-4 lg:h-6 text-success" />
+                <h3 className="text-base lg:text-lg font-semibold text-success">
                   Todos os Tomadores Estão Adimplentes
                 </h3>
               </div>
-              <p className="text-body text-foreground">
+              <p className="text-sm lg:text-base text-foreground">
                 Parabéns! Todos os seus investimentos estão com pagamentos em dia. 
                 Os tomadores de empréstimo estão cumprindo suas obrigações mensais 
                 conforme acordado, garantindo a segurança e rentabilidade dos seus investimentos.

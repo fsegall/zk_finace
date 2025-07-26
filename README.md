@@ -85,9 +85,13 @@ O projeto segue uma arquitetura modular bem organizada com dependências especí
 
 ```
 zkfinance/
-├── package.json          ← Projeto principal (frontend + backend)
-│   ├── Dependências: React, Vite, Supabase, Viem, Express
-│   └── Scripts: build:client, build:server, dev, test
+├── package.json          ← Projeto principal (servidor + scripts)
+│   ├── Dependências: Express, CORS, TypeScript, Vite
+│   └── Scripts: dev, build:server, start, test, install:all
+├── client/
+│   └── package.json      ← Frontend React + UI (isolado para Netlify)
+│       ├── Dependências: React, Viem, Supabase, shadcn/ui
+│       └── Scripts: dev, build, preview
 ├── zk-credit/
 │   └── package.json      ← Módulo ZK específico
 │       ├── Dependências: Circom, SnarkJS, ZKVerifyJS
@@ -101,6 +105,8 @@ zkfinance/
 - **Sem duplicação**: Dependências organizadas por necessidade
 - **Manutenibilidade**: Fácil atualização e gerenciamento
 - **Escalabilidade**: Novos módulos podem ser adicionados independentemente
+- **Deploy isolado**: Frontend pode ser deployado separadamente (Netlify)
+- **Build otimizado**: Sem timeout por dependências pesadas
 
 | Módulo             | Status | Descrição |
 |--------------------|--------|-----------|

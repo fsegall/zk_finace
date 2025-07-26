@@ -385,9 +385,14 @@ cd foundry && forge test -vv
 
 ### 🌐 **Deploy:**
 
+## Landing Page: https://zkfinance.framer.website
+
+## Web App: https://zkfinance.netlify.app
+
 ```bash
 # Client build for production
-npm run build:client
+cd client
+npm run build
 
 # Deploy to Netlify (frontend only)
 # The netlify.toml file is already configured

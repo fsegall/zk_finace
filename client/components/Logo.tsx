@@ -1,4 +1,5 @@
 import { useTheme } from "@/contexts/ThemeContext";
+import logoLight from "../public/logo_light.svg";
 
 interface LogoProps {
   className?: string;
@@ -14,11 +15,14 @@ export const Logo = ({ className = "", size = "md" }: LogoProps) => {
     lg: "h-12 w-auto"
   };
 
+  console.log("Logo component - Current theme:", theme);
+
   // Para o tema claro, usar a logo_light.svg
   if (theme === "light") {
+    console.log("Rendering light theme logo");
     return (
       <img 
-        src="/logo_light.svg" 
+        src={logoLight} 
         alt="ZK Finance" 
         className={`${sizeClasses[size]} ${className}`}
       />

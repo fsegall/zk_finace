@@ -156,7 +156,7 @@ const Register = () => {
                 placeholder={t('auth.fullName')}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="h-11 sm:h-12 bg-muted border-border"
+                className="h-11 sm:h-12 bg-muted placeholder:text-foreground border-border"
                 disabled={formLoading || loading}
               />
             </div>
@@ -167,7 +167,7 @@ const Register = () => {
                 placeholder={t('auth.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-11 sm:h-12 bg-muted border-border"
+                className="h-11 sm:h-12 bg-muted placeholder:text-foreground border-border"
                 disabled={formLoading || loading}
               />
             </div>
@@ -178,7 +178,7 @@ const Register = () => {
                 placeholder={t('auth.password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-11 sm:h-12 bg-muted border-border"
+                className="h-11 sm:h-12 bg-muted placeholder:text-foreground border-border"
                 disabled={formLoading || loading}
               />
             </div>

@@ -58,6 +58,29 @@ cd foundry && forge test -vv
 
 ## 🧱 Modular Architecture
 
+### 📦 **Package.json Organization**
+
+The project follows a well-organized modular architecture with specific dependencies for each module:
+
+```
+zkfinance/
+├── package.json          ← Main project (frontend + backend)
+│   ├── Dependencies: React, Vite, Supabase, Viem, Express
+│   └── Scripts: build:client, build:server, dev, test
+├── zk-credit/
+│   └── package.json      ← ZK-specific module
+│       ├── Dependencies: Circom, SnarkJS, ZKVerifyJS
+│       └── Scripts: setup, compile, generate, verify
+└── foundry/
+    └── lib/forge-std/    ← External dependency (not modified)
+```
+
+### ✅ **Architecture Benefits:**
+- **Clear separation**: Each module has its specific dependencies
+- **No duplication**: Dependencies organized by need
+- **Maintainability**: Easy updates and management
+- **Scalability**: New modules can be added independently
+
 | Module             | Status | Description |
 |--------------------|--------|-------------|
 | [`client/`](client/README_CLIENT.md) | ✅ **Active** | React application with Supabase authentication, RBAC and modern UI. **Viem + Smart Contract integration implemented**. |

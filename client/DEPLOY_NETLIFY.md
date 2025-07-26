@@ -13,9 +13,9 @@ No Netlify, vá em **Site Settings** → **Environment Variables** e adicione:
 
 ### ⚙️ **Configurações de Build:**
 
-- **Base directory**: `.` (raiz do projeto)
-- **Build command**: `npm run build:client`
-- **Publish directory**: `client/dist/spa`
+- **Base directory**: `client` (pasta do frontend com package.json próprio)
+- **Build command**: `npm run build`
+- **Publish directory**: `dist/spa`
 
 ### 🔗 **Variáveis Opcionais:**
 
@@ -45,24 +45,24 @@ No Netlify, vá em **Site Settings** → **Environment Variables** e adicione:
 
 ### Erro: "Command failed with exit code 127"
 - ✅ **RESOLVIDO**: Configuração corrigida no `netlify.toml`
-- Base directory agora é `.` (raiz) em vez de `client`
+- Base directory agora é `client` com package.json próprio para evitar timeout
 
 ### Erro: "Missing Supabase environment variables"
 - Verifique se as variáveis estão configuradas no Netlify
 - Confirme se os nomes começam com `VITE_`
 
 ### Erro: "Build failed"
-- Verifique se o **Base directory** está como `.`
-- Confirme se o **Publish directory** está como `client/dist/spa`
+- Verifique se o **Base directory** está como `client`
+- Confirme se o **Publish directory** está como `dist/spa`
 
 ---
 
 ## 🚀 **Deploy Automático:**
 
 Com o arquivo `netlify.toml` na raiz, o Netlify deve detectar automaticamente:
-- Base directory: `.`
-- Build command: `npm run build:client`
-- Publish directory: `client/dist/spa`
+- Base directory: `client`
+- Build command: `npm run build`
+- Publish directory: `dist/spa`
 
 ---
 

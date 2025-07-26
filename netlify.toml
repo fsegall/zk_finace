@@ -1,12 +1,12 @@
 [build]
-  # Base directory é a raiz do projeto
-  base = "."
+  # Base directory é apenas a pasta client
+  base = "client"
   
-  # Comando de build correto
-  command = "npm run build:client"
+  # Comando de build para o frontend
+  command = "npm run build"
   
   # Pasta de publicação
-  publish = "client/dist/spa"
+  publish = "dist/spa"
 
 [build.environment]
   # Node version

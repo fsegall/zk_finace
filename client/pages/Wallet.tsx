@@ -268,7 +268,7 @@ const Wallet = () => {
                     <p className="text-xs lg:text-sm text-foreground">Montante total após juros no final do contrato</p>
                   </div>
 
-                  <div className="p-3 lg:p-4 bg-primary/10 rounded-lg border border-primary/20">
+                  <div className="p-3 lg:p-4 bg-primary/10 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm lg:text-base font-medium text-primary">Economia na Quitação</span>
                       <span className="text-base lg:text-lg font-bold text-primary">R$ 10.500,00</span>

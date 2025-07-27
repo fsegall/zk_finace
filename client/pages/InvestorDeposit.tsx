@@ -401,7 +401,7 @@ const InvestorDeposit = () => {
 
                   {/* Summary */}
                   {amount && parseFloat(amount) > 0 && (
-                    <div className="bg-primary/10 rounded-xl p-4 lg:p-6 border border-primary/20">
+                    <div className="bg-primary/10 rounded-xl p-4 lg:p-6">
                       <h3 className="text-base lg:text-lg font-semibold text-foreground mb-3 lg:mb-4">
                         Resumo do Depósito
                       </h3>
@@ -443,7 +443,7 @@ const InvestorDeposit = () => {
                   {/* PIX QR Code */}
                   <div className="bg-card/20 rounded-xl p-4 lg:p-6 text-center">
                     <div className="flex items-center justify-center mb-3 lg:mb-4">
-                      <div className="w-32 lg:w-48 h-32 lg:h-48 bg-white rounded-lg flex items-center justify-center border-2 border-dashed border-border">
+                      <div className="w-32 lg:w-48 h-32 lg:h-48 bg-white rounded-lg flex items-center justify-center">
                         <QrCode className="w-20 lg:w-32 h-20 lg:h-32 text-foreground" />
                       </div>
                     </div>

@@ -521,7 +521,7 @@ const InvestorInvestments = () => {
               {filteredInvestments.map((investment) => (
                 <div
                   key={investment.id}
-                  className="bg-card/20 rounded-xl p-4 lg:p-6 border border-border/50 hover:border-primary/30 transition-all duration-300"
+                  className="bg-card/20 rounded-xl p-4 lg:p-6 transition-all duration-300"
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between mb-3 lg:mb-4">
@@ -635,7 +635,7 @@ const InvestorInvestments = () => {
                   </div>
 
                   {/* Collateral */}
-                  <div className="bg-primary/10 rounded-lg p-2 lg:p-3 mb-3 lg:mb-4 border border-primary/20">
+                  <div className="bg-primary/10 rounded-lg p-2 lg:p-3 mb-3 lg:mb-4">
                     <div className="flex items-center gap-2">
                       <Shield className="w-3 lg:w-4 h-3 lg:h-4 text-primary" />
                       <div>

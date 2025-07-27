@@ -473,7 +473,7 @@ const InvestorWithdraw = () => {
 
                   {/* Summary */}
                   {amount && parseFloat(amount) > 0 && (
-                    <div className="bg-primary/10 rounded-xl p-6 border border-primary/20">
+                    <div className="bg-primary/10 rounded-xl p-6">
                       <h3 className="text-lg font-semibold text-foreground mb-4">
                         Resumo do Saque
                       </h3>

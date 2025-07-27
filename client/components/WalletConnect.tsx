@@ -121,7 +121,7 @@ const WalletConnect = () => {
           <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger asChild>
               <motion.button
-                className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-background hover:bg-accent transition-colors"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-background hover:bg-accent hover:border hover:border-blue-600/30 hover:text-accent-foreground transition-all duration-200"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

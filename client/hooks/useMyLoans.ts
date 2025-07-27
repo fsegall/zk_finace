@@ -29,12 +29,68 @@ export interface LoanWithDetails {
 
 export function useMyLoans() {
   const { user } = useAuth();
+  
+  // Check if we're in development mode with mock user
+  const isDevelopment = import.meta.env.DEV && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  const isMockUser = user?.id === 'mock-user-id';
 
   return useQuery({
     queryKey: ["myLoans", user?.id],
     enabled: !!user,
     queryFn: async (): Promise<LoanWithDetails[]> => {
-              // Fetch user loans
+      // In development with mock user, return mock data
+      if (isDevelopment && isMockUser) {
+        return [
+          {
+            id: "mock-loan-1",
+            title: "TechGrow Software Development",
+            description: "Esse projeto é para implementar o crescimento das sementes na minha agroindústria, pelo qual estamos...",
+            amount: 50000,
+            interest_rate: 5.8,
+            term_months: 24,
+            category: "Tech",
+            risk_score: "Baixo",
+            status: "active",
+            deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+            created_at: "2024-03-15T10:00:00Z",
+            updated_at: "2024-03-15T10:00:00Z",
+            author: "Developer User",
+            value: "R$ 50.000,00",
+            interest: "5.8% APR",
+            expires: "5 dias",
+            progress: 65,
+            raised: "R$ 32.500,00",
+            goal: "R$ 50.000,00",
+            investors: 12,
+            daysLeft: 5,
+          },
+          {
+            id: "mock-loan-2",
+            title: "Fresh Eats Cafe Expansion",
+            description: "Expansão de cafeteria com foco em produtos orgânicos",
+            amount: 25000,
+            interest_rate: 6.3,
+            term_months: 18,
+            category: "Food",
+            risk_score: "Médio",
+            status: "active",
+            deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+            created_at: "2024-03-10T14:30:00Z",
+            updated_at: "2024-03-10T14:30:00Z",
+            author: "Developer User",
+            value: "R$ 25.000,00",
+            interest: "6.3% APR",
+            expires: "10 dias",
+            progress: 35,
+            raised: "R$ 8.750,00",
+            goal: "R$ 25.000,00",
+            investors: 8,
+            daysLeft: 10,
+          },
+        ];
+      }
+
+      // Fetch user loans from Supabase
       const { data: loans, error: loansError } = await supabase
         .from("loans")
         .select("*")

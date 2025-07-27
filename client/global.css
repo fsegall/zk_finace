@@ -153,12 +153,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* Only target the account button (when connected) */
 [data-testid="rk-account-button"] {
   background-color: hsl(var(--background)) !important;
-  border: 1px solid hsl(var(--border)) !important;
+  border: none !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Remove borders from all RainbowKit buttons */
+[data-testid="rk-account-button"] *,
+[data-testid="rk-connect-button"] * {
+  border: none !important;
+}
+
+/* Force remove borders from RainbowKit buttons in all themes */
+[data-testid="rk-account-button"],
+[data-testid="rk-connect-button"],
+[data-testid="rk-account-button"] *,
+[data-testid="rk-connect-button"] * {
+  border: none !important;
+  outline: none !important;
+}
+
+/* Standardize hover effect for wallet components - same as language switch */
+[data-testid="rk-account-button"]:hover,
+[data-testid="rk-connect-button"]:hover {
+  border: 1px solid hsl(220 100% 58% / 0.3) !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Network switcher button hover - dark text on dark theme */
+[data-testid="rk-account-button"]:hover span,
+[data-testid="rk-connect-button"]:hover span {
   color: hsl(var(--foreground)) !important;
 }
 
 [data-testid="rk-account-button"]:hover {
   background-color: hsl(var(--accent)) !important;
+  border: none !important;
 }
 
 /* Target specific elements within the account button */

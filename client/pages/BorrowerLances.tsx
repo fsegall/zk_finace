@@ -30,8 +30,10 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import { useMyLoans, LoanWithDetails } from "../hooks/useMyLoans";
 import WalletConnect from "../components/WalletConnect";
+import LanguageSwitch from "../components/LanguageSwitch";
 
 // Tipo unificado para lances (reais e mock)
 interface DisplayLance {
@@ -55,6 +57,7 @@ interface DisplayLance {
 const BorrowerLances = () => {
   const { theme, toggleTheme } = useTheme();
   const { user, profile } = useAuth();
+  const { t } = useLanguage();
   const [filterStatus, setFilterStatus] = useState("all");
   
   // Check if we're in development mode with mock user
@@ -421,6 +424,8 @@ const BorrowerLances = () => {
                   </div>
                 </div>
 
+                <LanguageSwitch />
+                
                 <Link to="/login">
                   <button className="p-2 hover:bg-muted/50 rounded-lg text-foreground transition-colors">
                     <span className="text-sm">Sair</span>

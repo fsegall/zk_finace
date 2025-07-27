@@ -163,11 +163,11 @@ const InvestorDashboard = () => {
               {t('dashboard.title')}
             </Link>
             <Link
-              to="/investor/investments"
+              to="/investor/ranking"
               className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
-              <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4" />
-              {t('dashboard.investments')}
+              <Trophy className="w-3 h-3 lg:w-4 lg:h-4" />
+              {t('dashboard.ranking')}
             </Link>
             <Link
               to="/investor/contributions"
@@ -175,13 +175,6 @@ const InvestorDashboard = () => {
             >
               <BarChart3 className="w-3 h-3 lg:w-4 lg:h-4" />
               {t('dashboard.contributions')}
-            </Link>
-            <Link
-              to="/investor/ranking"
-              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
-            >
-              <Trophy className="w-3 h-3 lg:w-4 lg:h-4" />
-              {t('dashboard.ranking')}
             </Link>
             <Link
               to="/investor/settings"
@@ -194,13 +187,6 @@ const InvestorDashboard = () => {
 
           {/* Support */}
           <div className="mt-auto pt-6 lg:pt-8 space-y-1 lg:space-y-2">
-            <Link
-              to="/kyc-verification"
-              className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 text-xs lg:text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg`}
-            >
-              <span className="text-xs">←</span>
-              {t('dashboard.backToKYC')}
-            </Link>
             <Link
               to="/investor/support"
               className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 text-xs lg:text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg`}

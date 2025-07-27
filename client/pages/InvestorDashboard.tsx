@@ -202,7 +202,7 @@ const InvestorDashboard = () => {
         {/* Main Content */}
         <div className="flex-1">
           {/* Header */}
-          <header className="bg-card/20 px-4 lg:px-6 py-3 lg:py-4">
+          <header className="bg-card/50 px-4 lg:px-6 py-3 lg:py-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-0">
               {/* Search */}
               <div className="relative w-full lg:w-96">
@@ -296,7 +296,7 @@ const InvestorDashboard = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
                 <Link
                   to="/investor/investments"
-                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors"
+                  className="bg-card/50 rounded-xl p-4 lg:p-6 hover:bg-card/60 transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
@@ -313,7 +313,7 @@ const InvestorDashboard = () => {
 
                 <Link
                   to="/investor/contributions"
-                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors"
+                  className="bg-card/50 rounded-xl p-4 lg:p-6 hover:bg-card/60 transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 bg-success/20 rounded-lg flex items-center justify-center">
@@ -330,7 +330,7 @@ const InvestorDashboard = () => {
 
                 <Link
                   to="/investor/ranking"
-                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors"
+                  className="bg-card/50 rounded-xl p-4 lg:p-6 hover:bg-card/60 transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 bg-warning/20 rounded-lg flex items-center justify-center">
@@ -347,7 +347,7 @@ const InvestorDashboard = () => {
 
                 <Link
                   to="/kyc-verification"
-                  className="bg-card/20 rounded-xl p-4 lg:p-6 hover:bg-card/30 transition-colors"
+                  className="bg-card/50 rounded-xl p-4 lg:p-6 hover:bg-card/60 transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 bg-info/20 rounded-lg flex items-center justify-center">
@@ -364,7 +364,7 @@ const InvestorDashboard = () => {
               </div>
 
               {/* Recent Investments */}
-              <div className="bg-card/20 rounded-xl p-4 lg:p-6">
+              <div className="bg-card/50 rounded-xl p-4 lg:p-6">
                 <div className="flex items-center justify-between mb-4 lg:mb-6">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground">
                     {t('dashboard.recentInvestments')}

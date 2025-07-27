@@ -196,6 +196,24 @@ zkfinance/
 - **Smart Contract ↔ Supabase**: ✅ Persistência bidirecional
 - **Supabase ↔ Frontend**: ✅ Atualização em tempo real
 
+### 🏆 **SUCESSOS CONFIRMADOS:**
+
+#### 🚀 **Smart Contract LoanManager - Deploy Sepolia:**
+- **✅ Status**: Deployado e verificado com sucesso
+- **📅 Data**: 25 de Julho de 2025 às 23:05:53 (UTC-3)
+- **🔗 Etherscan**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
+- **🔗 Sourcify**: https://sepolia.sourcify.dev/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
+- **💰 Custo**: 0.000001624967444464 ETH (extremamente baixo)
+- **⛽ Gas**: 1,581,286 gas
+
+#### 🔐 **ZKVerify Integration - 100% Funcional:**
+- **✅ Status**: Todos os testes passaram com sucesso
+- **📅 Data**: 26 de Julho de 2025 às 03:12:07 UTC
+- **🔗 Transação**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
+- **📊 Score**: 805 (threshold: 705) - **PROVA VÁLIDA!**
+- **💰 Taxa**: 0.02393157714 tVFY
+- **🔧 Rede**: ZKVerify Volta Testnet operacional
+
 ## 🧪 Testes de Integração ZKVerify
 
 ### Scripts Disponíveis
@@ -214,10 +232,11 @@ bash zk-credit/scripts/setup.sh
 ```
 
 ### Status dos Testes
-- ✅ **Conectividade RPC**: 13+ peers, rede estável
+- ✅ **Conectividade RPC**: 14+ peers, rede estável
 - ✅ **Registro de VK**: Verification key registrada na blockchain
-- ✅ **Submissão de Provas**: Múltiplas provas verificadas com sucesso
+- ✅ **Submissão de Provas**: **PROVA SUBMETIDA E FINALIZADA COM SUCESSO!**
 - ✅ **Rede Volta**: Operacional e acessível
+- ✅ **Transação Confirmada**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
 
 ## 📚 **Documentação Completa**
 
@@ -388,6 +407,41 @@ zkfinance_ui/
 - **💾 Persistência**: ✅ Supabase ↔ Blockchain sincronizado
 - **📚 Documentação**: ✅ Completa e atualizada
 
+### 🚀 **DEPLOY SUCESSO - CONTRATO LOANMANAGER**
+
+#### 📋 **Detalhes do Contrato:**
+- **Nome**: `LoanManager`
+- **Endereço**: `0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13`
+- **Rede**: Sepolia Testnet (Chain ID: 11155111)
+- **Status**: ✅ **DEPLOYADO E VERIFICADO**
+
+#### 🔗 **Links do Contrato:**
+- **Etherscan**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
+- **Sourcify**: https://sepolia.sourcify.dev/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
+
+#### 📅 **Informações do Deploy:**
+- **Data**: 25 de Julho de 2025
+- **Hora**: 23:05:53 (UTC-3)
+- **Custo**: 0.000001624967444464 ETH (muito baixo)
+- **Gas**: 1,581,286 gas
+
+### 🔐 **INTEGRAÇÃO ZKVERIFY - 100% FUNCIONAL**
+
+#### ✅ **Status dos Testes:**
+- **Conectividade RPC**: ✅ 14+ peers ativos
+- **Geração de Provas ZK**: ✅ SnarkJS funcionando perfeitamente
+- **Submissão de Provas**: ✅ **PROVA SUBMETIDA E FINALIZADA!**
+
+#### 🔗 **Transação de Sucesso:**
+- **Block Hash**: `0x2a6d4e840c2fdeb67db6f62c3620269b023c3d8d81a858aa2ce31dd85b827907`
+- **Transaction Hash**: `0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977`
+- **Test ID**: `1753499524455-9b3c8db76f3d7f0d`
+- **Score**: 805, Threshold: 705
+- **Taxa**: 0.02393157714 tVFY
+
+#### 🔗 **Link da Transação no ZKVerify:**
+https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
+
 ### 🚀 **Comandos para Demonstração:**
 
 ```bash
@@ -465,6 +519,20 @@ Desenvolvido por **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato*
 
 ## 🔗 Links Úteis
 
+### 🌐 **Aplicação:**
+- **Web App**: https://zkfinance.netlify.app
+- **Landing Page**: https://zkfinance.framer.website
+- **Domínio Principal**: https://zkfinance.com.br
+
+### 🔗 **Blockchain & Smart Contracts:**
+- **Etherscan Sepolia**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
+- **Sourcify**: https://sepolia.sourcify.dev/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
+
+### 🔐 **ZKVerify Integration:**
+- **Transação de Sucesso**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
+- **ZKVerify Website**: https://zkverify.io/
+
+### 📚 **Documentação:**
 - [Documentação Supabase](https://supabase.com/docs)
 - [shadcn/ui](https://ui.shadcn.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
@@ -473,4 +541,3 @@ Desenvolvido por **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato*
 - [Circom Documentation](https://docs.circom.io/)
 - [SnarkJS](https://github.com/iden3/snarkjs)
 - [N8N](https://n8n.io/)
-- [ZKVerify](https://zkverify.io/)

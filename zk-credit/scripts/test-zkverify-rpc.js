@@ -6,7 +6,7 @@ import path from 'path';
 // Configuration
 const VOLTA_RPC = 'https://volta-rpc.zkverify.io';
 const VOLTA_API = 'https://api.volta.zksync.dev';
-const ADDRESS = 'xph7MXyuL9B3WYLPBVz2S7wrs1mCzcBDXzMyv4qPMQcYJut7S';
+const ADDRESS = '[REDACTED_FOR_SECURITY]';
 
 async function testZKVerifyRPC() {
   console.log('🌐 Testando Integração ZKVerify via RPC');

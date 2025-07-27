@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useRBAC } from "../hooks/useRBAC";
 import WalletConnect from "../components/WalletConnect";
 import LanguageSwitch from "../components/LanguageSwitch";
 import MobileMenu from "../components/MobileMenu";
@@ -35,6 +36,7 @@ const Support = () => {
   const { theme, toggleTheme } = useTheme();
   const { user, profile, logout } = useAuth();
   const { t } = useLanguage();
+  const { isAdmin, isLender, isBorrower } = useRBAC();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
@@ -252,7 +254,7 @@ const Support = () => {
           <Breadcrumb
             items={[
               { label: "Início", href: "/user-selection" },
-              { label: "Dashboard", href: "/borrower/dashboard" },
+              { label: "Dashboard", href: isLender ? "/investor/dashboard" : "/borrower/dashboard" },
               { label: "Suporte" },
             ]}
           />
@@ -260,7 +262,7 @@ const Support = () => {
           <div className="max-w-7xl mx-auto">
             {/* Back Button */}
             <Link
-              to="/borrower/dashboard"
+              to={isLender ? "/investor/dashboard" : "/borrower/dashboard"}
               className="inline-flex items-center gap-2 text-foreground hover:text-foreground transition-colors mb-4 sm:mb-6"
             >
               <ArrowLeft className="w-4 h-4" />

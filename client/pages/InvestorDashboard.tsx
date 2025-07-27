@@ -174,7 +174,7 @@ const InvestorDashboard = () => {
               className={`w-full flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
               <BarChart3 className="w-3 h-3 lg:w-4 lg:h-4" />
-              {t('dashboard.contributions')}
+              {t('investor.contributions.title')}
             </Link>
             <Link
               to="/investor/settings"

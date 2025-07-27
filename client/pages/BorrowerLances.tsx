@@ -57,7 +57,11 @@ const BorrowerLances = () => {
   const { user, profile } = useAuth();
   const [filterStatus, setFilterStatus] = useState("all");
   
-  // Buscar dados reais do banco
+  // Check if we're in development mode with mock user
+  const isDevelopment = import.meta.env.DEV && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  const isMockUser = user?.id === 'mock-user-id';
+
+  // Buscar dados reais do banco (apenas se não for mock user)
   const { data: realLoans, isLoading, error } = useMyLoans();
 
   // Dados mock para manter a tela completa
@@ -156,8 +160,8 @@ const BorrowerLances = () => {
 
   // Combinar dados reais com mock
   const allLances = [
-    // Primeiro lance real (se existir)
-    ...(realLoans && realLoans.length > 0 ? [realLoans[0]] : []),
+    // Primeiro lance real (se existir e não for mock user)
+    ...(realLoans && realLoans.length > 0 && !isMockUser ? [realLoans[0]] : []),
     // Lances mock
     ...mockLances
   ];
@@ -235,8 +239,8 @@ const BorrowerLances = () => {
     ? displayLances 
     : displayLances.filter(lance => lance.status === filterStatus);
 
-  // Loading state
-  if (isLoading) {
+  // Loading state (apenas se não for mock user)
+  if (isLoading && !isMockUser) {
     return (
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <div className="text-center">
@@ -247,8 +251,8 @@ const BorrowerLances = () => {
     );
   }
 
-  // Error state
-  if (error) {
+  // Error state (apenas se não for mock user)
+  if (error && !isMockUser) {
     return (
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <div className="text-center">

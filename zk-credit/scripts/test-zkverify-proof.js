@@ -9,24 +9,24 @@ import { generateCreditProof } from '../services/creditProofService.ts';
 async function main() {
   try {
     console.log('🔍 Testando submissão de prova ZKVerify (usando VK já registrada)...');
-    // Gera identificador único para este teste
+    // Generate unique identifier for this test
     const timestamp = Date.now();
     const randomHash = crypto.randomBytes(8).toString('hex');
     const testId = `${timestamp}-${randomHash}`;
     console.log('🆔 Teste ID:', testId);
-    // Carrega verification key (já registrada)
+    // Load verification key (already registered)
     const buildPath = path.join(process.cwd(), 'build');
     const vkeyPath = path.join(buildPath, 'verification_key.json');
     const vkey = JSON.parse(fs.readFileSync(vkeyPath, 'utf-8'));
     const formattedVkey = formatVerificationKeyForZKVerify(vkey);
-    // Gera prova ZK real com inputs únicos
+    // Generate real ZK proof with unique inputs
     const score = 750 + (timestamp % 100); // Score varia entre 750-849
     const threshold = 700 + (timestamp % 50); // Threshold varia entre 700-749
     console.log(`📊 Score: ${score}, Threshold: ${threshold}`);
     const proofResult = await generateCreditProof({ score: score.toString(), threshold: threshold.toString() });
     const proof = proofResult.proof;
     const publicSignals = proofResult.publicSignals.map(String);
-    // Inicializa sessão
+    // Initialize session
     const session = await zkVerifySession.start()
       .Volta()
       .withAccount(process.env.ZKVERIFY_SEED_PHRASE || 'test seed phrase');

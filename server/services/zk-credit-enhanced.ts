@@ -37,7 +37,7 @@ export class ZKCreditEnhancedService {
 
   async generateProof(request: ZKProofRequest): Promise<ZKProofResponse> {
     try {
-      console.log('🔐 === INICIANDO GERAÇÃO DE PROVA ZK (ENHANCED) ===');
+      console.log('🔐 === STARTING ZK PROOF GENERATION (ENHANCED) ===');
       console.log('📊 Score:', request.score, 'Threshold:', request.threshold);
       console.log('🆔 Request ID:', request.requestId);
 
@@ -72,7 +72,7 @@ export class ZKCreditEnhancedService {
       const commitmentHash = this.generateCommitmentHash(proofResult.proof, publicSignalsArray);
 
       // Submeter para ZKVerify
-      console.log('🌐 Iniciando submissão para ZKVerify...');
+      console.log('🌐 Starting submission to ZKVerify...');
       const zkVerifyResult = await this.submitToZKVerify({ proof: proofResult.proof, publicSignals: publicSignalsArray }, request.requestId);
 
       return {
@@ -107,7 +107,7 @@ export class ZKCreditEnhancedService {
     }
 
     try {
-      console.log('🔗 Inicializando sessão ZKVerify...');
+      console.log('🔗 Initializing ZKVerify session...');
       
       const { zkVerifySession } = await import('zkverifyjs');
       
@@ -122,10 +122,10 @@ export class ZKCreditEnhancedService {
 
       console.log('🌍 RPC URL ZKVerify:', this.session.client?.rpc?.url);
 
-      console.log('✅ Sessão ZKVerify inicializada');
-      console.log('🔑 Seed phrase: Configurada');
-      console.log('👤 Endereço da conta:', this.session.getAccount()?.address || 'N/A');
-      console.log('✅ Sessão inicializada');
+      console.log('✅ ZKVerify session initialized');
+      console.log('🔑 Seed phrase: Configured');
+      console.log('👤 Account address:', this.session.getAccount()?.address || 'N/A');
+      console.log('✅ Session initialized');
 
       return this.session;
 
@@ -145,7 +145,7 @@ export class ZKCreditEnhancedService {
     note?: string;
   }> {
     try {
-      console.log('🌐 === INICIANDO SUBMISSÃO ZKVERIFY ===');
+      console.log('🌐 === STARTING ZKVERIFY SUBMISSION ===');
       console.log('📝 Request ID:', requestId);
       console.log('🔍 Verificando prova:', {
         hasProof: !!proof.proof,
@@ -153,22 +153,22 @@ export class ZKCreditEnhancedService {
         publicSignalsCount: proof.publicSignals?.length || 0
       });
 
-      // Inicializar sessão ZKVerify
+              // Initialize ZKVerify session
       const session = await this.initializeSession();
-      console.log('✅ Sessão inicializada');
+      console.log('✅ Session initialized');
 
       // Ler verification key
       const vkeyPath = path.join(this.circuitsPath, 'verification_key.json');
       const vkey = JSON.parse(fs.readFileSync(vkeyPath, 'utf8'));
-      console.log('✅ Verification key carregada');
+      console.log('✅ Verification key loaded');
 
       // Preparar dados da prova
-      console.log('📦 Preparando dados da prova...');
-      console.log('✅ Dados da prova preparados');
+      console.log('📦 Preparing proof data...');
+      console.log('✅ Proof data prepared');
 
-      // Executar verificação ZKVerify usando nova API
-      console.log('🚀 Executando verificação ZKVerify...');
-      console.log('📡 Conectando à rede Volta...');
+              // Execute ZKVerify verification using new API
+      console.log('🚀 Executing ZKVerify verification...');
+      console.log('📡 Connecting to Volta network...');
       
       // Debug: Verificar dados da prova
       console.log('🔍 DEBUG - Dados da prova:');
@@ -189,7 +189,7 @@ export class ZKCreditEnhancedService {
         };
       }
 
-      // IMPLEMENTAÇÃO ROBUSTA COM TRATAMENTO DE ERROS ASSÍNCRONOS
+              // ROBUST IMPLEMENTATION WITH ASYNC ERROR HANDLING
       return await this.executeZKVerifyWithRobustErrorHandling(session, vkey, proof);
 
     } catch (error) {
@@ -216,7 +216,7 @@ export class ZKCreditEnhancedService {
     productionNote?: string;
   }> {
     return new Promise(async (resolve) => {
-      console.log('🔐 === EXECUTANDO ZKVERIFY COM INTEGRAÇÃO REAL ===');
+      console.log('🔐 === EXECUTING ZKVERIFY WITH REAL INTEGRATION ===');
       
       try {
         // PASSO 1: Registrar verification key
@@ -242,7 +242,7 @@ export class ZKCreditEnhancedService {
         const registrationResult = await this.registerVerificationKey(vkey);
         
         if (!registrationResult.success) {
-          console.log('⚠️ Falha no registro da key, usando simulação MVP');
+          console.log('⚠️ Key registration failed, using MVP simulation');
           resolve({
             success: true,
             note: 'mvp-simulation-registration-failed',
@@ -259,14 +259,14 @@ export class ZKCreditEnhancedService {
         // PASSO 2: Verificando prova usando key registrada
         console.log('🔍 PASSO 2: Verificando prova com key registrada...');
         
-        // Validar e preparar proofData com verificationKey já sanitizada
+        // Validate and prepare proofData with already sanitized verificationKey
         const proofData = {
           verificationKey: formattedVKey,
           proof: proof.proof,
           publicSignals: proof.publicSignals
         };
 
-        // Validação detalhada do proofData
+        // Detailed validation of proofData
         console.log("🧪 Validando proofData:", {
           verificationKey: formattedVKey ? 'ok' : 'missing',
           proof: proof?.proof ? 'ok' : 'missing',
@@ -284,7 +284,7 @@ export class ZKCreditEnhancedService {
 
         console.log("📦 Enviando para execute:", JSON.stringify(proofData, null, 2));
         
-        // Implementação robusta com captura de erros assíncronos
+        // Robust implementation with async error capture
         const verificationPromise = session
           .verify()
           .groth16({
@@ -299,12 +299,12 @@ export class ZKCreditEnhancedService {
             }
           });
 
-        // Capturar erros assíncronos
+        // Capture async errors
         verificationPromise.catch((error) => {
-          console.log('❌ Erro assíncrono na verificação ZKVerify:', error.message);
+          console.log('❌ Async error in ZKVerify verification:', error.message);
           
           if (error.message.includes('Verification Key must be provided')) {
-            console.log('⚠️ Erro de verification key - usando simulação MVP');
+            console.log('⚠️ Verification key error - using MVP simulation');
             resolve({
               success: true,
               note: 'mvp-simulation-verification-key-error',
@@ -312,7 +312,7 @@ export class ZKCreditEnhancedService {
               productionNote: 'Verification key format issue - MVP simulation'
             });
           } else {
-            console.log('⚠️ Outro erro ZKVerify - usando simulação MVP');
+            console.log('⚠️ Other ZKVerify error - using MVP simulation');
             resolve({
               success: true,
               note: 'mvp-simulation-other-error',
@@ -334,9 +334,9 @@ export class ZKCreditEnhancedService {
           });
           
         } catch (error) {
-          console.log('❌ Erro síncrono na verificação ZKVerify:', error.message);
+          console.log('❌ Sync error in ZKVerify verification:', error.message);
           
-          // Fallback para simulação MVP
+          // Fallback to MVP simulation
           resolve({
             success: true,
             note: 'mvp-simulation-sync-error',
@@ -348,8 +348,8 @@ export class ZKCreditEnhancedService {
       } catch (error) {
         console.error('❌ Erro na integração real ZKVerify:', error);
         
-        // Fallback para simulação MVP
-        console.log('⚠️ Usando simulação MVP como fallback');
+        // Fallback to MVP simulation
+        console.log('⚠️ Using MVP simulation as fallback');
         resolve({
           success: true,
           note: 'mvp-simulation-error-fallback',
@@ -363,16 +363,16 @@ export class ZKCreditEnhancedService {
   }
 
   private setupAsyncErrorHandling(events: any, transactionResult: any, resolve: Function) {
-    console.log('🔧 Configurando tratamento de eventos assíncronos...');
+    console.log('🔧 Setting up async event handling...');
     
-    // Listener para eventos de erro
+    // Error event listener
     events.on('error', (error: any) => {
       console.log('❌ Evento de erro ZKVerify:', error);
       
-      // Se for erro de verification key, usar simulação MVP
+      // If verification key error, use MVP simulation
       if (error && error.error && error.error.includes('InvalidVerificationKey')) {
-        console.log('✅ MVP: Verification key não registrada (comportamento esperado)');
-        console.log('💡 Para produção: Registrar verification key na blockchain ZKVerify');
+        console.log('✅ MVP: Verification key not registered (expected behavior)');
+        console.log('💡 For production: Register verification key on ZKVerify blockchain');
         resolve({
           success: true,
           note: 'mvp-simulation-verification-key',
@@ -390,7 +390,7 @@ export class ZKCreditEnhancedService {
       }
     });
 
-    // Listener para eventos de sucesso
+    // Success event listener
     events.on('success', (result: any) => {
       console.log('✅ Evento de sucesso ZKVerify:', result);
       resolve({
@@ -401,9 +401,9 @@ export class ZKCreditEnhancedService {
       });
     });
 
-    // Tratar resultado da transação
+    // Handle transaction result
     transactionResult.then((result: any) => {
-      console.log('📊 Resultado da transação ZKVerify:', result);
+      console.log('📊 ZKVerify transaction result:', result);
       resolve({
         success: true,
         transactionHash: result?.transactionHash || 'simulated-tx-hash-' + Date.now(),
@@ -411,12 +411,12 @@ export class ZKCreditEnhancedService {
         note: 'transaction-success'
       });
     }).catch((error: any) => {
-      console.log('❌ Erro na transação ZKVerify:', error);
+      console.log('❌ Error in ZKVerify transaction:', error);
       
-      // Se for erro de verification key, usar simulação MVP
+      // If verification key error, use MVP simulation
       if (error && error.message && error.message.includes('InvalidVerificationKey')) {
-        console.log('✅ MVP: Verification key não registrada (comportamento esperado)');
-        console.log('💡 Para produção: Registrar verification key na blockchain ZKVerify');
+        console.log('✅ MVP: Verification key not registered (expected behavior)');
+        console.log('💡 For production: Register verification key on ZKVerify blockchain');
         resolve({
           success: true,
           note: 'mvp-simulation-verification-key',
@@ -447,7 +447,7 @@ export class ZKCreditEnhancedService {
       console.log('🔐 === REGISTRANDO VERIFICATION KEY ===');
       
       if (!this.session) {
-        console.log('❌ Sessão não inicializada');
+        console.log('❌ Session not initialized');
         return { success: false, error: 'Sessão não inicializada' };
       }
 
@@ -504,7 +504,7 @@ export class ZKCreditEnhancedService {
       try {
         await this.session.close();
         this.session = null;
-        console.log('🔒 Sessão ZKVerify fechada');
+        console.log('🔒 ZKVerify session closed');
       } catch (error) {
         console.error('❌ Erro ao fechar sessão:', error);
       }

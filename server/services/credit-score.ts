@@ -1,4 +1,4 @@
-// Tipos para análise de crédito
+// Types for credit analysis
 export interface CreditData {
   income: number;
   employment_years: number;
@@ -77,7 +77,7 @@ export interface CreditAnalysisResponse {
  */
 export function calculateCreditScore(data: CreditData): AnalysisResult {
   // Calcular score base
-  let score = 300; // Score mínimo
+  let score = 300; // Minimum score
 
   // Fatores de renda (0-300 pontos)
   if (data.income >= 10000) score += 300;
@@ -96,10 +96,10 @@ export function calculateCreditScore(data: CreditData): AnalysisResult {
   // Fatores de propriedade (0-150 pontos)
   if (data.has_property) score += 150;
 
-  // Fatores de dívida (-100 a 0 pontos)
+  // Debt factors (-100 to 0 points)
   if (data.has_debt) score -= 100;
 
-  // Fatores de inadimplência (-200 a 0 pontos)
+  // Default factors (-200 to 0 points)
   if (data.payment_defaults >= 5) score -= 200;
   else if (data.payment_defaults >= 3) score -= 150;
   else if (data.payment_defaults >= 1) score -= 100;
@@ -127,7 +127,7 @@ export function calculateCreditScore(data: CreditData): AnalysisResult {
     message = `Seu score de crédito é ${score} (${category}). Infelizmente não foi aprovado. Recomendamos melhorar sua situação financeira.`;
   }
 
-  // Calcular limite de crédito sugerido
+  // Calculate suggested credit limit
   let suggestedLimit = 0;
   if (passed) {
     if (score >= 750) suggestedLimit = data.income * 12;
@@ -204,21 +204,21 @@ export async function analyzeCredit(userData: CreditData, requestId?: string): P
   // Calcular score
   const analysisResult = calculateCreditScore(userData);
   
-  // Gerar perfil do usuário
+  // Generate user profile
   const userProfile = generateUserProfile(userData);
   
-  // Gerar recomendações
+  // Generate recommendations
   const recommendations = generateRecommendations(analysisResult);
   
-  // Gerar informações técnicas
+  // Generate technical information
   const technical = generateTechnical(startTime, userData);
   
-  // Calcular confiança baseada no score
+  // Calculate confidence based on score
   const confidence = analysisResult.score >= 750 ? 0.95 : 
                      analysisResult.score >= 700 ? 0.85 : 
                      analysisResult.score >= 650 ? 0.75 : 0.60;
   
-  // Gerar prova ZK (se o módulo estiver disponível)
+  // Generate ZK proof (if module is available)
   let zkProof;
   try {
     console.log('🔍 Tentando importar módulo zk-credit-enhanced...');
@@ -243,7 +243,7 @@ export async function analyzeCredit(userData: CreditData, requestId?: string): P
         proof: proofResult.proof.proof,
         publicSignals: proofResult.proof.publicSignals,
         hash: proofResult.proof.hash,
-        verified: true, // Assumir que foi verificado pelo serviço
+        verified: true, // Assume it was verified by the service
         zkVerifySubmission: proofResult.proof.zkVerifySubmission
       };
       

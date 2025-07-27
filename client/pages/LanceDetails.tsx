@@ -67,7 +67,7 @@ const LanceDetails = () => {
   const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Mock data - em produção viria da API
+  // Mock data - in production would come from API
   const lance = {
     id: parseInt(id || "1"),
     title: "TechGrow Software Development",

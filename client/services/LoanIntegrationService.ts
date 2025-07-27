@@ -129,7 +129,7 @@ const LOAN_MANAGER_ABI = [
   }
 ] as const;
 
-// Endereços dos contratos
+    // Contract addresses
 const CONTRACT_ADDRESSES = {
   localhost: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
   sepolia: '0x9EA26472ddFD1C14F02e1D8B16Bad0904758599e'
@@ -174,13 +174,13 @@ export class LoanIntegrationService {
     const chainConfig = chain === 'localhost' ? localhost : sepolia;
     this.contractAddress = CONTRACT_ADDRESSES[chain];
 
-    // Cliente público para leitura
+    // Public client for reading
     this.publicClient = createPublicClient({
       chain: chainConfig,
       transport: http()
     });
 
-    // Cliente de carteira para transações
+    // Wallet client for transactions
     this.walletClient = createWalletClient({
       chain: chainConfig,
       transport: http()
@@ -202,7 +202,7 @@ export class LoanIntegrationService {
       console.log('🔐 Gerando prova ZK...');
       const zkProof = await generateCreditProof({
         score: loanData.riskScore,
-        threshold: "700" // Threshold padrão
+        threshold: "700" // Default threshold
       });
 
       // 2. Criar hash da prova ZK
@@ -289,7 +289,7 @@ export class LoanIntegrationService {
     try {
       console.log('💸 Reembolsando empréstimo...', { loanId, borrowerWalletAddress });
 
-      // 1. Obter dados do empréstimo
+      // 1. Get loan data
       const loan = await this.getLoanFromContract(loanId);
       const totalWithInterest = this.calculateTotalWithInterest(loan.amount, loan.interestRate);
 
@@ -349,7 +349,7 @@ export class LoanIntegrationService {
     return Number(count);
   }
 
-  // Métodos privados auxiliares
+      // Private helper methods
 
   private async createLoanOnContract(
     loanData: LoanData,
@@ -501,5 +501,5 @@ export class LoanIntegrationService {
   }
 }
 
-// Instância singleton
+  // Singleton instance
 export const loanIntegrationService = new LoanIntegrationService(); 

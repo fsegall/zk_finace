@@ -40,19 +40,19 @@ export class ZKCreditService {
   private async initializeSession() {
     if (!this.session) {
       try {
-        console.log('🔗 Inicializando sessão ZKVerify...');
+        console.log('🔗 Initializing ZKVerify session...');
         
-        // Usar a rede Volta (testnet) conforme documentação oficial
+        // Use Volta network (testnet) according to official documentation
         this.session = await zkVerifySession.start()
           .Volta() // Rede predefinida da ZKVerify
           .withAccount(process.env.ZKVERIFY_SEED_PHRASE || 'test seed phrase for development');
         
-        console.log('✅ Sessão ZKVerify inicializada');
-        console.log('🔑 Seed phrase:', process.env.ZKVERIFY_SEED_PHRASE ? 'Configurada' : 'Padrão');
+        console.log('✅ ZKVerify session initialized');
+        console.log('🔑 Seed phrase:', process.env.ZKVERIFY_SEED_PHRASE ? 'Configured' : 'Default');
         
-        // Verificar informações da conta
+        // Check account information
         const account = this.session.getAccount();
-        console.log('👤 Endereço da conta:', account?.address || 'N/A');
+        console.log('👤 Account address:', account?.address || 'N/A');
         
       } catch (error) {
         console.error('❌ Erro ao inicializar sessão ZKVerify:', error);
@@ -71,7 +71,7 @@ export class ZKCreditService {
       console.log(`📊 Score: ${request.score}, Threshold: ${request.threshold}`);
       console.log(`🆔 Request ID: ${request.requestId}`);
 
-      // Verificar módulo zk-credit
+              // Check zk-credit module
       console.log('🔍 Verificando módulo zk-credit...');
       await this.checkZKCreditModule();
       console.log('✅ Módulo verificado');
@@ -99,7 +99,7 @@ export class ZKCreditService {
         hash: proof.hash
       });
 
-      // Enviar para ZKVerify usando documentação oficial
+              // Send to ZKVerify using official documentation
       console.log('🌐 Iniciando submissão para ZKVerify...');
       const zkVerifyResult = await this.submitToZKVerify(proof, request.requestId);
       console.log('📊 Resultado ZKVerify:', zkVerifyResult);
@@ -142,7 +142,7 @@ export class ZKCreditService {
         publicSignalsCount: proof.publicSignals?.length
       });
 
-      // Inicializar sessão
+              // Initialize session
       console.log('🔗 Inicializando sessão ZKVerify...');
       const session = await this.initializeSession();
       console.log('✅ Sessão inicializada');
@@ -162,7 +162,7 @@ export class ZKCreditService {
       };
       console.log('✅ Dados da prova preparados');
 
-      // Enviar prova usando documentação oficial
+              // Send proof using official documentation
       console.log('🚀 Executando verificação ZKVerify...');
       console.log('📡 Conectando à rede Volta...');
       
@@ -174,7 +174,7 @@ export class ZKCreditService {
         })
         .execute({
           proofData: proofData,
-          domainId: 1, // Domain ID para categorização
+          domainId: 1, // Domain ID for categorization
         });
 
       console.log('✅ Verificação iniciada, aguardando resultado...');
@@ -184,7 +184,7 @@ export class ZKCreditService {
         console.error('❌ Erro na transação ZKVerify:', JSON.stringify(eventData));
       });
 
-      // Aguardar resultado da transação
+              // Wait for transaction result
       console.log('⏳ Aguardando confirmação da transação...');
       try {
         const transactionInfo = await transactionResult;
@@ -251,10 +251,10 @@ export class ZKCreditService {
         execSync('pkill -f "generateProofAndHash.js"', { stdio: 'ignore' });
         console.log('🧹 Processos anteriores limpos');
       } catch (error) {
-        // Ignorar erro se não houver processos para matar
+        // Ignore error if there are no processes to kill
       }
       
-      // Executar script de forma síncrona
+              // Execute script synchronously
       const output = execSync(`node "${scriptPath}"`, {
         cwd: this.zkCreditPath,
         encoding: 'utf8',

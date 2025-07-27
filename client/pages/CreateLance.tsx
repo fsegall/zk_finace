@@ -64,13 +64,13 @@ const CreateLance = () => {
   const { user, profile } = useAuth();
   const createLoanMutation = useCreateLoan();
   
-  // Hook para análise de crédito
+  // Credit analysis hook
   const creditAnalysis = useCreditAnalysis(); // N8N configurado e ativo
   
   const [currentStep, setCurrentStep] = useState(1);
   const [creditAnalysisCompleted, setCreditAnalysisCompleted] = useState(false);
   const [formData, setFormData] = useState({
-    // Informações básicas
+    // Basic information
     title: "",
     description: "",
     category: "",
@@ -84,7 +84,7 @@ const CreateLance = () => {
     marketAnalysis: "",
     competitiveAdvantage: "",
     
-    // Informações financeiras
+    // Financial information
     monthlyRevenue: "",
     expenses: "",
     profitMargin: "",
@@ -95,12 +95,12 @@ const CreateLance = () => {
     collateralValue: "",
     collateralDescription: "",
     
-    // Documentos e mídia
+    // Documents and media
     documents: [],
     images: [],
     videos: [],
     
-    // Configurações do lance
+    // Lance settings
     minInvestment: "",
     maxInvestment: "",
     earlyBirdBonus: "",
@@ -183,13 +183,13 @@ const CreateLance = () => {
 
   const handleCreditAnalysis = async () => {
     try {
-      // Dados para análise de crédito (baseados no formulário)
+      // Data for credit analysis (based on form)
       const creditData = {
         income: formData.monthlyRevenue ? parseFloat(formData.monthlyRevenue) : undefined,
-        employment_years: 3, // Valor padrão - pode ser adicionado ao formulário
+                  employment_years: 3, // Default value - can be added to form
         has_property: formData.collateralType === "imóvel",
-        has_debt: false, // Valor padrão - pode ser adicionado ao formulário
-        payment_defaults: 0, // Valor padrão - pode ser adicionado ao formulário
+                  has_debt: false, // Default value - can be added to form
+                  payment_defaults: 0, // Default value - can be added to form
       };
 
       const result = await creditAnalysis.analyzeCreditAsync(creditData);
@@ -198,13 +198,14 @@ const CreateLance = () => {
         setCreditAnalysisCompleted(true);
         
         let zkInfo = '';
-        if (result.zkProof?.zkVerifySubmission) {
-          const zk = result.zkProof.zkVerifySubmission;
-          zkInfo = `\n🔐 Prova ZK: ${zk.success ? '✅ Enviada para ZKVerify' : '❌ Erro'}`;
-          if (zk.transactionHash) {
-            zkInfo += `\n📄 TX Hash: ${zk.transactionHash}`;
-          }
-        }
+        // Note: ZK proof functionality is not implemented in MVP
+        // if (result.zkProof?.zkVerifySubmission) {
+        //   const zk = result.zkProof.zkVerifySubmission;
+        //   zkInfo = `\n🔐 Prova ZK: ${zk.success ? '✅ Enviada para ZKVerify' : '❌ Erro'}`;
+        //   if (zk.transactionHash) {
+        //     zkInfo += `\n📄 TX Hash: ${zk.transactionHash}`;
+        //   }
+        // }
         
         alert(`✅ Análise de crédito aprovada!\n\n📊 Score: ${result.analysis.score} (${result.analysis.category})\n🎯 Threshold: ${result.analysis.threshold}\n💰 Limite sugerido: R$ ${result.analysis.suggestedLimit.toLocaleString()}\n\n💡 ${result.analysis.message}${zkInfo}`);
       } else {
@@ -218,14 +219,14 @@ const CreateLance = () => {
 
   const handleSubmit = async () => {
     try {
-      // Validar campos obrigatórios
+      // Validate required fields
       if (!formData.title || !formData.description || !formData.category || 
           !formData.goal || !formData.interest || !formData.term) {
         alert("Por favor, preencha todos os campos obrigatórios.");
         return;
       }
 
-      // Verificar se a análise de crédito foi aprovada
+      // Check if credit analysis was approved
       if (!creditAnalysisCompleted) {
         alert("É necessário realizar e aprovar a análise de crédito antes de criar o lance.");
         return;
@@ -240,7 +241,7 @@ const CreateLance = () => {
         term_months: parseInt(formData.term),
         category: formData.category,
         risk_score: "medium", // default para MVP
-        deadline: new Date().toISOString(), // será calculado no hook
+                  deadline: new Date().toISOString(), // will be calculated in hook
       };
 
       // Criar o lance
@@ -463,7 +464,7 @@ const CreateLance = () => {
               </div>
             </div>
 
-            {/* Projeções Financeiras */}
+            {/* Financial Projections */}
             <div className="bg-card/20 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-foreground mb-4">
                 Projeções Financeiras
@@ -574,7 +575,7 @@ const CreateLance = () => {
       case 5:
         return (
           <div className="space-y-6">
-            {/* Seção de Análise de Crédito */}
+            {/* Credit Analysis Section */}
             <div className="bg-muted/50 rounded-lg p-6 border border-border/50">
               <div className="flex items-center gap-3 mb-4">
                 <Shield className="w-6 h-6 text-primary" />
@@ -639,13 +640,13 @@ const CreateLance = () => {
                       <div>
                         <span className="text-foreground/60">Score:</span>
                         <span className="ml-2 font-medium text-foreground">
-                          {creditAnalysis.data.score}
+                          {creditAnalysis.data.analysis.score}
                         </span>
                       </div>
                       <div>
                         <span className="text-foreground/60">Threshold:</span>
                         <span className="ml-2 font-medium text-foreground">
-                          {creditAnalysis.data.threshold}
+                          {creditAnalysis.data.analysis.threshold}
                         </span>
                       </div>
                     </div>
@@ -689,7 +690,7 @@ const CreateLance = () => {
               )}
             </div>
 
-            {/* Upload de Vídeos */}
+            {/* Video Upload */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Vídeos do Projeto
@@ -720,7 +721,7 @@ const CreateLance = () => {
               )}
             </div>
 
-            {/* Upload de Documentos */}
+            {/* Document Upload */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Documentos
@@ -812,7 +813,7 @@ const CreateLance = () => {
               </div>
             </div>
 
-            {/* Configurações Avançadas */}
+            {/* Advanced Settings */}
             <div className="bg-card/20 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-foreground mb-4">
                 Configurações Avançadas
@@ -884,7 +885,7 @@ const CreateLance = () => {
               </div>
             </div>
 
-            {/* Análise ZK Proof */}
+            {/* ZK Proof Analysis */}
             <div className="bg-primary/10 rounded-xl p-6 border border-primary/20">
               <div className="flex items-center gap-3 mb-4">
                 <Shield className="w-6 h-6 text-primary" />
@@ -906,7 +907,7 @@ const CreateLance = () => {
               </div>
             </div>
 
-            {/* Termos e Condições */}
+            {/* Terms and Conditions */}
             <div className="bg-muted/50 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-foreground mb-4">
                 Termos e Condições
@@ -1210,7 +1211,7 @@ const CreateLance = () => {
                   </Button>
                 ) : (
                   <>
-                    {/* Botão de Análise de Crédito */}
+                    {/* Credit Analysis Button */}
                     {!creditAnalysisCompleted && (
                       <Button 
                         onClick={handleCreditAnalysis}
@@ -1232,7 +1233,7 @@ const CreateLance = () => {
                       </Button>
                     )}
                     
-                    {/* Status da Análise */}
+                    {/* Analysis Status */}
                     {creditAnalysisCompleted && (
                       <Badge variant="default" className="mr-2 bg-green-500 text-white">
                         <CheckCircle className="w-3 h-3 mr-1" />
@@ -1240,7 +1241,7 @@ const CreateLance = () => {
                       </Badge>
                     )}
                     
-                    {/* Botão Criar Lance */}
+                    {/* Create Lance Button */}
                     <Button 
                       onClick={handleSubmit}
                       disabled={createLoanMutation.isPending || !creditAnalysisCompleted}

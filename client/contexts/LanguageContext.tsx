@@ -22,10 +22,10 @@ interface LanguageProviderProps {
   children: React.ReactNode;
 }
 
-// Traduções
+// Translations
 const translations = {
   pt: {
-    // Navegação
+    // Navigation
     'nav.dashboard': 'Dashboard',
     'nav.lances': 'Lances',
     'nav.wallet': 'Carteira',
@@ -38,7 +38,7 @@ const translations = {
     'nav.withdraw': 'Sacar',
     'nav.admin': 'Admin',
     
-    // Autenticação
+    // Authentication
     'auth.login': 'Login',
     'auth.register': 'Cadastrar',
     'auth.logout': 'Sair',
@@ -55,7 +55,7 @@ const translations = {
     'auth.or': 'ou',
     'auth.comingSoon': 'Em breve',
     
-    // Usuário
+    // User
     'user.welcome': 'Que bom ter você aqui',
     'user.howToUse': 'Como você gostaria de utilizar a ZK Finance?',
     'user.wantCredit': 'Quero um empréstimo para o meu negócio',
@@ -161,7 +161,7 @@ const translations = {
     'wallet.limited': 'Limitado',
     'wallet.copyAddress': 'Copiar endereço',
     
-    // Configurações
+    // Settings
     'settings.title': 'Configurações',
     'settings.profile': 'Perfil',
     'settings.security': 'Segurança',

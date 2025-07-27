@@ -1,15 +1,15 @@
 import { useAuth } from "../contexts/AuthContext";
 
-// Roles possíveis: "admin", "moderator", "user", "lender", "borrower", "visitor"
+// Possible roles: "admin", "moderator", "user", "lender", "borrower", "visitor"
 export function useRBAC() {
   const { roles } = useAuth();
 
-  // Helpers genéricos
+  // Generic helpers
   const isAdmin = roles.includes("admin");
   const isBorrower = roles.includes("borrower");
   const isLender = roles.includes("lender");
 
-  // Permissões genéricas
+  // Generic permissions
   const canViewLoans = isAdmin || isLender || isBorrower;
   const canEditLoan = isAdmin || isBorrower;
   const canCreateLoan = isAdmin || isBorrower;
@@ -24,6 +24,6 @@ export function useRBAC() {
     canEditLoan,
     canCreateLoan,
     canInvest,
-    // ...adicione mais conforme necessário
+    // ...add more as needed
   };
 } 

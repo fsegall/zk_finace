@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Carrega sessão inicial
+      // Load initial session
   useEffect(() => {
     const currentSession = supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  // Carrega perfil e roles quando usuário muda
+      // Load profile and roles when user changes
   useEffect(() => {
     if (!user) {
       setProfile(null);
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       .finally(() => setLoading(false));
   }, [user]);
 
-  // Métodos de login/logout
+      // Login/logout methods
   const loginWithGoogle = async () => {
     setError(null);
     const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });

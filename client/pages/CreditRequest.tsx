@@ -53,7 +53,7 @@ const CreditRequest = () => {
     state: "SP",
     cep: "01234-567",
     
-    // Dados do empréstimo
+    // Loan data
     loanAmount: "50000",
     purpose: "Expansão de negócio",
     term: "12",

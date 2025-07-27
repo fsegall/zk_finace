@@ -5,11 +5,11 @@ async function checkZKVerifyBalance() {
   try {
     console.log('💰 Verificando saldo da conta ZKVerify...');
     
-    // Endereço da conta ZKVerify (derivado pelo script)
+    // ZKVerify account address (derived by script)
     const zkverifyAddress = 'xpkjTc2VemmgauFnBaa1VEbgyjw4NThpsmQiyEtxLYFNu8f8s';
     console.log('👤 Endereço ZKVerify:', zkverifyAddress);
     
-    // Inicializa sessão
+    // Initialize session
     const session = await zkVerifySession.start()
       .Volta()
       .withAccount(process.env.ZKVERIFY_SEED_PHRASE || 'test seed phrase');
@@ -18,7 +18,7 @@ async function checkZKVerifyBalance() {
     const account = session.getAccount();
     console.log('👤 Endereço da sessão:', account?.address || 'N/A');
     
-    // Verifica se o endereço da sessão corresponde ao esperado
+    // Check if session address matches expected
     if (account?.address === zkverifyAddress) {
       console.log('✅ Endereço da sessão corresponde ao esperado!');
     } else {
@@ -27,7 +27,7 @@ async function checkZKVerifyBalance() {
       console.log('   Atual:', account?.address);
     }
     
-    // Tenta obter informações da conta
+    // Try to get account information
     try {
       const accountInfo = await session.getAccountInfo();
       console.log('📊 Informações da conta:', accountInfo);

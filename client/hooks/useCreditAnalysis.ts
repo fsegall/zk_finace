@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 interface CreditAnalysisRequest {
   user_id?: string;
   email?: string;
-  // Dados opcionais para análise mais precisa
+  // Optional data for more accurate analysis
   income?: number;
   employment_years?: number;
   has_property?: boolean;
@@ -123,7 +123,7 @@ export const useCreditAnalysis = () => {
   };
 };
 
-// Hook para análise de crédito com dados mock (para desenvolvimento/teste)
+  // Hook for credit analysis with mock data (for development/testing)
 export const useMockCreditAnalysis = () => {
   const mockAnalysisMutation = useMutation<
     CreditAnalysisResponse,
@@ -134,7 +134,7 @@ export const useMockCreditAnalysis = () => {
       // Simular delay de rede
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // Simular cálculo de score baseado nos dados
+      // Simulate score calculation based on data
       let score = 500; // Score base
       
       if (requestData.income && requestData.income > 5000) score += 100;
@@ -149,7 +149,7 @@ export const useMockCreditAnalysis = () => {
       const threshold = 650;
       const passed = score >= threshold;
 
-      // Retornar payload completo compatível com o novo formato
+      // Return complete payload compatible with new format
       return {
         requestId: `mock-${Date.now()}`,
         timestamp: new Date().toISOString(),

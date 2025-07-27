@@ -12,7 +12,7 @@ const detectWalletType = (): WalletType => {
     return 'MetaMask';
   }
   
-  // SubWallet detection (pode variar dependendo da implementação)
+      // SubWallet detection (may vary depending on implementation)
   if (window.ethereum?.isSubWallet) {
     return 'SubWallet';
   }
@@ -66,7 +66,7 @@ export const useWallet = () => {
         return false;
       }
 
-      // Tratamento específico por tipo de carteira
+              // Specific treatment by wallet type
       switch (walletType) {
         case 'MetaMask':
           // Delay para evitar erro "Already processing"
@@ -78,7 +78,7 @@ export const useWallet = () => {
               params: [{ chainId: `0x${targetChainId.toString(16)}` }],
             });
           } catch (switchError: any) {
-            // Se a rede não existe, tenta adicionar
+            // If network doesn't exist, try to add it
             if (switchError.code === 4902) {
               const networkParams = targetChainId === 11155111 ? {
                 chainId: '0xaa36a7',
@@ -123,7 +123,7 @@ export const useWallet = () => {
     } catch (err: any) {
       console.error('Network switch error:', err);
       
-      // Tratamento de erros específicos
+              // Specific error handling
       if (err.code === -32002) {
         setError('Carteira está processando outra solicitação. Aguarde um momento e tente novamente.');
       } else if (err.code === 4001) {

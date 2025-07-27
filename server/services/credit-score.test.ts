@@ -41,7 +41,7 @@ describe('Credit Score Service', () => {
 
       const result = calculateCreditScore(data);
       
-      expect(result.score).toBe(300); // Score mínimo
+      expect(result.score).toBe(300); // Minimum score
       expect(result.passed).toBe(false);
     });
   });
@@ -141,7 +141,7 @@ describe('Credit Score Service', () => {
 
       const result = await analyzeCredit(data, 'test-zk');
       
-      // A prova ZK pode ou não estar presente (depende da disponibilidade do módulo)
+      // ZK proof may or may not be present (depends on module availability)
       expect(result.analysis).toBeDefined();
       expect(result.analysis.score).toBeGreaterThan(0);
       

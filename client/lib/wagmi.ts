@@ -1,10 +1,10 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { sepolia } from 'wagmi/chains';
 
-// Configuração para Sepolia (EVM) - Compatível com MetaMask e SubWallet
+// Configuration for Sepolia (EVM) - Compatible with MetaMask and SubWallet
 const sepoliaConfig = {
   ...sepolia,
-  // Configurações específicas para melhor compatibilidade
+  // Specific settings for better compatibility
   contracts: {
     multicall3: {
       address: '0xca11bde05977b3631167028862be2a173976ca11',
@@ -13,7 +13,7 @@ const sepoliaConfig = {
   },
 } as const;
 
-// Configuração para Volta (Polkadot/ZK) - Otimizada para SubWallet
+// Configuration for Volta (Polkadot/ZK) - Optimized for SubWallet
 const volta = {
   id: 73799,
   name: 'Volta',
@@ -31,7 +31,7 @@ const volta = {
     etherscan: { name: 'Volta Explorer', url: 'https://volta-explorer.zkverify.io' },
     default: { name: 'Volta Explorer', url: 'https://volta-explorer.zkverify.io' },
   },
-  // Configuração específica para Polkadot/Substrate
+  // Specific configuration for Polkadot/Substrate
   contracts: {
     multicall3: {
       address: '0xca11bde05977b3631167028862be2a173976ca11',
@@ -47,7 +47,7 @@ export const config = getDefaultConfig({
   ssr: true,
 });
 
-// Configurações específicas por tipo de rede
+// Specific settings by network type
 export const networkConfig = {
   evm: {
     sepolia: {

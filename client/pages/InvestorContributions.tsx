@@ -531,7 +531,7 @@ const InvestorContributions = () => {
               ))}
             </div>
 
-            {/* Adimplência Banner */}
+            {/* Compliance Banner */}
             <div className="mt-6 lg:mt-8 p-4 lg:p-6 bg-success/10 border border-success/20 rounded-xl">
               <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3">
                 <CheckCircle className="w-4 lg:w-6 h-4 lg:h-6 text-success" />

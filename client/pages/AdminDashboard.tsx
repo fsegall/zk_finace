@@ -52,7 +52,7 @@ const AdminDashboard = () => {
             <Settings className="w-4 h-4" />
             Painel Admin
           </Link>
-          {/* Futuras seções: Usuários, Empréstimos, Investimentos, Configurações... */}
+          {/* Future sections: Users, Loans, Investments, Settings... */}
         </nav>
       </aside>
 
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
           ))}
         </div>
 
-        {/* Placeholder para futuras seções administrativas */}
+        {/* Placeholder for future administrative sections */}
         <div className="bg-card/20 rounded-xl p-6 lg:p-8 text-center text-muted-foreground">
           <h2 className="text-lg lg:text-xl font-semibold mb-2 text-foreground">Bem-vindo ao Painel Administrativo</h2>
           <p className="text-sm lg:text-base">Aqui você poderá gerenciar usuários, empréstimos, investimentos e configurações do sistema.</p>

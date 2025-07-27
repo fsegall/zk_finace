@@ -13,7 +13,7 @@ async function main() {
     const vkey = JSON.parse(fs.readFileSync(vkeyPath, 'utf-8'));
     const formattedVkey = formatVerificationKeyForZKVerify(vkey);
 
-    // Inicializa sessão
+    // Initialize session
     const session = await zkVerifySession.start()
       .Volta()
       .withAccount(process.env.ZKVERIFY_SEED_PHRASE || 'test seed phrase');

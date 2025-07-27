@@ -22,10 +22,10 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('dark'); // Tema escuro como padrão
+  const [theme, setTheme] = useState<Theme>('dark'); // Dark theme as default
 
   useEffect(() => {
-    // Aplicar tema ao documento
+    // Apply theme to document
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-// Configurações
+// Configuration
 const VOLTA_RPC = 'https://volta-rpc.zkverify.io';
 const VOLTA_API = 'https://api.volta.zksync.dev';
 const ADDRESS = 'xph7MXyuL9B3WYLPBVz2S7wrs1mCzcBDXzMyv4qPMQcYJut7S';
@@ -13,7 +13,7 @@ async function testZKVerifyRPC() {
   console.log('==========================================\n');
 
   try {
-    // 1. Teste de conectividade básica
+    // 1. Basic connectivity test
     console.log('1️⃣ Testando conectividade com RPC...');
     try {
       const healthResponse = await axios.post(VOLTA_RPC, {
@@ -31,7 +31,7 @@ async function testZKVerifyRPC() {
       console.log('❌ Erro RPC:', error.message);
     }
 
-    // 2. Teste de informações da rede
+    // 2. Network information test
     console.log('\n2️⃣ Obtendo informações da rede...');
     try {
       const chainResponse = await axios.post(VOLTA_RPC, {
@@ -49,7 +49,7 @@ async function testZKVerifyRPC() {
       console.log('❌ Erro ao obter info da rede:', error.message);
     }
 
-    // 3. Teste de versão do node
+    // 3. Node version test
     console.log('\n3️⃣ Obtendo versão do node...');
     try {
       const versionResponse = await axios.post(VOLTA_RPC, {
@@ -67,7 +67,7 @@ async function testZKVerifyRPC() {
       console.log('❌ Erro ao obter versão:', error.message);
     }
 
-    // 4. Teste de informações do endereço
+    // 4. Address information test
     console.log('\n4️⃣ Obtendo informações do endereço...');
     try {
       const accountResponse = await axios.post(VOLTA_RPC, {
@@ -100,7 +100,7 @@ async function testZKVerifyRPC() {
       
       console.log('✅ Nonce atual:', balanceResponse.data.result);
       
-      // Tentar obter informações da conta
+      // Try to get account information
       const accountResponse = await axios.post(VOLTA_RPC, {
         jsonrpc: '2.0',
         method: 'state_getStorage',
@@ -120,7 +120,7 @@ async function testZKVerifyRPC() {
       console.log('❌ Erro ao consultar saldo on-chain:', error.message);
     }
 
-    // 6. Teste de informações de bloco
+    // 6. Block information test
     console.log('\n6️⃣ Obtendo informações do último bloco...');
     try {
       const headerResponse = await axios.post(VOLTA_RPC, {
@@ -141,7 +141,7 @@ async function testZKVerifyRPC() {
       console.log('❌ Erro ao obter header:', error.message);
     }
 
-    // 7. Teste de eventos de verificação (se disponível)
+    // 7. Verification events test (if available)
     console.log('\n7️⃣ Testando consulta de eventos...');
     try {
       const eventsResponse = await axios.post(VOLTA_RPC, {
@@ -159,7 +159,7 @@ async function testZKVerifyRPC() {
       console.log('❌ Erro ao consultar storage:', error.message);
     }
 
-    // 8. Teste de endpoints específicos da ZKVerify (se existirem)
+    // 8. ZKVerify specific endpoints test (if they exist)
     console.log('\n8️⃣ Testando endpoints específicos da ZKVerify...');
     console.log('⏭️ Pulando endpoints externos (podem estar indisponíveis)...');
 

@@ -34,7 +34,7 @@ export function useMyLoans() {
     queryKey: ["myLoans", user?.id],
     enabled: !!user,
     queryFn: async (): Promise<LoanWithDetails[]> => {
-      // Buscar empréstimos do usuário
+              // Fetch user loans
       const { data: loans, error: loansError } = await supabase
         .from("loans")
         .select("*")
@@ -44,10 +44,10 @@ export function useMyLoans() {
       if (loansError) throw loansError;
       if (!loans) return [];
 
-      // Para cada empréstimo, buscar investimentos e dados do criador
+              // For each loan, fetch investments and creator data
       const loansWithDetails = await Promise.all(
         loans.map(async (loan) => {
-          // Buscar investimentos para este empréstimo
+                      // Fetch investments for this loan
           const { data: investments, error: investmentsError } = await supabase
             .from("investments")
             .select("amount, investor_id")

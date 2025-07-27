@@ -162,7 +162,7 @@ const BorrowerLances = () => {
     ...mockLances
   ];
 
-  // Converter lance real para formato compatível com o mock
+          // Convert real lance to format compatible with mock
   const formatRealLoanForDisplay = (loan: LoanWithDetails) => ({
     id: loan.id,
     title: loan.title,
@@ -181,13 +181,13 @@ const BorrowerLances = () => {
     daysLeft: loan.daysLeft,
   });
 
-  // Preparar lista final de lances para exibição
+        // Prepare final list of lances for display
   const displayLances: DisplayLance[] = allLances.map((lance, index) => {
     if (index === 0 && realLoans && realLoans.length > 0) {
-      // Primeiro lance é real
+              // First lance is real
       return formatRealLoanForDisplay(lance as LoanWithDetails);
     } else {
-      // Outros lances são mock
+              // Other lances are mock
       return lance as DisplayLance;
     }
   });

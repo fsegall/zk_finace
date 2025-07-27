@@ -16,7 +16,7 @@ const Login = () => {
   const { loginWithGoogle, loginWithPassword, user, loading, error } = useAuth();
   const [formLoading, setFormLoading] = useState(false);
 
-  // Redireciona se já estiver logado
+  // Redirect if already logged in
   if (user && !loading) {
     navigate("/user-selection");
   }

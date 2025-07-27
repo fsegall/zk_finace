@@ -87,7 +87,7 @@ const InvestorWithdraw = () => {
     },
   ];
 
-  const availableBalance = 15000; // Simulando saldo disponível
+  const availableBalance = 15000; // Simulating available balance
 
   const handleWithdraw = () => {
     if (amount && parseFloat(amount) > 0 && parseFloat(amount) <= availableBalance) {

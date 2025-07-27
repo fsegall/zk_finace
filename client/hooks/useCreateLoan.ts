@@ -40,7 +40,7 @@ export function useCreateLoan() {
           term_months: loanData.term_months,
           category: loanData.category,
           risk_score: loanData.risk_score || "medium", // default
-          status: "pending", // sempre começa como pending
+          status: "pending", // always starts as pending
           deadline: deadline.toISOString(),
         })
         .select()
@@ -54,7 +54,7 @@ export function useCreateLoan() {
       return data;
     },
     onSuccess: (data) => {
-      // Invalidar cache dos empréstimos do usuário
+              // Invalidate user loans cache
       queryClient.invalidateQueries({ queryKey: ["myLoans", user?.id] });
       
       // Redirecionar para a lista de lances
@@ -65,7 +65,7 @@ export function useCreateLoan() {
     },
     onError: (error) => {
       console.error("Erro ao criar lance:", error);
-      // Aqui você pode implementar um toast de erro
+              // Here you can implement an error toast
     },
   });
 } 

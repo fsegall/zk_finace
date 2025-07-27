@@ -1,22 +1,22 @@
-// Recebe os dados do usuário do nó anterior
+// Receives user data from the previous node
 let userData = $input.item.json[0];
 
-// Verificação de segurança: se userData for undefined, cria um objeto vazio
+// Security check: if userData is undefined, create an empty object
 if (!userData) {
   userData = {};
   console.log('Aviso: Dados do usuário não encontrados. Usando valores padrão.');
 }
 
-// Implementação do algoritmo de cálculo de score com verificações de segurança
+// Implementation of score calculation algorithm with security checks
 function calculateCreditScore(userData) {
   let score = 500; // Score base
   
-  // Fatores que podem aumentar o score (com verificações de segurança)
+  // Factors that can increase the score (with security checks)
   if (userData.income && userData.income > 5000) score += 100;
   if (userData.employment_years && userData.employment_years > 2) score += 50;
   if (userData.has_property === true) score += 70;
   
-  // Fatores que podem diminuir o score (com verificações de segurança)
+  // Factors that can decrease the score (with security checks)
   if (userData.has_debt === true) score -= 80;
   if (userData.payment_defaults && userData.payment_defaults > 0) score -= 100;
   
@@ -24,7 +24,7 @@ function calculateCreditScore(userData) {
   return Math.max(300, Math.min(850, score));
 }
 
-// Definir o threshold (limite mínimo para aprovação)
+  // Define the threshold (minimum limit for approval)
 const threshold = 650;
 
 // Calcular o score
@@ -33,7 +33,7 @@ const score = calculateCreditScore(userData);
 // Verificar se passou no threshold
 const passed = score >= threshold;
 
-// Registrar informações para debug
+  // Log information for debug
 console.log('Dados do usuário:', JSON.stringify(userData));
 console.log('Score calculado:', score);
 console.log('Threshold:', threshold);

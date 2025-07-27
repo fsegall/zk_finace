@@ -34,6 +34,8 @@ import {
   Target,
   ArrowUpRight,
   ArrowDownRight,
+  Trophy,
+  BarChart3,
 } from "lucide-react";
 
 const InvestorContributions = () => {
@@ -214,14 +216,14 @@ const InvestorContributions = () => {
               to="/investor/ranking"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
             >
-              <Star className="w-4 h-4" />
+              <Trophy className="w-4 h-4" />
               Ranking
             </Link>
             <Link
               to="/investor/contributions"
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors bg-sidebar-accent text-sidebar-accent-foreground`}
             >
-              <TrendingUp className="w-4 h-4 text-primary" />
+              <BarChart3 className="w-4 h-4 text-primary" />
               Lances Contribuídos
             </Link>
             <Link

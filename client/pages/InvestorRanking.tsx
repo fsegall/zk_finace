@@ -11,6 +11,8 @@ import {
   Settings,
   HelpCircle,
   Filter,
+  Trophy,
+  BarChart3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,8 +41,8 @@ const InvestorRanking = () => {
 
   const sidebarItems = [
     { icon: Home, label: "Dashboard", active: false },
-    { icon: Star, label: "Ranking", active: true },
-    { icon: TrendingUp, label: "Lances Contribuídos", active: false },
+    { icon: Trophy, label: "Ranking", active: true },
+    { icon: BarChart3, label: "Lances Contribuídos", active: false },
     { icon: Settings, label: "Configurações", active: false },
   ];
 

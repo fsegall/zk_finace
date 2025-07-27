@@ -6,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Logo } from "../components/Logo";
+import DevLoginInstructions from "../components/DevLoginInstructions";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,6 +55,7 @@ const Login = () => {
 
         {/* Main Content */}
         <div className="space-y-6 sm:space-y-8">
+          <DevLoginInstructions />
           <h1 className="text-h2 text-foreground">
             {t('auth.login')}
           </h1>

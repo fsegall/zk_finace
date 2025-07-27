@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Logo } from "../components/Logo";
+import DevLoginInstructions from "../components/DevLoginInstructions";
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -55,6 +56,7 @@ const Register = () => {
 
         {/* Main Content */}
         <div className="space-y-6 sm:space-y-8">
+          <DevLoginInstructions />
           <h1 className="text-h2 font-semibold text-foreground">
             {t('auth.register')}
           </h1>

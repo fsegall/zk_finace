@@ -501,7 +501,7 @@ Developed by **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato**, *
 ### 🌐 **Application:**
 - **Web App**: https://zkfinance.netlify.app
 - **Landing Page**: https://zkfinance.framer.website
-- **Main Domain**: https://zkfinance.com.br
+- **Main Domain**: https://zkfinance.com.br - To be configured
 
 ### 🔗 **Blockchain & Smart Contracts:**
 - **Etherscan Sepolia**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13

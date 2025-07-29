@@ -30,6 +30,7 @@ import InvestorInvestments from "./pages/InvestorInvestments";
 import InvestmentDetails from "./pages/InvestmentDetails";
 import InvestorRanking from "./pages/InvestorRanking";
 import KYCVerification from "./pages/KYCVerification";
+import ZKProofTest from "./pages/ZKProofTest";
 import CollateralRegistration from "./pages/CollateralRegistration";
 import Wallet from "./pages/Wallet";
 import Settings from "./pages/Settings";
@@ -58,6 +59,7 @@ function App() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/user-selection" element={<UserSelection />} />
                         <Route path="/kyc-verification" element={<KYCVerification />} />
+                        <Route path="/zk-proof-test" element={<ZKProofTest />} />
                         <Route path="/borrower/dashboard" element={<BorrowerDashboard />} />
                         <Route path="/borrower/lances" element={<BorrowerLances />} />
                         <Route path="/borrower/lance/:id" element={<LanceDetails />} />

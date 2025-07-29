@@ -12,8 +12,12 @@ console.log('🔑 ZKVERIFY_SEED_PHRASE:', process.env.ZKVERIFY_SEED_PHRASE ? 'Co
 
 const app = express();
 
-app.use(cors());
-app.use(express.json()); // To accept JSON in the body
+// Configurar CORS apenas para rotas específicas
+app.use('/api', cors());
+app.use('/health', cors());
+
+// Configurar JSON parsing apenas para rotas específicas
+app.use('/api', express.json());
 
 // Credit analysis routes (new local implementation)
 app.use('/api', creditAnalysisRouter);

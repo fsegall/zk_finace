@@ -152,6 +152,16 @@ const Login = () => {
             >
               {formLoading || loading ? t('auth.entering') : t('auth.login')}
             </Button>
+            
+            <Link to="/zk-proof-test">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+              >
+                🔐 ZK Proof Client-Side Test
+              </Button>
+            </Link>
           </form>
 
           {error && (

@@ -1,10 +1,122 @@
 # 🤝 ZKFinance — Decentralized Financing Platform with ZK Proofs
 
-This project is a modern platform that connects entrepreneurs to investors, using smart contracts, ZK proofs for credit analysis, and eligibility verification with privacy preservation. Currently under active development with focus on Supabase integration and core functionalities.
+## 🔐 **FUNDAMENTAL CONCEPT: ZK Proofs vs Business Logic**
 
-## 🚀 **COMPLETE LOAN FLOW - TOTAL INTEGRATION**
+### 🎯 **What is ZK Proof (Zero-Knowledge Proof)?**
 
-### 🔄 **Implemented End-to-End Architecture:**
+**ZK Proof** is a cryptographic mathematical proof that allows verifying a statement without revealing sensitive information. In our case:
+
+#### ✅ **What the ZK Proof Does:**
+```circom
+// Circom Circuit - ONLY mathematics
+template CreditScoreCheck() {
+    signal input score;      // PRIVATE (not revealed)
+    signal input threshold;  // PUBLIC (revealed)
+    signal output passed;    // PUBLIC (0 or 1)
+
+    component isGreaterEq = GreaterEqThan(16);
+    isGreaterEq.in[0] <== score;      // score ≥ threshold?
+    isGreaterEq.in[1] <== threshold;
+    passed <== isGreaterEq.out;       // result: 0 or 1
+}
+```
+
+**The ZK proof guarantees only:**
+- ✅ **Privacy**: The real score is never revealed
+- ✅ **Verification**: Mathematically proves that `score ≥ threshold`
+- ✅ **Result**: Only `true` (1) or `false` (0)
+
+#### ❌ **What is NOT ZK Proof:**
+- Risk analysis (Excellent, Good, Fair, Poor)
+- Score breakdown (income bonus, employment bonus)
+- Approval recommendations
+- **All of this is just business logic for UI**
+
+### 🔍 **How to Distinguish:**
+
+| **ZK Proof (Mathematics)** | **Business Logic (UI)** |
+|---------------------------|----------------------------|
+| `score ≥ threshold` | Risk levels, breakdown, recommendations |
+| Circom Circuit | Credit analysis for display |
+| Privacy guaranteed | Only for user interface |
+| Blockchain verification | Local frontend processing |
+
+### 🎯 **Why This Matters:**
+
+1. **ZK Proof**: Ensures privacy and mathematical verification
+2. **Business Logic**: Improves user experience
+3. **Separation**: ZK Proof is immutable, business logic is flexible
+
+---
+
+This project is a modern platform that connects entrepreneurs to investors, using smart contracts, ZK proofs for credit analysis, and eligibility verification with privacy preservation. Currently in active development with focus on Supabase integration and core functionalities.
+
+## 🔒 **PRIVACY AND LOCAL ARCHITECTURE - MANDATORY REQUIREMENT MET**
+
+### ✅ **Commitment to Data Privacy:**
+**NO EXTERNAL CALLS ARE MADE WITH USER DATA** - All sensitive data remains 100% local.
+
+### 🏗️ **Implemented Local Architecture:**
+- **Credit Algorithm**: Executed locally (no external APIs)
+- **ZK Proofs**: Generated locally with SnarkJS
+- **ZK Verification**: Only the proof (no data) is sent to ZKVerify
+- **Smart Contracts**: Local and testnet deployment (no sensitive data)
+
+### 📁 **`server/` Folder - Organization Purpose:**
+The `server/` folder contains API endpoints **ONLY FOR MODULAR ORGANIZATION** of the project. **WE DO NOT INTEND TO EXPOSE THE SERVER AND FRONTEND IN SEPARATE INSTANCES** that communicate over the internet. Everything runs locally to preserve privacy.
+
+### 🔐 **Privacy Flow:**
+```
+User Data → Local Algorithm → Local ZK Proof → ZKVerify (proof only) → Smart Contract
+     🔒              🔒                🔒                🔒                      🔒
+   ALWAYS LOCAL    ALWAYS LOCAL     ALWAYS LOCAL    PROOF ONLY           ALWAYS LOCAL
+```
+
+## 🚀 **NEW 100% CLIENT-SIDE ZK IMPLEMENTATION - HIGHLIGHT!**
+
+### 🏆 **Historic Achievement: First 100% Client-Side ZK Transaction**
+
+**Status**: ✅ **TOTAL SUCCESS** - Real transaction confirmed on ZKVerify blockchain!
+
+#### 📊 **Transaction Completed:**
+- **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
+- **Status**: ✅ **Success** (Finalized)
+- **Block**: 1719350
+- **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
+
+#### 🎯 **What was achieved:**
+- ✅ **ZK proof generated in browser** (no server)
+- ✅ **Transaction sent directly to blockchain**
+- ✅ **Perfect Subwallet integration**
+- ✅ **Automatic address conversion** (Polkadot → Volta)
+- ✅ **100% decentralized architecture**
+
+#### 📁 **Implementation Location:**
+```
+client/zk-proof/
+├── services/embeddedZKVerifyService.ts    # Main ZK service
+├── hooks/useEmbeddedZKProof.ts           # React hook
+├── components/EmbeddedZKProofDemo.tsx    # Demo interface
+├── assets/                               # Embedded ZK artifacts
+│   ├── wasm-base64.txt                   # WASM circuit
+│   ├── zkey-base64.txt                   # Proof key
+│   └── vkey-base64.txt                   # Verification key
+└── README_ZKPROOF_EN.md                  # English documentation
+```
+
+#### 🚀 **How to test:**
+```bash
+cd client
+npm install
+npm run dev
+# Access: http://localhost:8080/zk-proof-test
+```
+
+---
+
+## 🔄 **COMPLETE LOAN FLOW - TOTAL INTEGRATION**
+
+### 🎯 **Implemented End-to-End Architecture:**
 
 ```
 ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
@@ -26,14 +138,14 @@ This project is a modern platform that connects entrepreneurs to investors, usin
 2. **📝 Frontend** → Local API (credit analysis)
 3. **🔐 API** → zk-credit (ZK proof generation)
 4. **🔍 zk-credit** → ZKVerify (blockchain verification)
-5. **📋 ZKVerify** → Smart Contract (loan creation)
+5. **📋 ZKVerify** → Smart Contract (validated loan creation)
 6. **💾 Smart Contract** → Supabase (data persistence)
-7. **🔄 Supabase** → Frontend (interface update)
+7. **🔄 Supabase** → Frontend (real-time interface update)
 
 ### ✅ **Integration Status:**
 
-- **🔐 ZKVerify**: ✅ RPC connectivity (13+ peers), verified proofs
-- **📝 Smart Contract**: ✅ Local and Sepolia deploy, tests passing
+- **🔐 ZKVerify**: ✅ RPC connectivity (13+ peers), proofs verified
+- **📝 Smart Contract**: ✅ Local and Sepolia deployment, tests passing
 - **🏗️ Role System**: ✅ DDD implemented, RBAC functional
 - **🔗 Frontend-Contract Bridge**: ✅ Viem + TypeScript integrated
 - **💾 Persistence**: ✅ Supabase ↔ Smart Contract synchronized
@@ -44,7 +156,7 @@ This project is a modern platform that connects entrepreneurs to investors, usin
 # ZKVerify connectivity test
 node zk-credit/scripts/test-zkverify-rpc.js
 
-# ZK proofs test
+# ZK proof test
 node zk-credit/scripts/test-zkverify-proof.js
 
 # Complete integration test
@@ -68,11 +180,11 @@ zkfinance/
 │   ├── Dependencies: Express, CORS, TypeScript, Vite
 │   └── Scripts: dev, build:server, start, test, install:all
 ├── client/
-│   └── package.json      ← Frontend React + UI (isolated for Netlify)
+│   └── package.json      ← React Frontend + UI (isolated for Netlify)
 │       ├── Dependencies: React, Viem, Supabase, shadcn/ui
 │       └── Scripts: dev, build, preview
 ├── zk-credit/
-│   └── package.json      ← ZK-specific module
+│   └── package.json      ← Specific ZK module
 │       ├── Dependencies: Circom, SnarkJS, ZKVerifyJS
 │       └── Scripts: setup, compile, generate, verify
 └── foundry/
@@ -82,18 +194,19 @@ zkfinance/
 ### ✅ **Architecture Benefits:**
 - **Clear separation**: Each module has its specific dependencies
 - **No duplication**: Dependencies organized by need
-- **Maintainability**: Easy updates and management
+- **Maintainability**: Easy update and management
 - **Scalability**: New modules can be added independently
-- **Isolated deploy**: Frontend can be deployed separately (Netlify)
+- **Isolated deployment**: Frontend can be deployed separately (Netlify)
 - **Optimized build**: No timeout due to heavy dependencies
 
 | Module             | Status | Description |
-|--------------------|--------|-------------|
+|--------------------|--------|-----------|
 | [`client/`](client/README_CLIENT.md) | ✅ **Active** | React application with Supabase authentication, RBAC and modern UI. **Viem + Smart Contract integration implemented**. |
+| [`client/zk-proof/`](client/zk-proof/README_ZKPROOF_EN.md) | ✅ **NEW!** | **100% client-side ZK implementation** - First real transaction confirmed on blockchain! |
 | [`supabase/`](supabase/README_SUPABASE.md) | ✅ **Active** | Backend with PostgreSQL, Web3 authentication, RLS and edge functions. **DDD role system implemented**. |
 | [`foundry/`](foundry/README.md) | ✅ **Implemented** | Smart contracts for loans. **LoanManager.sol deployed and tested**. |
 | [`zk-credit/`](zk-credit/README.md) | ✅ **Implemented** | Circom circuits and ZK proofs. **ZKVerify integration working**. |
-| [`credit-agent/`](credit-agent/README-credit-agent.md) | ✅ **Implemented** | Local credit analysis agent. **Internal algorithm working**. |
+| [`credit-agent/`](credit-agent/README-credit-agent.md) | ✅ **Implemented** | **Local credit analysis algorithm** (N8N replaced for privacy). **Internal algorithm working**. |
 
 ---
 
@@ -107,7 +220,7 @@ zkfinance/
 
 ### ✅ Modern Interface
 - **Design System** with shadcn/ui and Tailwind CSS
-- **Dark/Light Theme** with automatic toggle
+- **Dark/Light theme** with automatic toggle
 - **Complete responsiveness** for mobile and desktop
 - **Optimized contrasts** for accessibility
 
@@ -126,20 +239,22 @@ zkfinance/
 - **Organized and versioned migrations**
 
 ### ✅ Specialized Modules
-- **credit-agent**: N8N agent for automated credit analysis
+- **credit-agent**: **Local algorithm** for automated credit analysis (N8N replaced for privacy)
 - **zk-credit**: Circom circuits and ZK proofs for privacy preservation
-- **foundry**: Smart contracts for loans and peer-to-peer financing
+- **foundry**: Smart contracts for peer-to-peer loans and financing
+- **client/zk-proof**: **NEW 100% client-side ZK implementation** with real transaction confirmed!
 
 ### ✅ ZKVerify Integration
 - **RPC connectivity tests** with ZKVerify Volta network
 - **Verification key registration** on blockchain
-- **ZK proof submission and verification** in real-time
+- **ZK proof submission and verification** in real time
 - **Test scripts** for demonstration and validation
+- **NEW: 100% client-side implementation** with real transaction confirmed!
 
 ### ✅ Smart Contract and Blockchain Integration
-- **LoanManager Contract** deployed locally and on Sepolia
-- **Viem Integration** for smart contract interaction
-- **Frontend-Contract Bridge** with TypeScript
+- **LoanManager contract** deployed locally and on Sepolia
+- **Viem integration** for smart contract interaction
+- **Frontend-Contract bridge** with TypeScript
 - **Supabase ↔ Smart Contract synchronization**
 - **useLoanIntegration hook** for React
 
@@ -159,13 +274,13 @@ zkfinance/
 2. **🏷️ Role Selection**: Choose between Borrower, Investor or Admin
 3. **📊 Personalized Dashboard**: Interface adapted to user role
 4. **📝 Loan Creation**: Borrower submits credit data
-5. **🔐 Credit Analysis**: credit-agent calculates score locally
+5. **🔐 Credit Analysis**: **local algorithm** calculates score (N8N replaced for privacy)
 6. **🔒 ZK Proof Generation**: zk-credit generates proof that score ≥ threshold
 7. **🔍 ZKVerify Verification**: Proof validated on ZKVerify Volta blockchain
 8. **📋 Smart Contract**: foundry registers validated loan on blockchain
 9. **💾 Persistence**: Data synchronized with Supabase via Viem
-10. **💰 Financing**: Investors can fund via smart contract
-11. **🔄 Update**: Interface updated in real-time
+10. **💰 Financing**: Investors can finance via smart contract
+11. **🔄 Update**: Interface updated in real time
 
 ### ✅ **Integration Status:**
 - **Frontend ↔ API**: ✅ React + Node.js integrated
@@ -173,11 +288,12 @@ zkfinance/
 - **zk-credit ↔ ZKVerify**: ✅ Blockchain verification active
 - **ZKVerify ↔ Smart Contract**: ✅ Validated loan creation
 - **Smart Contract ↔ Supabase**: ✅ Bidirectional persistence
-- **Supabase ↔ Frontend**: ✅ Real-time interface update
+- **Supabase ↔ Frontend**: ✅ Real-time update
+- **NEW: Client-side ZK**: ✅ **Real transaction confirmed on blockchain!**
 
 ### 🏆 **CONFIRMED SUCCESSES:**
 
-#### 🚀 **Smart Contract LoanManager - Sepolia Deploy:**
+#### 🚀 **LoanManager Smart Contract - Sepolia Deployment:**
 - **✅ Status**: Successfully deployed and verified
 - **📅 Date**: July 25, 2025 at 23:05:53 (UTC-3)
 - **🔗 Etherscan**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
@@ -192,6 +308,15 @@ zkfinance/
 - **📊 Score**: 805 (threshold: 705) - **VALID PROOF!**
 - **💰 Fee**: 0.02393157714 tVFY
 - **🔧 Network**: ZKVerify Volta Testnet operational
+
+#### 🏆 **NEW: 100% Client-Side ZK Implementation - HISTORIC SUCCESS:**
+- **✅ Status**: **FIRST 100% CLIENT-SIDE ZK TRANSACTION CONFIRMED!**
+- **📅 Date**: July 29, 2025 at 01:02:12 (UTC)
+- **🔗 Transaction**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
+- **🔗 Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
+- **📊 Block**: 1719350
+- **💰 Fee**: 0.02393157714 tVFY
+- **🎯 Achievement**: ZK proof generated in browser and sent directly to blockchain!
 
 ## 🧪 ZKVerify Integration Tests
 
@@ -216,6 +341,7 @@ bash zk-credit/scripts/setup.sh
 - ✅ **Proof Submission**: **PROOF SUBMITTED AND FINALIZED SUCCESSFULLY!**
 - ✅ **Volta Network**: Operational and accessible
 - ✅ **Confirmed Transaction**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
+- ✅ **NEW: Client-side ZK**: **Real transaction confirmed on blockchain!**
 
 ## 📚 **Complete Documentation**
 
@@ -225,11 +351,12 @@ bash zk-credit/scripts/setup.sh
 - **[zk-credit/README.md](zk-credit/README.md)**: ZKVerify test documentation
 - **[foundry/README.md](foundry/README.md)**: Smart contract documentation
 - **[foundry/DEPLOY.md](foundry/DEPLOY.md)**: Complete deployment guide
+- **[client/zk-proof/README_ZKPROOF_EN.md](client/zk-proof/README_ZKPROOF_EN.md)**: **NEW 100% client-side ZK implementation**
 
 ### 🧪 **Test Scripts:**
 - **`test_integration_complete.js`**: End-to-end integration test
 - **`zk-credit/scripts/test-zkverify-rpc.js`**: Connectivity test
-- **`zk-credit/scripts/test-zkverify-proof.js`**: ZK proofs test
+- **`zk-credit/scripts/test-zkverify-proof.js`**: ZK proof test
 - **`foundry/test/LoanManager.t.sol`**: Smart contract tests
 
 ---
@@ -255,9 +382,11 @@ bash zk-credit/scripts/setup.sh
 - **Circom** for ZK circuits
 - **SnarkJS** for proof generation and verification
 - **ZKVerify** for proof verification
+- **NEW: zkverifyjs** for client-side integration
 
-### Automation
-- **N8N** for credit analysis workflows
+### Credit Analysis
+- **Local algorithm** (N8N replaced for privacy)
+- **100% local processing** without external APIs
 
 ### Development
 - **ESLint** for linting
@@ -282,7 +411,7 @@ supabase functions deploy # Deploy edge functions
 # Smart Contracts (Foundry)
 cd foundry
 forge test           # Run tests
-forge script scripts/DeployLoan.s.sol --rpc-url $SEPOLIA_RPC --private-key $KEY --broadcast
+forge script script/DeployLoan.s.sol --rpc-url $SEPOLIA_RPC --private-key $KEY --broadcast
 
 # ZK Proofs (zk-credit)
 cd zk-credit
@@ -291,8 +420,9 @@ npm run compile      # Compile circuits
 npm run generate     # Generate proofs
 npm run verify       # Verify proofs
 
-# Credit Agent (credit-agent)
-# N8N workflow already hosted and functional
+# NEW: Client-side ZK
+cd client/zk-proof
+# Access: http://localhost:8080/zk-proof-test
 ```
 
 ---
@@ -337,8 +467,10 @@ foundryup
 cd zk-credit
 npm install
 
-# Configure N8N (optional - already hosted)
-# The credit-agent workflow is already functional
+# NEW: Test client-side ZK implementation
+cd client
+npm run dev
+# Access: http://localhost:8080/zk-proof-test
 ```
 
 ---
@@ -349,10 +481,15 @@ npm install
 zkfinance_ui/
 ├── client/                 # React Frontend
 │   ├── components/         # UI Components
-│   ├── pages/             # Application pages
+│   ├── pages/             # Application Pages
 │   ├── hooks/             # Custom hooks (useAuth, useRBAC, etc)
 │   ├── contexts/          # Context providers
-│   └── lib/               # Utilities
+│   ├── lib/               # Utilities
+│   └── zk-proof/          # 🆕 NEW: 100% client-side ZK implementation
+│       ├── services/      # Main ZK service
+│       ├── hooks/         # React hook for ZK
+│       ├── components/    # Demo interface
+│       └── assets/        # Embedded ZK artifacts
 ├── supabase/              # Supabase Backend
 │   ├── migrations/        # SQL migrations
 │   ├── functions/         # Edge functions
@@ -360,17 +497,17 @@ zkfinance_ui/
 ├── foundry/               # Smart Contracts
 │   ├── src/               # Solidity contracts
 │   ├── test/              # Forge tests
-│   └── scripts/           # Deployment scripts
-├── zk-credit/             # ZK Proofs
+│   └── script/            # Deployment scripts
+├── zk-credit/             # ZK Proofs (backend)
 │   ├── circuits/          # Circom circuits
 │   ├── build/             # Compiled files
 │   └── scripts/           # Generation scripts
 ├── credit-agent/          # Credit Agent
-│   ├── workflow_hackathon.json # N8N workflow
-│   └── algorithms/        # Score logic
+│   ├── algoritmo_score.js # 🆕 Local algorithm (N8N replaced)
+│   └── workflow.json      # Analysis workflow
 ├── shared/                # Shared types
 ├── server/                # Local API (Node.js)
-└── netlify.toml           # Client deployment config (Netlify)
+└── netlify.toml           # Client deployment configuration (Netlify)
 ```
 
 ---
@@ -380,13 +517,14 @@ zkfinance_ui/
 ### ✅ **All Integrations Implemented:**
 
 - **🔐 ZKVerify**: ✅ Connectivity and proofs working
-- **📝 Smart Contract**: ✅ Deploy and tests passing
+- **📝 Smart Contract**: ✅ Deployment and tests passing
 - **🏗️ Role System**: ✅ DDD and RBAC implemented
 - **🔗 Frontend-Contract**: ✅ Viem + TypeScript integrated
 - **💾 Persistence**: ✅ Supabase ↔ Blockchain synchronized
 - **📚 Documentation**: ✅ Complete and updated
+- **🆕 Client-side ZK**: ✅ **FIRST REAL TRANSACTION CONFIRMED!**
 
-### 🚀 **DEPLOY SUCCESS - LOANMANAGER CONTRACT**
+### 🚀 **DEPLOYMENT SUCCESS - LOANMANAGER CONTRACT**
 
 #### 📋 **Contract Details:**
 - **Name**: `LoanManager`
@@ -398,7 +536,7 @@ zkfinance_ui/
 - **Etherscan**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
 - **Sourcify**: https://sepolia.sourcify.dev/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
 
-#### 📅 **Deploy Information:**
+#### 📅 **Deployment Information:**
 - **Date**: July 25, 2025
 - **Time**: 23:05:53 (UTC-3)
 - **Cost**: 0.000001624967444464 ETH (very low)
@@ -421,13 +559,22 @@ zkfinance_ui/
 #### 🔗 **ZKVerify Transaction Link:**
 https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
 
+### 🏆 **NEW: 100% CLIENT-SIDE ZK IMPLEMENTATION - HISTORIC SUCCESS!**
+
+#### ✅ **First 100% Client-Side ZK Transaction:**
+- **Status**: ✅ **TOTAL SUCCESS - TRANSACTION CONFIRMED!**
+- **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
+- **Block**: 1719350
+- **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
+- **Achievement**: **First ZK transaction generated in browser and sent directly to blockchain!**
+
 ### 🚀 **Demo Commands:**
 
 ```bash
 # 1. ZKVerify connectivity test
 node zk-credit/scripts/test-zkverify-rpc.js
 
-# 2. ZK proofs test
+# 2. ZK proof test
 node zk-credit/scripts/test-zkverify-proof.js
 
 # 3. Complete integration test
@@ -435,25 +582,29 @@ node test_integration_complete.js
 
 # 4. Smart contract test
 cd foundry && forge test -vv
+
+# 5. 🆕 NEW: Client-side ZK implementation test
+cd client && npm run dev
+# Access: http://localhost:8080/zk-proof-test
 ```
 
-### 🌐 **Deploy:**
-
-## Production domain: https://zkfinance.com.br (Landing Page and Web App)
+### 🌐 **Deployment:**
 
 ## Landing Page: https://zkfinance.framer.website
 
 ## Web App: https://zkfinance.netlify.app
+
+## Production domain: https://zkfinance.com.br - **Under configuration (not yet accessible)**
 
 ```bash
 # Client build for production
 cd client
 npm run build
 
-# Deploy to Netlify (frontend only)
-# The netlify.toml file is already configured
+# Netlify deployment (frontend only)
+# netlify.toml file is already configured
 
-# Smart Contract deploy on Sepolia
+# Smart Contract deployment on Sepolia
 cd foundry
 ./scripts/deploy_sepolia.sh
 ```
@@ -463,6 +614,8 @@ cd foundry
 ```
 Frontend → API → zk-credit → ZKVerify → Smart Contract → Supabase → Frontend
 ```
+
+**🆕 NEW: Client-side ZK working independently!**
 
 **🏆 ZKFINANCE PROJECT 100% READY FOR PRESENTATION TO COMPANY OWNERS! 🚀**
 
@@ -492,7 +645,7 @@ This project is under the MIT license. See the `LICENSE` file for more details.
 
 ## 👥 Authors
 
-Developed by **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato**, **Laura Eckert** with focus on social impact solutions and privacy using Web3 technologies and ZK Proofs.
+Developed by **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato**, **Laura Eckert** with focus on social impact solutions and privacy using Web3 and ZK Proofs technologies.
 
 ---
 
@@ -501,7 +654,7 @@ Developed by **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato**, *
 ### 🌐 **Application:**
 - **Web App**: https://zkfinance.netlify.app
 - **Landing Page**: https://zkfinance.framer.website
-- **Main Domain**: https://zkfinance.com.br - To be configured
+- **Main Domain**: https://zkfinance.com.br - **Under configuration (not yet accessible)**
 
 ### 🔗 **Blockchain & Smart Contracts:**
 - **Etherscan Sepolia**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
@@ -509,6 +662,7 @@ Developed by **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato**, *
 
 ### 🔐 **ZKVerify Integration:**
 - **Success Transaction**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
+- **🆕 NEW: Client-side ZK**: https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183
 - **ZKVerify Website**: https://zkverify.io/
 
 ### 📚 **Documentation:**
@@ -519,4 +673,4 @@ Developed by **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato**, *
 - [Foundry Book](https://book.getfoundry.sh/)
 - [Circom Documentation](https://docs.circom.io/)
 - [SnarkJS](https://github.com/iden3/snarkjs)
-- [N8N](https://n8n.io/) 
+- [zkverifyjs](https://docs.zkverify.io/) 

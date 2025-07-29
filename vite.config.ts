@@ -26,8 +26,17 @@ function expressPlugin(): Plugin {
     name: "express-plugin",
     apply: "serve", // Only apply during development (serve mode)
     configureServer(server) {
-      // Usa o app Express exportado como default
-      server.middlewares.use(app);
+      // Usa o app Express exportado como default, mas apenas para rotas específicas
+      server.middlewares.use('/api', (req: any, res: any, next: any) => {
+        // Remove o prefixo /api antes de passar para o Express
+        req.url = req.url.replace(/^\/api/, '');
+        app(req, res, next);
+      });
+      
+      // Adiciona o endpoint /health
+      server.middlewares.use('/health', (req: any, res: any, next: any) => {
+        app(req, res, next);
+      });
     },
   };
 }

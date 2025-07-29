@@ -9,14 +9,24 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@polkadot/api": "^16.4.2",
+    "@polkadot/extension-dapp": "^0.61.4",
+    "@polkadot/keyring": "^13.5.4",
+    "@polkadot/util-crypto": "^13.5.4",
     "@rainbow-me/rainbowkit": "^2.2.8",
     "@supabase/supabase-js": "^2.52.0",
+    "@types/snarkjs": "^0.7.9",
     "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
+    "snarkjs": "^0.7.5",
     "viem": "^2.33.1",
+    "vite-plugin-top-level-await": "^1.6.0",
+    "vite-plugin-wasm": "^3.5.0",
     "wagmi": "^2.16.0",
+    "zkverifyjs": "^0.16.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -76,4 +86,4 @@
     "typescript": "^5.6.3",
     "vite": "^5.4.10"
   }
-} 
+}

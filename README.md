@@ -1,6 +1,55 @@
 # 🤝 ZKFinance — Plataforma de Financiamento Descentralizada com ZK Proofs
 
-Este projeto é uma plataforma moderna que conecta empreendedores a investidores, utilizando contratos inteligentes, provas ZK de análise de crédito e verificação de elegibilidade com preservação de privacidade. Atualmente em desenvolvimento ativo com foco na integração Supabase e funcionalidades core.
+## 🔐 **CONCEITO FUNDAMENTAL: ZK Proofs vs Lógica de Negócio**
+
+### 🎯 **O que é ZK Proof (Zero-Knowledge Proof)?**
+
+**ZK Proof** é uma prova matemática criptográfica que permite verificar uma afirmação sem revelar informações sensíveis. No nosso caso:
+
+#### ✅ **O que a Prova ZK Faz:**
+```circom
+// Circuito Circom - APENAS matemática
+template CreditScoreCheck() {
+    signal input score;      // PRIVADO (não revelado)
+    signal input threshold;  // PÚBLICO (revelado)
+    signal output passed;    // PÚBLICO (0 ou 1)
+
+    component isGreaterEq = GreaterEqThan(16);
+    isGreaterEq.in[0] <== score;      // score ≥ threshold?
+    isGreaterEq.in[1] <== threshold;
+    passed <== isGreaterEq.out;       // resultado: 0 ou 1
+}
+```
+
+**A prova ZK garante apenas:**
+- ✅ **Privacidade**: O score real nunca é revelado
+- ✅ **Verificação**: Prova matematicamente que `score ≥ threshold`
+- ✅ **Resultado**: Apenas `true` (1) ou `false` (0)
+
+#### ❌ **O que NÃO é ZK Proof:**
+- Análise de risco (Excellent, Good, Fair, Poor)
+- Breakdown do score (income bonus, employment bonus)
+- Recomendações de aprovação
+- **Tudo isso é apenas lógica de negócio para UI**
+
+### 🔍 **Como Distinguir:**
+
+| **ZK Proof (Matemática)** | **Lógica de Negócio (UI)** |
+|---------------------------|----------------------------|
+| `score ≥ threshold` | Risk levels, breakdown, recommendations |
+| Circuito Circom | Análise de crédito para exibição |
+| Privacidade garantida | Apenas para interface do usuário |
+| Verificação na blockchain | Processamento local no frontend |
+
+### 🎯 **Por que isso Importa:**
+
+1. **ZK Proof**: Garante privacidade e verificação matemática
+2. **Lógica de Negócio**: Melhora experiência do usuário
+3. **Separação**: ZK Proof é imutável, lógica de negócio é flexível
+
+---
+
+Este projeto é uma plataforma moderna que conecta emprestedores a investidores, utilizando contratos inteligentes, provas ZK de análise de crédito e verificação de elegibilidade com preservação de privacidade. Atualmente em desenvolvimento ativo com foco na integração Supabase e funcionalidades core.
 
 ## 🔒 **PRIVACIDADE E ARQUITETURA LOCAL - REQUISITO OBRIGATÓRIO ATENDIDO**
 
@@ -23,9 +72,51 @@ Dados do Usuário → Algoritmo Local → Prova ZK Local → ZKVerify (apenas pr
    SEMPRE LOCAL    SEMPRE LOCAL     SEMPRE LOCAL    APENAS PROVA           SEMPRE LOCAL
 ```
 
-## 🚀 **FLUXO COMPLETO DE EMPRÉSTIMO - INTEGRAÇÃO TOTAL**
+## 🚀 **NOVA IMPLEMENTAÇÃO 100% CLIENT-SIDE ZK - DESTAQUE!**
 
-### 🔄 **Arquitetura End-to-End Implementada:**
+### 🏆 **Conquista Histórica: Primeira Transação ZK 100% Client-Side**
+
+**Status**: ✅ **SUCESSO TOTAL** - Transação real confirmada na blockchain ZKVerify!
+
+#### 📊 **Transação Realizada:**
+- **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
+- **Status**: ✅ **Success** (Finalizada)
+- **Block**: 1719350
+- **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
+
+#### 🎯 **O que foi conquistado:**
+- ✅ **Prova ZK gerada no navegador** (sem servidor)
+- ✅ **Transação enviada diretamente à blockchain**
+- ✅ **Integração perfeita com Subwallet**
+- ✅ **Conversão automática de endereços** (Polkadot → Volta)
+- ✅ **Arquitetura 100% descentralizada**
+
+#### 📁 **Localização da Implementação:**
+```
+client/zk-proof/
+├── services/embeddedZKVerifyService.ts    # Serviço principal ZK
+├── hooks/useEmbeddedZKProof.ts           # Hook React
+├── components/EmbeddedZKProofDemo.tsx    # Interface de demonstração
+├── assets/                               # Artefatos ZK embutidos
+│   ├── wasm-base64.txt                   # Circuito WASM
+│   ├── zkey-base64.txt                   # Chave de prova
+│   └── vkey-base64.txt                   # Chave de verificação
+└── README_ZKPROOF_EN.md                  # Documentação em inglês
+```
+
+#### 🚀 **Como testar:**
+```bash
+cd client
+npm install
+npm run dev
+# Acesse: http://localhost:8080/zk-proof-test
+```
+
+---
+
+## 🔄 **FLUXO COMPLETO DE EMPRÉSTIMO - INTEGRAÇÃO TOTAL**
+
+### 🎯 **Arquitetura End-to-End Implementada:**
 
 ```
 ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
@@ -111,10 +202,11 @@ zkfinance/
 | Módulo             | Status | Descrição |
 |--------------------|--------|-----------|
 | [`client/`](client/README_CLIENT.md) | ✅ **Ativo** | Aplicação React com autenticação Supabase, RBAC e UI moderna. **Integração Viem + Smart Contract implementada**. |
+| [`client/zk-proof/`](client/zk-proof/README_ZKPROOF_EN.md) | ✅ **NOVO!** | **Implementação 100% client-side ZK** - Primeira transação real confirmada na blockchain! |
 | [`supabase/`](supabase/README_SUPABASE.md) | ✅ **Ativo** | Backend com PostgreSQL, autenticação Web3, RLS e edge functions. **Sistema de roles DDD implementado**. |
 | [`foundry/`](foundry/README.md) | ✅ **Implementado** | Contratos inteligentes para empréstimos. **LoanManager.sol deployado e testado**. |
 | [`zk-credit/`](zk-credit/README.md) | ✅ **Implementado** | Circuitos Circom e provas ZK. **Integração ZKVerify funcionando**. |
-| [`credit-agent/`](credit-agent/README-credit-agent.md) | ✅ **Implementado** | Agente de análise de crédito local. **Algoritmo interno funcionando**. |
+| [`credit-agent/`](credit-agent/README-credit-agent.md) | ✅ **Implementado** | **Algoritmo local de análise de crédito** (N8N substituído por privacidade). **Algoritmo interno funcionando**. |
 
 ---
 
@@ -147,15 +239,17 @@ zkfinance/
 - **Migrations** organizadas e versionadas
 
 ### ✅ Módulos Especializados
-- **credit-agent**: Agente N8N para análise de crédito automatizada
+- **credit-agent**: **Algoritmo local** para análise de crédito automatizada (N8N substituído por privacidade)
 - **zk-credit**: Circuitos Circom e provas ZK para preservação de privacidade
 - **foundry**: Smart contracts para empréstimos e financiamento peer-to-peer
+- **client/zk-proof**: **NOVA implementação 100% client-side ZK** com transação real confirmada!
 
 ### ✅ Integração ZKVerify
 - **Testes de conectividade RPC** com a rede ZKVerify Volta
 - **Registro de verification keys** na blockchain
 - **Submissão e verificação de provas ZK** em tempo real
 - **Scripts de teste** para demonstração e validação
+- **NOVA: Implementação 100% client-side** com transação real confirmada!
 
 ### ✅ Smart Contract e Integração Blockchain
 - **Contrato LoanManager** deployado local e em Sepolia
@@ -180,7 +274,7 @@ zkfinance/
 2. **🏷️ Seleção de Role**: Escolhe entre Borrower, Investor ou Admin
 3. **📊 Dashboard Personalizado**: Interface adaptada ao role do usuário
 4. **📝 Criação de Empréstimo**: Borrower submete dados de crédito
-5. **🔐 Análise de Crédito**: credit-agent calcula score localmente
+5. **🔐 Análise de Crédito**: **algoritmo local** calcula score (N8N substituído por privacidade)
 6. **🔒 Geração de Prova ZK**: zk-credit gera prova de que score ≥ threshold
 7. **🔍 Verificação ZKVerify**: Prova validada na blockchain ZKVerify Volta
 8. **📋 Smart Contract**: foundry registra empréstimo validado na blockchain
@@ -195,6 +289,7 @@ zkfinance/
 - **ZKVerify ↔ Smart Contract**: ✅ Criação de empréstimos validados
 - **Smart Contract ↔ Supabase**: ✅ Persistência bidirecional
 - **Supabase ↔ Frontend**: ✅ Atualização em tempo real
+- **NOVA: Client-side ZK**: ✅ **Transação real confirmada na blockchain!**
 
 ### 🏆 **SUCESSOS CONFIRMADOS:**
 
@@ -213,6 +308,15 @@ zkfinance/
 - **📊 Score**: 805 (threshold: 705) - **PROVA VÁLIDA!**
 - **💰 Taxa**: 0.02393157714 tVFY
 - **🔧 Rede**: ZKVerify Volta Testnet operacional
+
+#### 🏆 **NOVA: Implementação 100% Client-Side ZK - SUCESSO HISTÓRICO:**
+- **✅ Status**: **PRIMEIRA TRANSAÇÃO ZK 100% CLIENT-SIDE CONFIRMADA!**
+- **📅 Data**: 29 de Julho de 2025 às 01:02:12 (UTC)
+- **🔗 Transação**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
+- **🔗 Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
+- **📊 Block**: 1719350
+- **💰 Fee**: 0.02393157714 tVFY
+- **🎯 Conquista**: Prova ZK gerada no navegador e enviada diretamente à blockchain!
 
 ## 🧪 Testes de Integração ZKVerify
 
@@ -237,6 +341,7 @@ bash zk-credit/scripts/setup.sh
 - ✅ **Submissão de Provas**: **PROVA SUBMETIDA E FINALIZADA COM SUCESSO!**
 - ✅ **Rede Volta**: Operacional e acessível
 - ✅ **Transação Confirmada**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
+- ✅ **NOVA: Client-side ZK**: **Transação real confirmada na blockchain!**
 
 ## 📚 **Documentação Completa**
 
@@ -246,6 +351,7 @@ bash zk-credit/scripts/setup.sh
 - **[zk-credit/README.md](zk-credit/README.md)**: Documentação dos testes ZKVerify
 - **[foundry/README.md](foundry/README.md)**: Documentação do smart contract
 - **[foundry/DEPLOY.md](foundry/DEPLOY.md)**: Guia completo de deploy
+- **[client/zk-proof/README_ZKPROOF_EN.md](client/zk-proof/README_ZKPROOF_EN.md)**: **NOVA implementação 100% client-side ZK**
 
 ### 🧪 **Scripts de Teste:**
 - **`test_integration_complete.js`**: Teste de integração end-to-end
@@ -276,9 +382,11 @@ bash zk-credit/scripts/setup.sh
 - **Circom** para circuitos ZK
 - **SnarkJS** para geração e verificação de provas
 - **ZKVerify** para verificação de provas
+- **NOVA: zkverifyjs** para integração client-side
 
-### Automação
-- **N8N** para workflows de análise de crédito
+### Análise de Crédito
+- **Algoritmo local** (N8N substituído por privacidade)
+- **Processamento 100% local** sem APIs externas
 
 ### Desenvolvimento
 - **ESLint** para linting
@@ -312,8 +420,9 @@ npm run compile      # Compila circuitos
 npm run generate     # Gera provas
 npm run verify       # Verifica provas
 
-# Agente de Crédito (credit-agent)
-# Workflow N8N já está hospedado e funcional
+# NOVA: Client-side ZK
+cd client/zk-proof
+# Acesse: http://localhost:8080/zk-proof-test
 ```
 
 ---
@@ -358,8 +467,10 @@ foundryup
 cd zk-credit
 npm install
 
-# Configurar N8N (opcional - já hospedado)
-# O workflow credit-agent já está funcional
+# NOVA: Testar implementação client-side ZK
+cd client
+npm run dev
+# Acesse: http://localhost:8080/zk-proof-test
 ```
 
 ---
@@ -373,7 +484,12 @@ zkfinance_ui/
 │   ├── pages/             # Páginas da aplicação
 │   ├── hooks/             # Custom hooks (useAuth, useRBAC, etc)
 │   ├── contexts/          # Context providers
-│   └── lib/               # Utilitários
+│   ├── lib/               # Utilitários
+│   └── zk-proof/          # 🆕 NOVA: Implementação 100% client-side ZK
+│       ├── services/      # Serviço ZK principal
+│       ├── hooks/         # Hook React para ZK
+│       ├── components/    # Interface de demonstração
+│       └── assets/        # Artefatos ZK embutidos
 ├── supabase/              # Backend Supabase
 │   ├── migrations/        # SQL migrations
 │   ├── functions/         # Edge functions
@@ -382,13 +498,13 @@ zkfinance_ui/
 │   ├── src/               # Contratos Solidity
 │   ├── test/              # Testes com Forge
 │   └── script/            # Scripts de deploy
-├── zk-credit/             # Provas ZK
+├── zk-credit/             # Provas ZK (backend)
 │   ├── circuits/          # Circuitos Circom
 │   ├── build/             # Arquivos compilados
 │   └── scripts/           # Scripts de geração
 ├── credit-agent/          # Agente de Crédito
-│   ├── workflow_hackathon.json # Workflow N8N
-│   └── algoritmos/        # Lógica de score
+│   ├── algoritmo_score.js # 🆕 Algoritmo local (N8N substituído)
+│   └── workflow.json      # Workflow de análise
 ├── shared/                # Tipos compartilhados
 ├── server/                # API Local (Node.js)
 └── netlify.toml           # Configuração deploy cliente (Netlify)
@@ -406,6 +522,7 @@ zkfinance_ui/
 - **🔗 Frontend-Contrato**: ✅ Viem + TypeScript integrado
 - **💾 Persistência**: ✅ Supabase ↔ Blockchain sincronizado
 - **📚 Documentação**: ✅ Completa e atualizada
+- **🆕 Client-side ZK**: ✅ **PRIMEIRA TRANSAÇÃO REAL CONFIRMADA!**
 
 ### 🚀 **DEPLOY SUCESSO - CONTRATO LOANMANAGER**
 
@@ -442,6 +559,15 @@ zkfinance_ui/
 #### 🔗 **Link da Transação no ZKVerify:**
 https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
 
+### 🏆 **NOVA: IMPLEMENTAÇÃO 100% CLIENT-SIDE ZK - SUCESSO HISTÓRICO!**
+
+#### ✅ **Primeira Transação ZK 100% Client-Side:**
+- **Status**: ✅ **SUCESSO TOTAL - TRANSAÇÃO CONFIRMADA!**
+- **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
+- **Block**: 1719350
+- **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
+- **Conquista**: **Primeira transação ZK gerada no navegador e enviada diretamente à blockchain!**
+
 ### 🚀 **Comandos para Demonstração:**
 
 ```bash
@@ -456,15 +582,19 @@ node test_integration_complete.js
 
 # 4. Teste do smart contract
 cd foundry && forge test -vv
+
+# 5. 🆕 NOVA: Teste da implementação client-side ZK
+cd client && npm run dev
+# Acesse: http://localhost:8080/zk-proof-test
 ```
 
 ### 🌐 **Deploy:**
 
-## Production domain: https://zkfinance.com.br (Landing Page e Web App)
-
 ## Landing Page: https://zkfinance.framer.website
 
 ## Web App: https://zkfinance.netlify.app
+
+## Production domain: https://zkfinance.com.br - **Em configuração (ainda não acessível)**
 
 ```bash
 # Build do cliente para produção
@@ -484,6 +614,8 @@ cd foundry
 ```
 Frontend → API → zk-credit → ZKVerify → Smart Contract → Supabase → Frontend
 ```
+
+**🆕 NOVA: Client-side ZK funcionando independentemente!**
 
 **🏆 PROJETO ZKFINANCE 100% PRONTO PARA APRESENTAÇÃO AOS DONOS DA EMPRESA! 🚀**
 
@@ -522,7 +654,7 @@ Desenvolvido por **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato*
 ### 🌐 **Aplicação:**
 - **Web App**: https://zkfinance.netlify.app
 - **Landing Page**: https://zkfinance.framer.website
-- **Domínio Principal**: https://zkfinance.com.br - a configurar
+- **Domínio Principal**: https://zkfinance.com.br - **Em configuração (ainda não acessível)**
 
 ### 🔗 **Blockchain & Smart Contracts:**
 - **Etherscan Sepolia**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
@@ -530,6 +662,7 @@ Desenvolvido por **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato*
 
 ### 🔐 **ZKVerify Integration:**
 - **Transação de Sucesso**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
+- **🆕 NOVA: Client-side ZK**: https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183
 - **ZKVerify Website**: https://zkverify.io/
 
 ### 📚 **Documentação:**
@@ -540,4 +673,4 @@ Desenvolvido por **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato*
 - [Foundry Book](https://book.getfoundry.sh/)
 - [Circom Documentation](https://docs.circom.io/)
 - [SnarkJS](https://github.com/iden3/snarkjs)
-- [N8N](https://n8n.io/)
+- [zkverifyjs](https://docs.zkverify.io/)

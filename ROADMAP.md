@@ -9,7 +9,7 @@
 
 ## 🏆 **NOVA CONQUISTA HISTÓRICA: 100% CLIENT-SIDE ZK - ✅ CONCLUÍDO!**
 
-### ✅ **Primeira Transação ZK 100% Client-Side:**
+### ✅ **Transação ZK 100% Client-Side:**
 - ✅ **Prova ZK gerada no navegador** (sem servidor)
 - ✅ **Transação enviada diretamente à blockchain**
 - ✅ **Integração perfeita com Subwallet**
@@ -36,7 +36,7 @@ client/zk-proof/
 ```
 
 ### 🎯 **Conquista:**
-**Primeira transação ZK gerada no navegador e enviada diretamente à blockchain ZKVerify!**
+**Transação ZK gerada no navegador e enviada diretamente à blockchain ZKVerify!**
 
 ---
 
@@ -260,11 +260,11 @@ Frontend → API Local → Algoritmo Interno → Prova ZK → ZKVerify → Smart
 - **Transação de Prova**: [https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977](https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977)
 
 ### 🏆 **NOVA: Implementação 100% Client-Side ZK - SUCESSO HISTÓRICO!**
-- **Status**: ✅ **PRIMEIRA TRANSAÇÃO ZK 100% CLIENT-SIDE CONFIRMADA!**
+- **Status**: ✅ **TRANSAÇÃO ZK 100% CLIENT-SIDE CONFIRMADA!**
 - **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
 - **Block**: 1719350
 - **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
-- **Conquista**: **Primeira transação ZK gerada no navegador e enviada diretamente à blockchain!**
+- **Conquista**: **Transação ZK gerada no navegador e enviada diretamente à blockchain!**
 
 ### ✅ **Smart Contract de Empréstimo EVM:**
 - **Contrato LoanManager**: Implementado e testado ✅

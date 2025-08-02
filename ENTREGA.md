@@ -10,18 +10,18 @@
 - **🔗 Frontend-Contrato**: ✅ Viem + TypeScript integrado
 - **💾 Persistência**: ✅ Supabase ↔ Blockchain sincronizado
 - **📚 Documentação**: ✅ Completa e atualizada
-- **🆕 Client-side ZK**: ✅ **PRIMEIRA TRANSAÇÃO REAL CONFIRMADA!**
+- **🆕 Client-side ZK**: ✅ **TRANSAÇÃO REAL CONFIRMADA!**
 
 ---
 
 ## 🏆 **CONQUISTA HISTÓRICA: 100% CLIENT-SIDE ZK**
 
-### ✅ **Primeira Transação ZK 100% Client-Side:**
+### ✅ **Transação ZK 100% Client-Side:**
 - **Status**: ✅ **SUCESSO TOTAL - TRANSAÇÃO CONFIRMADA!**
 - **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
 - **Block**: 1719350
 - **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
-- **Conquista**: **Primeira transação ZK gerada no navegador e enviada diretamente à blockchain!**
+- **Conquista**: **Transação ZK gerada no navegador e enviada diretamente à blockchain!**
 
 ### 📁 **Implementação:**
 ```
@@ -133,7 +133,7 @@ Frontend → API → zk-credit → ZKVerify → Smart Contract → Supabase → 
 - ✅ **🆕 Client-side ZK funcionando**
 
 ### 🏆 **CONQUISTAS HISTÓRICAS:**
-1. **Primeira transação ZK 100% client-side confirmada na blockchain**
+1. **Transação ZK 100% client-side confirmada na blockchain**
 2. **Smart contract deployado e verificado na Sepolia**
 3. **Integração ZKVerify 100% funcional**
 4. **Arquitetura DDD implementada**

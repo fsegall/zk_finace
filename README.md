@@ -74,7 +74,7 @@ Dados do Usuário → Algoritmo Local → Prova ZK Local → ZKVerify (apenas pr
 
 ## 🚀 **NOVA IMPLEMENTAÇÃO 100% CLIENT-SIDE ZK - DESTAQUE!**
 
-### 🏆 **Conquista Histórica: Primeira Transação ZK 100% Client-Side**
+### 🏆 **Conquista Significativa: Transação ZK 100% Client-Side**
 
 **Status**: ✅ **SUCESSO TOTAL** - Transação real confirmada na blockchain ZKVerify!
 
@@ -202,7 +202,7 @@ zkfinance/
 | Módulo             | Status | Descrição |
 |--------------------|--------|-----------|
 | [`client/`](client/README_CLIENT.md) | ✅ **Ativo** | Aplicação React com autenticação Supabase, RBAC e UI moderna. **Integração Viem + Smart Contract implementada**. |
-| [`client/zk-proof/`](client/zk-proof/README_ZKPROOF_EN.md) | ✅ **NOVO!** | **Implementação 100% client-side ZK** - Primeira transação real confirmada na blockchain! |
+| [`client/zk-proof/`](client/zk-proof/README_ZKPROOF_EN.md) | ✅ **NOVO!** | **Implementação 100% client-side ZK** - Transação real confirmada na blockchain! |
 | [`supabase/`](supabase/README_SUPABASE.md) | ✅ **Ativo** | Backend com PostgreSQL, autenticação Web3, RLS e edge functions. **Sistema de roles DDD implementado**. |
 | [`foundry/`](foundry/README.md) | ✅ **Implementado** | Contratos inteligentes para empréstimos. **LoanManager.sol deployado e testado**. |
 | [`zk-credit/`](zk-credit/README.md) | ✅ **Implementado** | Circuitos Circom e provas ZK. **Integração ZKVerify funcionando**. |
@@ -310,7 +310,7 @@ zkfinance/
 - **🔧 Rede**: ZKVerify Volta Testnet operacional
 
 #### 🏆 **NOVA: Implementação 100% Client-Side ZK - SUCESSO HISTÓRICO:**
-- **✅ Status**: **PRIMEIRA TRANSAÇÃO ZK 100% CLIENT-SIDE CONFIRMADA!**
+- **✅ Status**: **TRANSAÇÃO ZK 100% CLIENT-SIDE CONFIRMADA!**
 - **📅 Data**: 29 de Julho de 2025 às 01:02:12 (UTC)
 - **🔗 Transação**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
 - **🔗 Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
@@ -522,7 +522,7 @@ zkfinance_ui/
 - **🔗 Frontend-Contrato**: ✅ Viem + TypeScript integrado
 - **💾 Persistência**: ✅ Supabase ↔ Blockchain sincronizado
 - **📚 Documentação**: ✅ Completa e atualizada
-- **🆕 Client-side ZK**: ✅ **PRIMEIRA TRANSAÇÃO REAL CONFIRMADA!**
+- **🆕 Client-side ZK**: ✅ **TRANSAÇÃO REAL CONFIRMADA!**
 
 ### 🚀 **DEPLOY SUCESSO - CONTRATO LOANMANAGER**
 
@@ -561,12 +561,12 @@ https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904
 
 ### 🏆 **NOVA: IMPLEMENTAÇÃO 100% CLIENT-SIDE ZK - SUCESSO HISTÓRICO!**
 
-#### ✅ **Primeira Transação ZK 100% Client-Side:**
+#### ✅ **Transação ZK 100% Client-Side:**
 - **Status**: ✅ **SUCESSO TOTAL - TRANSAÇÃO CONFIRMADA!**
 - **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
 - **Block**: 1719350
 - **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
-- **Conquista**: **Primeira transação ZK gerada no navegador e enviada diretamente à blockchain!**
+- **Conquista**: **Transação ZK gerada no navegador e enviada diretamente à blockchain!**
 
 ### 🚀 **Comandos para Demonstração:**
 

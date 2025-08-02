@@ -206,9 +206,9 @@ http://localhost:8080/zk-proof-test
 
 ## 🎉 **Conclusão**
 
-Esta implementação representa um **marco histórico** na tecnologia Zero-Knowledge:
+Esta implementação representa uma **inovação significativa** na tecnologia Zero-Knowledge:
 
-✅ **Primeira transação ZK 100% client-side**  
+✅ **Transação ZK 100% client-side**  
 ✅ **Integração perfeita com carteiras Polkadot**  
 ✅ **Arquitetura totalmente descentralizada**  
 ✅ **Privacidade preservada no navegador**  

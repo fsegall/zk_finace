@@ -141,14 +141,14 @@ template CreditScoreCheck() {
 
 ## 🚀 **INOVAÇÃO CONCEITUAL:**
 
-**Criamos a primeira implementação 100% client-side onde:**
+**Implementamos com sucesso uma solução 100% client-side onde:**
 - ✅ **Prova ZK** é gerada no browser
 - ✅ **Arquivos ZK** são embutidos no código
 - ✅ **Blockchain** recebe apenas a prova
 - ✅ **Privacidade** é garantida por criptografia
 - ✅ **Verificação** é feita matematicamente
 
-**É uma arquitetura revolucionária que elimina completamente a necessidade de servidores para geração de provas ZK!**
+**Esta representa uma arquitetura inovadora que elimina a necessidade de servidores para geração de provas ZK!**
 
 ## 📊 **PROVA DE CONCEITO VALIDADA:**
 
@@ -167,7 +167,7 @@ template CreditScoreCheck() {
 
 ## 🎯 **IMPACTO E SIGNIFICÂNCIA:**
 
-Esta implementação representa um **marco histórico** na evolução das aplicações ZK, demonstrando que é possível:
+Esta implementação representa uma **inovação significativa** na evolução das aplicações ZK, demonstrando que é possível:
 
 1. **Eliminar servidores** para geração de provas ZK
 2. **Garantir privacidade total** no front-end

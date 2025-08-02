@@ -207,7 +207,7 @@ http://localhost:8080/zk-proof-test
 
 ## 🎉 **Conclusion**
 
-This implementation represents a **historic milestone** in Zero-Knowledge technology:
+This implementation represents a **significant innovation** in Zero-Knowledge technology:
 
 ✅ **First 100% client-side ZK transaction**  
 ✅ **Perfect integration with Polkadot wallets**  

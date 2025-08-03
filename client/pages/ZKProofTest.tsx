@@ -29,7 +29,7 @@ const ZKProofTest: React.FC = () => {
               <Link to="/login">
                 <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
                   <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                  Voltar
+                  Back
                 </Button>
               </Link>
             </div>
@@ -43,7 +43,7 @@ const ZKProofTest: React.FC = () => {
         <main className="p-4 lg:p-6">
           <Breadcrumb
             items={[
-              { label: "Início", href: "/login" },
+              { label: "Home", href: "/login" },
               { label: "ZK Proof Test" },
             ]}
           />

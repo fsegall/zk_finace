@@ -191,7 +191,7 @@ const Login = () => {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full h-10 border-border bg-transparent text-foreground hover:bg-muted/50 text-sm"
+                    className="w-full h-10 border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/20 focus:bg-accent focus:text-accent-foreground focus:border-accent-foreground/20 text-sm transition-all duration-200"
                   >
                     🔐 ZK Proof Test
                   </Button>
@@ -200,7 +200,7 @@ const Login = () => {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full h-10 border-border bg-transparent text-foreground hover:bg-muted/50 text-sm"
+                    className="w-full h-10 border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/20 focus:bg-accent focus:text-accent-foreground focus:border-accent-foreground/20 text-sm transition-all duration-200"
                   >
                     📁 Circuit Upload
                   </Button>
@@ -209,7 +209,7 @@ const Login = () => {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full h-10 border-border bg-transparent text-foreground hover:bg-muted/50 text-sm"
+                    className="w-full h-10 border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/20 focus:bg-accent focus:text-accent-foreground focus:border-accent-foreground/20 text-sm transition-all duration-200"
                   >
                     🧪 New ZK System
                   </Button>

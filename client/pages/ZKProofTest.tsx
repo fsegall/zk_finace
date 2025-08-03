@@ -2,6 +2,7 @@ import React from 'react';
 import { EmbeddedZKProofDemo } from '../zk-proof/components/EmbeddedZKProofDemo';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
 import { Zap, Globe, Shield, CheckCircle, AlertTriangle, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from '../components/ui/breadcrumb';
@@ -25,12 +26,11 @@ const ZKProofTest: React.FC = () => {
         <header className="bg-card/50 px-4 lg:px-6 py-3 lg:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link
-                to="/login"
-                className="flex items-center gap-2 text-foreground hover:text-foreground/80 transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span className="text-sm">Voltar</span>
+              <Link to="/login">
+                <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
+                  <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                  Voltar
+                </Button>
               </Link>
             </div>
             <div className="flex items-center gap-2">

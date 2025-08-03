@@ -44,6 +44,7 @@ const translations = {
     'auth.logout': 'Sair',
     'auth.email': 'Email',
     'auth.password': 'Senha',
+    'auth.confirmPassword': 'Confirmar Senha',
     'auth.fullName': 'Nome Completo',
     'auth.forgotPassword': 'Esqueci minha Senha',
     'auth.alreadyHaveAccount': 'Já tem uma conta?',
@@ -54,6 +55,11 @@ const translations = {
     'auth.walletConnected': 'Carteira conectada',
     'auth.or': 'ou',
     'auth.comingSoon': 'Em breve',
+    'auth.passwordValid': 'Senha válida',
+    'auth.passwordInvalid': 'Mínimo 6 caracteres',
+    'auth.passwordsMatch': 'Senhas coincidem',
+    'auth.passwordsDontMatch': 'Senhas não coincidem',
+    'auth.testPages': 'Páginas de Teste',
     
     // User
     'user.welcome': 'Que bom ter você aqui',
@@ -395,6 +401,7 @@ const translations = {
     'auth.logout': 'Logout',
     'auth.email': 'Email',
     'auth.password': 'Password',
+    'auth.confirmPassword': 'Confirm Password',
     'auth.fullName': 'Full Name',
     'auth.forgotPassword': 'Forgot Password',
     'auth.alreadyHaveAccount': 'Already have an account?',
@@ -405,6 +412,11 @@ const translations = {
     'auth.walletConnected': 'Wallet connected',
     'auth.or': 'or',
     'auth.comingSoon': 'Coming soon',
+    'auth.passwordValid': 'Password valid',
+    'auth.passwordInvalid': 'Minimum 6 characters',
+    'auth.passwordsMatch': 'Passwords match',
+    'auth.passwordsDontMatch': 'Passwords do not match',
+    'auth.testPages': 'Test Pages',
     
     // User
     'user.welcome': 'Great to have you here',

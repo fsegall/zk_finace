@@ -31,7 +31,6 @@ import InvestmentDetails from "./pages/InvestmentDetails";
 import InvestorRanking from "./pages/InvestorRanking";
 import KYCVerification from "./pages/KYCVerification";
 import ZKProofTest from "./pages/ZKProofTest";
-import CircuitBuildTest from "./pages/CircuitBuildTest";
 import CircuitUploadTest from "./pages/CircuitUploadTest";
 import { NewZKSystemTestPage } from "./pages/NewZKSystemTest";
 import CollateralRegistration from "./pages/CollateralRegistration";
@@ -63,7 +62,6 @@ function App() {
                         <Route path="/user-selection" element={<UserSelection />} />
                         <Route path="/kyc-verification" element={<KYCVerification />} />
                         <Route path="/zk-proof-test" element={<ZKProofTest />} />
-                        <Route path="/circuit-build-test" element={<CircuitBuildTest />} />
                         <Route path="/circuit-upload-test" element={<CircuitUploadTest />} />
                         <Route path="/new-zk-system-test" element={<NewZKSystemTestPage />} />
                         <Route path="/borrower/dashboard" element={<BorrowerDashboard />} />

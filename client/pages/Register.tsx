@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Logo } from "../components/Logo";
+import LanguageSwitch from "../components/LanguageSwitch";
 import DevLoginInstructions from "../components/DevLoginInstructions";
 
 const Register = () => {
@@ -12,6 +14,9 @@ const Register = () => {
   const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { loginWithGoogle, signupWithPassword, user, loading, error } = useAuth();
   const [formLoading, setFormLoading] = useState(false);
@@ -30,11 +35,34 @@ const Register = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation
+    if (!fullName.trim()) {
+      return;
+    }
+    
+    if (!email.trim() || !email.includes('@')) {
+      return;
+    }
+    
+    if (password.length < 6) {
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      return;
+    }
+
     setFormLoading(true);
     await signupWithPassword(email, password, fullName);
     setFormLoading(false);
     navigate("/user-selection");
   };
+
+  // Password validation
+  const passwordValid = password.length >= 6;
+  const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
+  const formValid = fullName.trim() && email.includes('@') && passwordValid && passwordsMatch;
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
@@ -47,6 +75,11 @@ const Register = () => {
           filter: "blur(120px)",
         }}
       />
+
+      {/* Language Switch - Top Right */}
+      <div className="absolute top-4 right-4 z-20">
+        <LanguageSwitch />
+      </div>
 
       <div className="relative z-10 text-center max-w-lg mx-auto px-4 sm:px-6">
         {/* Logo */}
@@ -99,7 +132,17 @@ const Register = () => {
             </Button>
           </div>
 
-
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-foreground/70">
+                {t('auth.or')}
+              </span>
+            </div>
+          </div>
 
           {/* Form */}
           <form className="space-y-3 sm:space-y-4" onSubmit={handleSignup}>
@@ -109,8 +152,9 @@ const Register = () => {
                 placeholder={t('auth.fullName')}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="h-11 sm:h-12 bg-muted placeholder:text-foreground border-border"
+                className="h-11 sm:h-12 bg-muted placeholder:text-foreground/50 border-border"
                 disabled={formLoading || loading}
+                required
               />
             </div>
 
@@ -120,38 +164,102 @@ const Register = () => {
                 placeholder={t('auth.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-11 sm:h-12 bg-muted placeholder:text-foreground border-border"
+                className="h-11 sm:h-12 bg-muted placeholder:text-foreground/50 border-border"
                 disabled={formLoading || loading}
+                required
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <Input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={t('auth.password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-11 sm:h-12 bg-muted placeholder:text-foreground border-border"
+                className="h-11 sm:h-12 bg-muted placeholder:text-foreground/50 border-border pr-10"
                 disabled={formLoading || loading}
+                required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/60 hover:text-foreground p-1 transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
+                ) : (
+                  <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+                )}
+              </button>
+              {password.length > 0 && (
+                <div className="flex items-center gap-2 text-xs mt-1">
+                  {passwordValid ? (
+                    <CheckCircle className="w-3 h-3 text-green-500" />
+                  ) : (
+                    <XCircle className="w-3 h-3 text-red-500" />
+                  )}
+                  <span className={passwordValid ? "text-green-500" : "text-red-500"}>
+                    {password.length >= 6 ? t('auth.passwordValid') : t('auth.passwordInvalid')}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2 relative">
+              <Input
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder={t('auth.confirmPassword')}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="h-11 sm:h-12 bg-muted placeholder:text-foreground/50 border-border pr-10"
+                disabled={formLoading || loading}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/60 hover:text-foreground p-1 transition-colors"
+                tabIndex={-1}
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
+                ) : (
+                  <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+                )}
+              </button>
+              {confirmPassword.length > 0 && (
+                <div className="flex items-center gap-2 text-xs mt-1">
+                  {passwordsMatch ? (
+                    <CheckCircle className="w-3 h-3 text-green-500" />
+                  ) : (
+                    <XCircle className="w-3 h-3 text-red-500" />
+                  )}
+                  <span className={passwordsMatch ? "text-green-500" : "text-red-500"}>
+                    {passwordsMatch ? t('auth.passwordsMatch') : t('auth.passwordsDontMatch')}
+                  </span>
+                </div>
+              )}
             </div>
 
             <Button
               type="submit"
-              className="w-full h-11 sm:h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors"
-              disabled={formLoading || loading}
+              className="w-full h-11 sm:h-12 bg-primary hover:bg-primary/80 text-primary-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={formLoading || loading || !formValid}
             >
               {formLoading || loading ? t('auth.registering') : t('auth.register')}
             </Button>
           </form>
 
           {error && (
-            <div className="text-red-500 text-sm mt-2 px-2">{error}</div>
+            <div className="bg-red-950/20 border border-red-500/30 text-red-400 text-sm p-3 rounded-lg">
+              {error}
+            </div>
           )}
 
-          <p className="text-body text-foreground text-sm sm:text-base">
+          <p className="text-body text-foreground/80 text-sm sm:text-base">
             {t('auth.alreadyHaveAccount')}{" "}
-            <Link to="/login" className="text-primary hover:underline">
+            <Link to="/login" className="text-primary hover:underline font-medium">
               {t('auth.login')}
             </Link>
           </p>

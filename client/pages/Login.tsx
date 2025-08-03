@@ -6,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Logo } from "../components/Logo";
+import LanguageSwitch from "../components/LanguageSwitch";
 import DevLoginInstructions from "../components/DevLoginInstructions";
 
 const Login = () => {
@@ -46,6 +47,11 @@ const Login = () => {
           filter: "blur(120px)",
         }}
       />
+
+      {/* Language Switch - Top Right */}
+      <div className="absolute top-4 right-4 z-20">
+        <LanguageSwitch />
+      </div>
 
       <div className="relative z-10 text-center max-w-lg mx-auto px-4 sm:px-6">
         {/* Logo */}
@@ -98,7 +104,17 @@ const Login = () => {
             </Button>
           </div>
 
-
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-foreground/70">
+                {t('auth.or')}
+              </span>
+            </div>
+          </div>
 
           {/* Form */}
           <form className="space-y-3 sm:space-y-4" onSubmit={handlePassword}>
@@ -108,8 +124,9 @@ const Login = () => {
                 placeholder={t('auth.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground"
+                className="h-11 sm:h-12 bg-muted border-border placeholder:text-foreground/50"
                 disabled={formLoading || loading}
+                required
               />
             </div>
 
@@ -119,19 +136,20 @@ const Login = () => {
                 placeholder="••••••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-11 sm:h-12 bg-muted border-border pr-10 placeholder:text-foreground"
+                className="h-11 sm:h-12 bg-muted border-border pr-10 placeholder:text-foreground/50"
                 disabled={formLoading || loading}
+                required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/60 hover:text-foreground p-1 transition-colors"
                 tabIndex={-1}
               >
                 {showPassword ? (
-                  <EyeOff className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
+                  <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
                 ) : (
-                  <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-foreground" />
+                  <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                 )}
               </button>
             </div>
@@ -139,7 +157,7 @@ const Login = () => {
             <div className="text-right">
               <Link
                 to="/forgot-password"
-                className="text-small text-foreground hover:text-foreground text-sm"
+                className="text-small text-foreground/70 hover:text-foreground text-sm transition-colors"
               >
                 {t('auth.forgotPassword')}
               </Link>
@@ -152,52 +170,57 @@ const Login = () => {
             >
               {formLoading || loading ? t('auth.entering') : t('auth.login')}
             </Button>
-            
-            <Link to="/zk-proof-test">
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
-              >
-                🔐 ZK Proof Client-Side Test
-              </Button>
-            </Link>
-            <Link to="/circuit-build-test">
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
-              >
-                🔧 Circuit Build API Test
-              </Button>
-            </Link>
-            <Link to="/new-zk-system-test">
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
-              >
-                🧪 Novo Sistema ZK Test
-              </Button>
-            </Link>
-            <Link to="/circuit-upload-test">
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
-              >
-                📁 Circuit Upload Test
-              </Button>
-            </Link>
           </form>
 
           {error && (
-            <div className="text-red-500 text-sm mt-2 px-2">{error}</div>
+            <div className="bg-red-950/20 border border-red-500/30 text-red-400 text-sm p-3 rounded-lg">
+              {error}
+            </div>
           )}
 
-          <p className="text-body text-foreground text-sm sm:text-base">
+          {/* Test Pages Section - Only in Development */}
+          {import.meta.env.DEV && (
+            <div className="space-y-2">
+              <div className="text-center">
+                <span className="text-xs text-foreground/80 bg-muted/50 px-2 py-1 rounded">
+                  🧪 {t('auth.testPages')}
+                </span>
+              </div>
+              <div className="grid grid-cols-1 gap-2">
+                <Link to="/zk-proof-test">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full h-10 border-border bg-transparent text-foreground hover:bg-muted/50 text-sm"
+                  >
+                    🔐 ZK Proof Test
+                  </Button>
+                </Link>
+                <Link to="/circuit-upload-test">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full h-10 border-border bg-transparent text-foreground hover:bg-muted/50 text-sm"
+                  >
+                    📁 Circuit Upload
+                  </Button>
+                </Link>
+                <Link to="/new-zk-system-test">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full h-10 border-border bg-transparent text-foreground hover:bg-muted/50 text-sm"
+                  >
+                    🧪 New ZK System
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          <p className="text-body text-foreground/80 text-sm sm:text-base">
             {t('auth.dontHaveAccount')}{" "}
-            <Link to="/register" className="text-primary hover:underline">
+            <Link to="/register" className="text-primary hover:underline font-medium">
               {t('auth.register')}
             </Link>
           </p>

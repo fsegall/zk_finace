@@ -1,0 +1,1 @@
+pragma circom 2.1.4; template Example() { signal input a; signal output b; b <== a; } component main = Example();

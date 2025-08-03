@@ -72,36 +72,40 @@ User Data → Local Algorithm → Local ZK Proof → ZKVerify (proof only) → S
    ALWAYS LOCAL    ALWAYS LOCAL     ALWAYS LOCAL    PROOF ONLY           ALWAYS LOCAL
 ```
 
-## 🚀 **NEW 100% CLIENT-SIDE ZK IMPLEMENTATION - HIGHLIGHT!**
+## 🚀 **NEW ZK SYSTEM IMPLEMENTATION - HIGHLIGHT!**
 
-### 🏆 **Significant Achievement: 100% Client-Side ZK Transaction**
+### 🏆 **Significant Achievement: Complete End-to-End ZK System**
 
 **Status**: ✅ **TOTAL SUCCESS** - Real transaction confirmed on ZKVerify blockchain!
 
-#### 📊 **Transaction Completed:**
-- **TX Hash**: `0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183`
+#### 📊 **Latest Transaction Completed:**
+- **TX Hash**: `0x5253f504a97fd4bd51c52868485011ba3393a83cb1a3e4ed26b7f400f93b94de`
 - **Status**: ✅ **Success** (Finalized)
-- **Block**: 1719350
-- **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183](https://zkverify-testnet.subscan.io/extrinsic/0xf345bcd404f1540a730d1def639f17db78e982c8591e5639a200e6cb4b221183)
+- **Date**: August 3, 2025 - 1:07:52 PM
+- **Explorer**: [https://zkverify-testnet.subscan.io/extrinsic/0x5253f504a97fd4bd51c52868485011ba3393a83cb1a3e4ed26b7f400f93b94de](https://zkverify-testnet.subscan.io/extrinsic/0x5253f504a97fd4bd51c52868485011ba3393a83cb1a3e4ed26b7f400f93b94de)
 
 #### 🎯 **What was achieved:**
-- ✅ **ZK proof generated in browser** (no server)
-- ✅ **Transaction sent directly to blockchain**
-- ✅ **Perfect Subwallet integration**
-- ✅ **Automatic address conversion** (Polkadot → Volta)
-- ✅ **100% decentralized architecture**
+- ✅ **Circuit Upload Interface** - User-friendly web interface
+- ✅ **API Circuit Build** - Real-time compilation with Circom + SnarkJS
+- ✅ **Artifact Generation** - WASM, ZKEY, VKEY in Base64 format
+- ✅ **ZK Proof Generation** - Using generated artifacts
+- ✅ **Blockchain Submission** - Direct to ZKVerify testnet
+- ✅ **Complete Integration** - End-to-end flow without command line
 
 #### 📁 **Implementation Location:**
 ```
-client/zk-proof/
-├── services/embeddedZKVerifyService.ts    # Main ZK service
-├── hooks/useEmbeddedZKProof.ts           # React hook
-├── components/EmbeddedZKProofDemo.tsx    # Demo interface
-├── assets/                               # Embedded ZK artifacts
-│   ├── wasm-base64.txt                   # WASM circuit
-│   ├── zkey-base64.txt                   # Proof key
-│   └── vkey-base64.txt                   # Verification key
-└── README_ZKPROOF_EN.md                  # English documentation
+client/pages/
+├── CircuitUploadTest.tsx                 # Circuit upload interface
+├── NewZKSystemTest.tsx                   # ZK test interface
+
+client/zk-proof-api/
+├── components/NewZKSystemTest.tsx        # ZK test component
+├── test-new-zk-system.ts                 # ZK system logic
+├── generated/                            # Generated artifacts
+└── NEW_ZK_SYSTEM_SUCCESS.md             # Success documentation
+
+server/services/
+└── circuit-build.ts                      # Circuit build API
 ```
 
 #### 🚀 **How to test:**
@@ -109,7 +113,8 @@ client/zk-proof/
 cd client
 npm install
 npm run dev
-# Access: http://localhost:8080/zk-proof-test
+# Access: http://localhost:8080/circuit-upload-test
+# Access: http://localhost:8080/new-zk-system-test
 ```
 
 ---
@@ -243,6 +248,7 @@ zkfinance/
 - **zk-credit**: Circom circuits and ZK proofs for privacy preservation
 - **foundry**: Smart contracts for peer-to-peer loans and financing
 - **client/zk-proof**: **NEW 100% client-side ZK implementation** with real transaction confirmed!
+- **client/zk-proof-api**: **NEW circuit build API** with automatic Base64 artifact generation
 
 ### ✅ ZKVerify Integration
 - **RPC connectivity tests** with ZKVerify Volta network
@@ -250,6 +256,8 @@ zkfinance/
 - **ZK proof submission and verification** in real time
 - **Test scripts** for demonstration and validation
 - **NEW: 100% client-side implementation** with real transaction confirmed!
+- **NEW: Circuit build API** with automatic Base64 artifact generation
+- **NEW: Independent test page** for ZK system validation
 
 ### ✅ Smart Contract and Blockchain Integration
 - **LoanManager contract** deployed locally and on Sepolia
@@ -290,6 +298,8 @@ zkfinance/
 - **Smart Contract ↔ Supabase**: ✅ Bidirectional persistence
 - **Supabase ↔ Frontend**: ✅ Real-time update
 - **NEW: Client-side ZK**: ✅ **Real transaction confirmed on blockchain!**
+- **NEW: Circuit Build API**: ✅ **Automatic Base64 artifact generation working!**
+- **NEW: Independent Tests**: ✅ **Dedicated page for ZK system validation!**
 
 ### 🏆 **CONFIRMED SUCCESSES:**
 
@@ -342,6 +352,70 @@ bash zk-credit/scripts/setup.sh
 - ✅ **Volta Network**: Operational and accessible
 - ✅ **Confirmed Transaction**: https://zkverify-testnet.subscan.io/extrinsic/0x8b190dff059ac4b9c39449c2a37ec904ad8419554b6b3f50cd1f6463307e8977
 - ✅ **NEW: Client-side ZK**: **Real transaction confirmed on blockchain!**
+
+## 🧪 **NEW: Independent Test Pages**
+
+### 🆕 **Available Test Pages:**
+
+#### **1. Circuit Build API Test**
+- **URL**: `http://localhost:8080/circuit-build-test`
+- **Purpose**: Test the circuit build API with automatic Base64 artifact generation
+- **Features**:
+  - Circuit compilation via API
+  - Automatic Base64 conversion
+  - Real-time artifact generation
+  - Professional interface for testing
+
+#### **2. Circuit Upload Test**
+- **URL**: `http://localhost:8080/circuit-upload-test`
+- **Purpose**: User-friendly interface for circuit upload and build testing
+- **Features**:
+  - Drag & drop file upload for .circom files
+  - Direct code input with syntax highlighting
+  - Real circuit compilation (not simulation)
+  - Automatic artifact download (WASM, ZKEY, VKEY)
+  - Perfect for evaluators and developers
+
+#### **3. New ZK System Test**
+- **URL**: `http://localhost:8080/new-zk-system-test`
+- **Purpose**: Independent validation of the ZK system using API-generated artifacts
+- **Features**:
+  - Complete ZK proof generation
+  - Blockchain submission to ZKVerify
+  - Real-time transaction tracking
+  - Subscan link generation
+  - Professional English interface
+
+#### **3. Original ZK Proof Test**
+- **URL**: `http://localhost:8080/zk-proof-test`
+- **Purpose**: Original client-side ZK implementation demonstration
+- **Features**:
+  - Embedded ZK artifacts
+  - Direct blockchain integration
+  - Credit score analysis integration
+  - Complete user experience
+
+### 🚀 **How to Access Test Pages:**
+
+```bash
+# Start the development server
+cd client && npm run dev
+
+# Start the API server (for circuit build tests)
+npm run server:start
+
+# Access test pages:
+# - http://localhost:8080/circuit-build-test
+# - http://localhost:8080/new-zk-system-test
+# - http://localhost:8080/zk-proof-test
+```
+
+### ✅ **Test Page Features:**
+- **Professional Interface**: Complete English translation
+- **Real-time Logs**: Live progress tracking
+- **Error Handling**: Comprehensive error management
+- **Blockchain Integration**: Direct ZKVerify submission
+- **Transaction Verification**: Automatic Subscan link generation
 
 ## 📚 **Complete Documentation**
 
@@ -423,6 +497,13 @@ npm run verify       # Verify proofs
 # NEW: Client-side ZK
 cd client/zk-proof
 # Access: http://localhost:8080/zk-proof-test
+
+# NEW: Circuit Build API Test
+npm run server:start
+# Access: http://localhost:8080/circuit-build-test
+
+# NEW: Independent ZK System Test
+# Access: http://localhost:8080/new-zk-system-test
 ```
 
 ---
@@ -471,6 +552,13 @@ npm install
 cd client
 npm run dev
 # Access: http://localhost:8080/zk-proof-test
+
+# NEW: Test circuit build API
+npm run server:start
+# Access: http://localhost:8080/circuit-build-test
+
+# NEW: Test independent ZK system
+# Access: http://localhost:8080/new-zk-system-test
 ```
 
 ---
@@ -490,6 +578,10 @@ zkfinance_ui/
 │       ├── hooks/         # React hook for ZK
 │       ├── components/    # Demo interface
 │       └── assets/        # Embedded ZK artifacts
+│   └── zk-proof-api/      # 🆕 NEW: Circuit build API
+│       ├── services/      # API service
+│       ├── components/    # Test components
+│       └── generated/     # Automatically generated artifacts
 ├── supabase/              # Supabase Backend
 │   ├── migrations/        # SQL migrations
 │   ├── functions/         # Edge functions
@@ -590,11 +682,8 @@ cd client && npm run dev
 
 ### 🌐 **Deployment:**
 
-## Landing Page: https://zkfinance.framer.website
-
+## Production domain: https://zkfinance.com.br
 ## Web App: https://zkfinance.netlify.app
-
-## Production domain: https://zkfinance.com.br - **Under configuration (not yet accessible)**
 
 ```bash
 # Client build for production

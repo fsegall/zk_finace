@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "vite --config vite.config.server.ts",
+    "server:dev": "tsx watch server/index.ts",
+    "server:start": "tsx server/index.ts",
     "build": "npm run build:client && npm run build:server",
     "build:client": "cd client && npm run build",
     "build:server": "vite build --config vite.config.server.ts",
@@ -17,9 +19,15 @@
   "dependencies": {
     "@polkadot/api": "^16.4.2",
     "@polkadot/util-crypto": "^13.5.4",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "autoprefixer": "^10.4.21",
     "dotenv": "^17.2.1",
     "express": "^4.18.2",
-    "serverless-http": "^3.2.0"
+    "postcss": "^8.5.6",
+    "serverless-http": "^3.2.0",
+    "tailwindcss": "^4.1.11",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -27,6 +35,7 @@
     "@types/node": "^22.5.5",
     "cors": "^2.8.5",
     "prettier": "^3.5.3",
+    "tsx": "^4.20.3",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vitest": "^2.1.8"

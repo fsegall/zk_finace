@@ -1,4 +1,3 @@
-
 import express from 'express';
 import cors from "cors";
 import creditAnalysisRouter from './routes/credit-analysis.js';
@@ -38,7 +37,8 @@ app.get('/health', (req, res) => {
     features: [
       'credit-analysis-local',
       'zk-proof-generation',
-      'privacy-compliant'
+      'privacy-compliant',
+      'circuit-build-service'
     ]
   });
 });
@@ -61,6 +61,4 @@ app.listen(port, () => {
   console.log('🔒 Data processed locally - total confidentiality guaranteed');
   console.log('🔑 ZK proofs generated for zero-knowledge compliance');
   console.log('🔧 Circuit build service for automated ZK artifact generation');
-});
-
-export default app;
+}); 

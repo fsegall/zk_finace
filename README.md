@@ -243,6 +243,7 @@ zkfinance/
 - **zk-credit**: Circuitos Circom e provas ZK para preservação de privacidade
 - **foundry**: Smart contracts para empréstimos e financiamento peer-to-peer
 - **client/zk-proof**: **NOVA implementação 100% client-side ZK** com transação real confirmada!
+- **client/zk-proof-api**: **NOVA API de build de circuitos** com geração automática de artifacts Base64
 
 ### ✅ Integração ZKVerify
 - **Testes de conectividade RPC** com a rede ZKVerify Volta
@@ -250,6 +251,8 @@ zkfinance/
 - **Submissão e verificação de provas ZK** em tempo real
 - **Scripts de teste** para demonstração e validação
 - **NOVA: Implementação 100% client-side** com transação real confirmada!
+- **NOVA: API de build de circuitos** com geração automática de artifacts Base64
+- **NOVA: Página de testes independente** para validação do sistema ZK
 
 ### ✅ Smart Contract e Integração Blockchain
 - **Contrato LoanManager** deployado local e em Sepolia
@@ -290,6 +293,8 @@ zkfinance/
 - **Smart Contract ↔ Supabase**: ✅ Persistência bidirecional
 - **Supabase ↔ Frontend**: ✅ Atualização em tempo real
 - **NOVA: Client-side ZK**: ✅ **Transação real confirmada na blockchain!**
+- **NOVA: API de Build**: ✅ **Geração automática de artifacts Base64 funcionando!**
+- **NOVA: Testes Independentes**: ✅ **Página dedicada para validação do sistema ZK!**
 
 ### 🏆 **SUCESSOS CONFIRMADOS:**
 
@@ -423,6 +428,13 @@ npm run verify       # Verifica provas
 # NOVA: Client-side ZK
 cd client/zk-proof
 # Acesse: http://localhost:8080/zk-proof-test
+
+# NOVA: API de Build de Circuitos
+npm run server:start
+# Acesse: http://localhost:8080/circuit-build-test
+
+# NOVA: Testes Independentes do Sistema ZK
+# Acesse: http://localhost:8080/new-zk-system-test
 ```
 
 ---
@@ -471,6 +483,13 @@ npm install
 cd client
 npm run dev
 # Acesse: http://localhost:8080/zk-proof-test
+
+# NOVA: Testar API de build de circuitos
+npm run server:start
+# Acesse: http://localhost:8080/circuit-build-test
+
+# NOVA: Testar sistema ZK independente
+# Acesse: http://localhost:8080/new-zk-system-test
 ```
 
 ---
@@ -490,6 +509,10 @@ zkfinance_ui/
 │       ├── hooks/         # Hook React para ZK
 │       ├── components/    # Interface de demonstração
 │       └── assets/        # Artefatos ZK embutidos
+│   └── zk-proof-api/      # 🆕 NOVA: API de build de circuitos
+│       ├── services/      # Serviço de API
+│       ├── components/    # Componentes de teste
+│       └── generated/     # Artifacts gerados automaticamente
 ├── supabase/              # Backend Supabase
 │   ├── migrations/        # SQL migrations
 │   ├── functions/         # Edge functions
@@ -586,6 +609,13 @@ cd foundry && forge test -vv
 # 5. 🆕 NOVA: Teste da implementação client-side ZK
 cd client && npm run dev
 # Acesse: http://localhost:8080/zk-proof-test
+
+# 6. 🆕 NOVA: Teste da API de build de circuitos
+npm run server:start
+# Acesse: http://localhost:8080/circuit-build-test
+
+# 7. 🆕 NOVA: Teste do sistema ZK independente
+# Acesse: http://localhost:8080/new-zk-system-test
 ```
 
 ### 🌐 **Deploy:**
@@ -652,9 +682,9 @@ Desenvolvido por **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato*
 ## 🔗 Links Úteis
 
 ### 🌐 **Aplicação:**
+- **Domínio Principal**: https://zkfinance.com.br 
 - **Web App**: https://zkfinance.netlify.app
-- **Landing Page**: https://zkfinance.framer.website
-- **Domínio Principal**: https://zkfinance.com.br - **Em configuração (ainda não acessível)**
+
 
 ### 🔗 **Blockchain & Smart Contracts:**
 - **Etherscan Sepolia**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13

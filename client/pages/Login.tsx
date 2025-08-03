@@ -162,6 +162,33 @@ const Login = () => {
                 🔐 ZK Proof Client-Side Test
               </Button>
             </Link>
+            <Link to="/circuit-build-test">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+              >
+                🔧 Circuit Build API Test
+              </Button>
+            </Link>
+            <Link to="/new-zk-system-test">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+              >
+                🧪 Novo Sistema ZK Test
+              </Button>
+            </Link>
+            <Link to="/circuit-upload-test">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full h-11 sm:h-12 border-border bg-transparent text-foreground hover:bg-muted/50"
+              >
+                📁 Circuit Upload Test
+              </Button>
+            </Link>
           </form>
 
           {error && (

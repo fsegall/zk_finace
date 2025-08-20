@@ -741,9 +741,9 @@ Developed by **Felipe Segall**, **Fêlix Rock Rodrigues**, **Paulo Marinato**, *
 ## 🔗 Useful Links
 
 ### 🌐 **Application:**
+- **Main Domain**: https://zkfinance.com.br 
 - **Web App**: https://zkfinance.netlify.app
-- **Landing Page**: https://zkfinance.framer.website
-- **Main Domain**: https://zkfinance.com.br - **Under configuration (not yet accessible)**
+
 
 ### 🔗 **Blockchain & Smart Contracts:**
 - **Etherscan Sepolia**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13

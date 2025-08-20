@@ -110,9 +110,9 @@ Frontend → API → zk-credit → ZKVerify → Smart Contract → Supabase → 
 ## 🌐 **DEPLOY**
 
 ### **Aplicação:**
+- **Domínio Principal**: https://zkfinance.com.br
 - **Web App**: https://zkfinance.netlify.app
-- **Landing Page**: https://zkfinance.framer.website
-- **Domínio Principal**: https://zkfinance.com.br - **Em configuração (ainda não acessível)**
+
 
 ### **Blockchain:**
 - **Etherscan Sepolia**: https://sepolia.etherscan.io/address/0xE745DF76c8AbEf6ce158aee5fba1734ABd91CA13
